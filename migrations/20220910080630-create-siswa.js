@@ -2,46 +2,42 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Siswa', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       nis: {
-        type: Sequelize.BIGINT,
+        primaryKey: true,
         allowNull: false,
+        type: Sequelize.STRING(10),
       },
       nisn: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING(10),
         allowNull: false,
       },
       nama: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       nomor_ijazah_smk: {
-        type: Sequelize.BIGINT,
-        allowNull: true,
-      },
-      tanggal_ijazah_smk: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING(20),
         allowNull: true,
       },
       nomor_ijazah_smp: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING(20),
+        allowNull: true,
+      },
+      tanggal_ijazah_smk: {
+        type: Sequelize.DATEONLY,
         allowNull: true,
       },
       nomor_skhun: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING(10),
         allowNull: true,
       },
       tahun_ijazah_smp: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       alamat_siswa: {
@@ -57,7 +53,7 @@ module.exports = {
         allowNull: false,
       },
       tgl_lahir: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       jenis_kelamin: {
@@ -81,7 +77,7 @@ module.exports = {
         allowNull: true,
       },
       no_telp: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING(20),
         allowNull: true,
       },
       foto: {
@@ -101,7 +97,7 @@ module.exports = {
         allowNull: true,
       },
       tgl_masuk: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
       },
       isAlumni: {
