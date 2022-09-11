@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Siswa.belongsTo(models.Ortu);
     }
   }
   Siswa.init({
@@ -26,6 +26,16 @@ module.exports = (sequelize, DataTypes) => {
     nama: {
       type: DataTypes.STRING(100),
       allowNull: false,
+    },
+    ortuId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Ortu',
+        key: 'id',
+      }
     },
     email: {
       type: DataTypes.STRING,

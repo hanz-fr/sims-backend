@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Siswa', {
+    await queryInterface.createTable('siswa', {
       nis: {
         primaryKey: true,
         allowNull: false,
@@ -14,6 +14,16 @@ module.exports = {
       nama: {
         type: Sequelize.STRING(100),
         allowNull: false,
+      },
+      ortuId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Ortu',
+          key: 'id',
+        }
       },
       email: {
         type: Sequelize.STRING,
@@ -115,6 +125,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Siswa');
+    await queryInterface.dropTable('siswa');
   }
 };

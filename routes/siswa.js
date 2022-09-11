@@ -48,9 +48,7 @@ router.post('/', async (req, res, next) => {
         const siswaIsExist = await Siswa.findOne({
           where: { nis: req.body.nis },
         });
-    
 
-        
         // return error message to client if siswa already exist.
         if (siswaIsExist) {
           return res.status(409).json({
@@ -58,6 +56,8 @@ router.post('/', async (req, res, next) => {
             message: "NIS siswa sudah terdaftar.",
           });
         }
+
+ 
 
         // find Siswa where email already exist.
         const siswaEmailExist = await Siswa.findOne({
