@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Ortu.belongsTo(models.Siswa, {
-        foreignKey: 'ortuId',
+      Ortu.hasOne(models.Siswa, {
+        foreignKey: 'OrtuId',
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE',                                                                          
       });
     }
   }
@@ -40,11 +40,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     no_telp: {
       type: DataTypes.STRING(20),
-      allowNull: false
+      allowNull: false,
     },
     pekerjaan: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING(100),

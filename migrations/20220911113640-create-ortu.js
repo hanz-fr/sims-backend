@@ -26,11 +26,11 @@ module.exports = {
       },
       no_telp: {
         type: Sequelize.STRING(20),
-        allowNull: false
+        allowNull: false,
       },
       pekerjaan: {
         type: Sequelize.STRING(50),
-        allowNull: false
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING(100),

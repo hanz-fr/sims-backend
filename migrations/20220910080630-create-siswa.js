@@ -15,20 +15,19 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
-      ortuId: {
+      OrtuId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
           model: 'Ortu',
           key: 'id',
-        }
+        },
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       nomor_ijazah_smk: {
         type: Sequelize.STRING(20),

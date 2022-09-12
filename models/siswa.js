@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    ortuId: {
+    OrtuId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
       references: {
