@@ -35,12 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Ortu',
         key: 'id',
-      }
+      },
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allowNull: true,
     },
     nomor_ijazah_smk: {
       type: DataTypes.STRING(20),
@@ -87,7 +86,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     status: {
-      type: DataTypes.ENUM('AA','AK','AT'),
+      type: DataTypes.ENUM('AA', 'AK', 'AT'),
       allowNull: true,
     },
     agama: {
@@ -100,11 +99,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     no_telp: {
       type: DataTypes.STRING(20),
-      allowNull: true,
+      allowNull: false,
     },
     foto: {
       type: 'VARBINARY(100)',
-      allowNull: false,
+      allowNull: true,
     },
     berat_badan: {
       type: DataTypes.INTEGER,

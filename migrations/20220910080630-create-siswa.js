@@ -27,7 +27,7 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       nomor_ijazah_smk: {
         type: Sequelize.STRING(20),
@@ -87,11 +87,11 @@ module.exports = {
       },
       no_telp: {
         type: Sequelize.STRING(20),
-        allowNull: true,
+        allowNull: false,
       },
       foto: {
         type: 'VARBINARY(100)',
-        allowNull: false,
+        allowNull: true,
       },
       berat_badan: {
         type: Sequelize.INTEGER,
