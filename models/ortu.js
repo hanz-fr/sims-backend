@@ -16,12 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Ortu.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
     nik_ortu: {
       type: DataTypes.STRING(16),
       allowNull: false,
@@ -50,14 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: true,
     },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
   }, {
     sequelize,
     modelName: 'Ortu',

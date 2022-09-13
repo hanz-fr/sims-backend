@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Siswa.belongsTo(models.Ortu);
+      Siswa.belongsTo(models.Kelas, {
+        foreignKey: "KelasId",
+        targetKey: "id",
+      });
     }
   }
   Siswa.init({
@@ -34,6 +38,16 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       references: {
         model: 'Ortu',
+        key: 'id',
+      },
+    },
+    KelasId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Kelas',
         key: 'id',
       },
     },

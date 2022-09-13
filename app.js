@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var siswaRouter = require('./routes/siswa');
 var ortuRouter = require('./routes/ortu');
 var jurusanRouter = require('./routes/jurusan');
+var kelasRouter = require('./routes/kelas');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use('/users', usersRouter);
 app.use('/siswa', siswaRouter);
 app.use('/ortu', ortuRouter);
 app.use('/jurusan', jurusanRouter);
+app.use('/kelas', kelasRouter);
 
 module.exports = app;
 

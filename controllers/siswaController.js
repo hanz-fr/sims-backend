@@ -1,11 +1,11 @@
 const Validator = require("fastest-validator");
-const { Siswa, Ortu, sequelize } = require("../models");
+const { Siswa, Ortu, Kelas, sequelize } = require("../models");
 
 // import fastest-validator
 const v = new Validator();
 
 
-// GET ALL SISWA CONTROLLER
+// get all siswa
 exports.getAllSiswa = async (req, res) => {
     const siswa = await sequelize.query("SELECT * FROM siswa", {
         model: Siswa,
@@ -15,7 +15,7 @@ exports.getAllSiswa = async (req, res) => {
     res.status(200).json(siswa);
 }
 
-// GET SISWA BY NIS CONTROLLER
+// get siswa
 exports.getSiswa = async (req, res) => {
     const nis = req.params.nis;
 
@@ -34,7 +34,7 @@ exports.getSiswa = async (req, res) => {
     });
 }
 
-// CREATE SISWA CONTROLLER
+// create siswa
 exports.createSiswa = async (req, res) => {
     try {
         // validate incoming request using fastest-validator
@@ -44,6 +44,7 @@ exports.createSiswa = async (req, res) => {
             nama: { type: "string", max: 100 },
             email: { type: "string" },
             OrtuId: { type: "number", optional: true },
+            KelasId: { type: "number", optional: true },
             nomor_ijazah_smk: { type: "string", max: 20, optional: true },
             nomor_ijazah_smp: { type: "string", max: 20, optional: true },
             nomor_skhun: { type: "string", max: 10, optional: true },
@@ -107,10 +108,21 @@ exports.createSiswa = async (req, res) => {
             });
     
             if (!ortuIdExist) {
-                return res.json({ message: "Ortu ID is invalid or does not exist" })
+                return res.res.status(409).json({
+                    message: `Ortu with id ${req.body.OrtuId} is invalid or does not exist`
+                });
             }
         }
-        
+
+        let kelas = await Kelas.findOne({
+            where: { id: req.body.KelasId }
+        });
+
+        if (!kelas) {
+            return res.status(404).json({
+                message: `Kelas with id ${req.body.KelasId} does not exist`
+            });
+        }
 
         var siswa = await Siswa.create(req.body);
 
@@ -119,13 +131,20 @@ exports.createSiswa = async (req, res) => {
             siswa,
         });
     } catch (error) {
-        console.log(error);
-        res.status(500);
-        res.send({ status: "error", message: "Something went wrong. :(" });
+
+        if (error.errno === 1452) {
+            return res.status(500).json({
+                message: "Id of Kelas is invalid or does not exist"
+            });
+        } else {
+            console.log(error);
+            res.status(500);
+            res.send({ status: "error", message: "Something went wrong. :(" });
+        }
     }
 }
 
-// UPDATE SISWA CONTROLLER 
+// update siswa
 exports.updateSiswa = async (req, res) => {
 
     // get nis from req params
@@ -145,6 +164,7 @@ exports.updateSiswa = async (req, res) => {
         nama: { type: "string", max: 100, optional: true },
         email: { type: "string", optional: true },
         OrtuId: { type: "number", optional: true },
+        KelasId: { type: "number", optional: true },
         nomor_ijazah_smk: { type: "string", max: 20, optional: true },
         nomor_ijazah_smp: { type: "string", max: 20, optional: true },
         nomor_skhun: { type: "string", max: 10, optional: true },
@@ -186,8 +206,6 @@ exports.updateSiswa = async (req, res) => {
         return res.status(400).json(validate);
     }
     
-
-
     // update siswa
     siswaExist = await siswaExist.update(req.body);
     res.status(200).json({
@@ -196,7 +214,7 @@ exports.updateSiswa = async (req, res) => {
     });
 }
 
-// DELETE SISWA CONTROLLER
+// delete siswa
 exports.deleteSiswa = async (req, res) => {
 
     const nis = req.params.nis; // get nis from req params
@@ -213,9 +231,9 @@ exports.deleteSiswa = async (req, res) => {
 
     await siswa.destroy();
 
-    res.json({
-        message: "Siswa deleted successfully"
-    })
+    res.status(200).json({
+        message: "Siswa deleted successfully."
+    });
 
 }
 

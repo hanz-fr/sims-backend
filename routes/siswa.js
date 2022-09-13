@@ -15,6 +15,4 @@ router.put('/:nis', controller.updateSiswa); // update route
 router.delete('/:nis', controller.deleteSiswa); // delete route
 
 
-
-
 module.exports = router;

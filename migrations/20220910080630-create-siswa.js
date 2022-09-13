@@ -25,6 +25,16 @@ module.exports = {
           key: 'id',
         },
       },
+      KelasId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Kelas',
+          key: 'id',
+        },
+      },
       email: {
         type: Sequelize.STRING,
         allowNull: true,
