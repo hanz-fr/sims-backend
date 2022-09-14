@@ -10,6 +10,9 @@ var siswaRouter = require('./routes/siswa');
 var ortuRouter = require('./routes/ortu');
 var jurusanRouter = require('./routes/jurusan');
 var kelasRouter = require('./routes/kelas');
+var mapelRouter = require('./routes/mapel');
+var mapelJurusanRouter = require('./routes/mapelJurusan');
+var nilaiAkhirRouter = require('./routes/nilaiAkhir');
 
 var app = express();
 
@@ -19,12 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/siswa', siswaRouter);
 app.use('/ortu', ortuRouter);
 app.use('/jurusan', jurusanRouter);
 app.use('/kelas', kelasRouter);
+app.use('/mapel', mapelRouter);
+app.use('/mapel-jurusan', mapelJurusanRouter);
+app.use('/nilai-akhir', nilaiAkhirRouter);
 
 module.exports = app;
 

@@ -20,7 +20,8 @@ exports.getJurusan = async (req, res) => {
   const jurusan = await Jurusan.findByPk(id);
 
   if (!jurusan) {
-    return res.json({
+    return res.status(404).json({
+      status: "error",
       message: `Jurusan with id ${id}  does not exist`,
     });
   }
@@ -66,7 +67,10 @@ exports.updateJurusan = async (req, res) => {
   let jurusanExist = await Jurusan.findByPk(id);
 
   if (!jurusanExist) {
-    return res.json({ message: "Jurusan does not exist" });
+    return res.status(404).json({ 
+      status: 'error',
+      message: "Jurusan does not exist"
+    });
   }
 
   const schema = {

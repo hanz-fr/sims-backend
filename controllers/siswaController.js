@@ -23,7 +23,7 @@ exports.getSiswa = async (req, res) => {
     const siswa = await Siswa.findByPk(nis);
 
     if (!siswa) {
-        return res.json({
+        return res.status(404).json({
             message: "Siswa does not exist"
         });
     }
@@ -114,16 +114,20 @@ exports.createSiswa = async (req, res) => {
             }
         }
 
-        let kelas = await Kelas.findOne({
-            where: { id: req.body.KelasId }
-        });
-
-        if (!kelas) {
-            return res.status(404).json({
-                message: `Kelas with id ${req.body.KelasId} does not exist`
+        // if KelasId is not empty, check if the id exist
+        if (req.body.KelasId){
+            let kelas = await Kelas.findOne({
+                where: { id: req.body.KelasId }
             });
+    
+            if (!kelas) {
+                return res.status(404).json({
+                    status: "error",
+                    message: `Kelas with id ${req.body.KelasId} does not exist`
+                });
+            }
         }
-
+        
         var siswa = await Siswa.create(req.body);
 
         res.status(200).json({
@@ -188,14 +192,31 @@ exports.updateSiswa = async (req, res) => {
     };
 
 
-    // find if ortu id is exist (if 'OrtuId' is not null.)
+    // if OrtuId is not empty, check if the id exist
     if (req.body.OrtuId) {
         const ortuIdExist = await Ortu.findOne({
             where: { id: req.body.OrtuId }
         });
 
         if (!ortuIdExist) {
-            return res.json({ message: "Ortu ID is invalid or does not exist" })
+            return res.json({ 
+                status: "error",
+                message: "Ortu ID is invalid or does not exist" 
+            })
+        }
+    }
+
+    // if KelasId is not empty, check if the id exist
+    if (req.body.KelasId){
+        let kelas = await Kelas.findOne({
+            where: { id: req.body.KelasId }
+        });
+
+        if (!kelas) {
+            return res.status(404).json({
+                status: "error",
+                message: `Kelas with id ${req.body.KelasId} does not exist`
+            });
         }
     }
 
@@ -225,6 +246,7 @@ exports.deleteSiswa = async (req, res) => {
     // return error if siswa doesn't exist
     if (!siswa) {
         return res.json({
+            status: "error",
             message: "Siswa does not exist"
         });
     }
@@ -236,4 +258,3 @@ exports.deleteSiswa = async (req, res) => {
     });
 
 }
-

@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
+      Jurusan.belongsToMany(models.Mapel, { 
+        through: models.MapelJurusan,
+        foreignKey: 'JurusanId',
+        targetKey: 'id', 
+      });
     }
   }
   Jurusan.init({

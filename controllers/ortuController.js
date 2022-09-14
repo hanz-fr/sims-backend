@@ -99,7 +99,10 @@ exports.updateOrtu = async (req, res) => {
   let ortuExist = await Ortu.findByPk(id); // check if ortu is exist
 
   if (!ortuExist) {
-    return res.json({ message: "Ortu does not exist" });
+    return res.status(404).json({
+      status: "error",
+      message: "Ortu does not exist" 
+    });
   }
 
   const schema = {
@@ -133,7 +136,8 @@ exports.deleteOrtu = async (req, res) => {
   let ortu = await Ortu.findByPk(id);
 
   if (!ortu) {
-    return res.json({
+    return res.status(404).json({
+      status: "error",
       message: "Ortu does not exist",
     });
   }
