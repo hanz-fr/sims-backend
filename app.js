@@ -13,6 +13,7 @@ var kelasRouter = require('./routes/kelas');
 var mapelRouter = require('./routes/mapel');
 var mapelJurusanRouter = require('./routes/mapelJurusan');
 var nilaiAkhirRouter = require('./routes/nilaiAkhir');
+var raportRouter = require('./routes/raport');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/kelas', kelasRouter);
 app.use('/mapel', mapelRouter);
 app.use('/mapel-jurusan', mapelJurusanRouter);
 app.use('/nilai-akhir', nilaiAkhirRouter);
+app.use('/raport', raportRouter);
 
 module.exports = app;
 

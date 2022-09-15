@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "KelasId",
         targetKey: "id",
       });
+      Siswa.hasMany(models.Raport, {
+        foreignKey: 'nis_siswa',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   Siswa.init({
@@ -22,14 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.STRING(10),
-    },
-    nisn: {
-      type: DataTypes.STRING(10),
-      allowNull: false,
-    },
-    nama: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
     },
     OrtuId: {
       type: DataTypes.INTEGER,
@@ -50,6 +47,14 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Kelas',
         key: 'id',
       },
+    },
+    nisn: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+    },
+    nama: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,

@@ -1,5 +1,5 @@
 const Validator = require("fastest-validator");
-const { NilaiAkhir, sequelize } = require("../models");
+const { NilaiAkhir, Raport, sequelize } = require("../models");
 
 // import fastest-validator
 const v = new Validator();
@@ -38,6 +38,7 @@ exports.getNilaiAkhir = async (req, res) => {
 exports.createNilaiAkhir = async (req, res) => {
     try {
         const schema = {
+            RaportId: { type: "number", optional: false },
             nilai_us_teori: { type: "number", max: 100 },
             nilai_us_praktek: { type: "number", max: 100 },
             nilai_ukk: { type: "number", max: 100 },
@@ -48,6 +49,17 @@ exports.createNilaiAkhir = async (req, res) => {
 
         if (validate.length) {
             return res.status(400).json(validate);
+        }
+
+        let raport = await Raport.findOne({
+            where: { id: req.body.RaportId } 
+        });
+
+        if (!raport) {
+            return res.status(404).json({
+                status: 'error',
+                message: `Raport with id : ${req.body.RaportId} does not exist`
+            });
         }
 
         var nilaiAkhir = await NilaiAkhir.create(req.body);
@@ -72,11 +84,12 @@ exports.updateNilaiAkhir = async (req, res) => {
     if (!nilaiAkhirExist) {
         return res.status(400).json({
             status: 'error',
-            message: 'Nilai akhir does not exist'
+            message: 'Nilai Akhir is invalid or does not exist'
         });
     }
 
     const schema = {
+        RaportId: { type: "number", optional: true },
         nilai_us_teori: { type: "number", max: 100, optional: true },
         nilai_us_praktek: { type: "number", max: 100, optional: true },
         nilai_ukk: { type: "number", max: 100, optional: true },
@@ -87,6 +100,21 @@ exports.updateNilaiAkhir = async (req, res) => {
 
     if (validate.length) {
         return res.status(400).json(validate);
+    }
+
+
+    // find raport id if is not empty
+    if (req.body.RaportId){
+        let raport = await Raport.findOne({
+            where: { id: req.body.RaportId } 
+        });
+    
+        if (!raport) {
+            return res.status(404).json({
+                status: 'error',
+                message: `Raport with id : ${req.body.RaportId} does not exist`
+            });
+        }
     }
 
     nilaiAkhirExist = await nilaiAkhirExist.update(req.body);

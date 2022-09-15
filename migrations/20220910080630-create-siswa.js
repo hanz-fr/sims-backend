@@ -7,14 +7,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(10),
       },
-      nisn: {
-        type: Sequelize.STRING(10),
-        allowNull: false,
-      },
-      nama: {
-        type: Sequelize.STRING(100),
-        allowNull: false,
-      },
       OrtuId: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -34,6 +26,14 @@ module.exports = {
           model: 'Kelas',
           key: 'id',
         },
+      },
+      nisn: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+      },
+      nama: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,

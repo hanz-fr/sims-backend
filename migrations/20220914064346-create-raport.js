@@ -1,14 +1,15 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Raports', {
+    await queryInterface.createTable('raport', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      mapelJurusanId: {
+      // BUAT DI NILAI MAPEL
+      /* mapelJurusanId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         onDelete: 'CASCADE',
@@ -17,13 +18,48 @@ module.exports = {
           model: 'MapelJurusan',
           key: 'mapelJurusanId',
         },
+      }, */
+      nis_siswa: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Siswa',
+          key: 'nis'
+        }
       },
-      
       semester: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      thn_ajaran: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       sakit: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      ijin: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      alpa: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      isNaik: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+      },
+      naikKelas: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+      },
+      tgl_kenaikan: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +72,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Raports');
+    await queryInterface.dropTable('raport');
   }
 };

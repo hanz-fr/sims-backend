@@ -8,6 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      RaportId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Raport',
+          key: 'id',
+        }, 
+      },
       nilai_us_teori: {
         type: Sequelize.INTEGER,
         allowNull: false,

@@ -108,7 +108,8 @@ exports.createSiswa = async (req, res) => {
             });
     
             if (!ortuIdExist) {
-                return res.res.status(409).json({
+                return res.res.status(404).json({
+                    status: 'error',
                     message: `Ortu with id ${req.body.OrtuId} is invalid or does not exist`
                 });
             }
@@ -254,7 +255,7 @@ exports.deleteSiswa = async (req, res) => {
     await siswa.destroy();
 
     res.status(200).json({
-        message: "Siswa deleted successfully."
+        message: "Siswa deleted successfully"
     });
 
 }

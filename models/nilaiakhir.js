@@ -10,10 +10,26 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      NilaiAkhir.belongsTo(models.Raport);
     }
   }
   NilaiAkhir.init({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    RaportId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Raport',
+        key: 'id',
+      } 
+    },
     nilai_us_teori: {
       type: DataTypes.INTEGER,
       allowNull: false,
