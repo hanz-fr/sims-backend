@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "nis_siswa",
         targetKey: "nis"
       });
+      Raport.hasMany(models.NilaiMapel, {
+        foreignKey: 'RaportId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
   }
   Raport.init({
@@ -28,17 +33,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    // BUAT DI NILAI MAPEL
-    /* mapelJurusanId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-      references: {
-        model: 'MapelJurusan',
-        key: 'mapelJurusanId',
-      },
-    }, */
     nis_siswa: {
       type: DataTypes.STRING(10),
       allowNull: false,

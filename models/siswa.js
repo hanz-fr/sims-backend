@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
+      Siswa.hasOne(models.Mutasi, {
+        foreignKey: 'nis_siswa',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      }); 
     }
   }
   Siswa.init({

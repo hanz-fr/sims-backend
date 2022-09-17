@@ -1,32 +1,44 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('mapel_jurusan', {
-      mapelJurusanId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
+    await queryInterface.createTable('nilai_mapel', {
+      id: {
+        allowNull: false,
         autoIncrement: true,
-        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
-      MapelId: {
+      idMapelJurusan: {
         type: Sequelize.INTEGER,
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
-          model: 'Mapel',
-          key: 'id',
+          model: 'mapel_jurusan',
+          key: 'mapelJurusanId',
         },
       },
-      JurusanId: {
+      RaportId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
-          model: 'Jurusan',
+          model: 'Raport',
           key: 'id',
-        },
+        }
+      },
+      nilai_keterampilan: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      nilai_pengetahuan: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      kkm: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -39,6 +51,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('mapel_jurusan');
+    await queryInterface.dropTable('nilai_mapel');
   }
 };

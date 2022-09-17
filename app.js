@@ -14,6 +14,8 @@ var mapelRouter = require('./routes/mapel');
 var mapelJurusanRouter = require('./routes/mapelJurusan');
 var nilaiAkhirRouter = require('./routes/nilaiAkhir');
 var raportRouter = require('./routes/raport');
+var nilaiMapelRouter = require('./routes/nilaiMapel');
+var mutasiRouter = require('./routes/mutasi');
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use('/mapel', mapelRouter);
 app.use('/mapel-jurusan', mapelJurusanRouter);
 app.use('/nilai-akhir', nilaiAkhirRouter);
 app.use('/raport', raportRouter);
+app.use('/nilai-mapel', nilaiMapelRouter);
+app.use('/mutasi', mutasiRouter);
 
 module.exports = app;
 

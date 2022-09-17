@@ -159,7 +159,7 @@ exports.updateSiswa = async (req, res) => {
     let siswaExist = await Siswa.findByPk(nis);
 
     if (!siswaExist) {
-        return res.json({ message: "Siswa does not exist" });
+        return res.status(404).json({ message: "Siswa does not exist" });
     }
 
     // validate incoming request
@@ -193,6 +193,13 @@ exports.updateSiswa = async (req, res) => {
     };
 
 
+    // validate schema
+    const validate = v.validate(req.body, schema);
+
+    if (validate.length) {
+        return res.status(400).json(validate);
+    }
+
     // if OrtuId is not empty, check if the id exist
     if (req.body.OrtuId) {
         const ortuIdExist = await Ortu.findOne({
@@ -221,13 +228,6 @@ exports.updateSiswa = async (req, res) => {
         }
     }
 
-    // validate schema
-    const validate = v.validate(req.body, schema);
-
-    if (validate.length) {
-        return res.status(400).json(validate);
-    }
-    
     // update siswa
     siswaExist = await siswaExist.update(req.body);
     res.status(200).json({
