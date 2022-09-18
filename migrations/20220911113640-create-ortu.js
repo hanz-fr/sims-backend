@@ -10,7 +10,7 @@ module.exports = {
       },
       nik_ortu: {
         type: Sequelize.STRING(16),
-        allowNull: false,
+        allowNull: true,
       },
       nama: {
         type: Sequelize.STRING(100),
@@ -18,7 +18,7 @@ module.exports = {
       },
       hubungan: {
         type: Sequelize.ENUM('Ibu', 'Ayah', 'Wali'),
-        allowNull: true,
+        allowNull: false,
       },
       alamat: {
         type: Sequelize.STRING,
@@ -26,11 +26,11 @@ module.exports = {
       },
       no_telp: {
         type: Sequelize.STRING(20),
-        allowNull: false,
+        allowNull: true,
       },
       pekerjaan: {
         type: Sequelize.STRING(50),
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: Sequelize.STRING(100),

@@ -50,6 +50,9 @@ exports.createSiswa = async (req, res) => {
             nomor_skhun: { type: "string", max: 10, optional: true },
             tanggal_ijazah_smk: { type: "date", convert: true, optional: true },
             tahun_ijazah_smp: { type: "number", optional: true },
+            diterima_di_kelas: { type: "string", optional: true },
+            tgl_diterima: { type: "date", convert: true, optional: true },
+            semester_diterima: { type: "number", optional: true },
             alamat_siswa: { type: "string" },
             nama_sekolah_asal: { type: "string" },
             tmp_lahir: { type: "string" },
@@ -103,7 +106,7 @@ exports.createSiswa = async (req, res) => {
 
         // find if ortuid is exist or not
         if (req.body.OrtuId){
-            const ortuIdExist = await Ortu.findOne({
+            let ortuIdExist = await Ortu.findOne({
                 where: { id: req.body.OrtuId }
             });
     
@@ -175,6 +178,9 @@ exports.updateSiswa = async (req, res) => {
         nomor_skhun: { type: "string", max: 10, optional: true },
         tanggal_ijazah_smk: { type: "date", convert: true, optional: true },
         tahun_ijazah_smp: { type: "number", optional: true },
+        diterima_di_kelas: { type: "string", optional: true },
+        tgl_diterima: { type: "date", convert: true, optional: true },
+        semester_diterima: { type: "number", optional: true },
         alamat_siswa: { type: "string", optional: true },
         nama_sekolah_asal: { type: "string", optional: true },
         tmp_lahir: { type: "string", optional: true },

@@ -33,15 +33,6 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
-    /* UNTUK TGL DITERIMA, DAN SEMESTER MASIH SEMENTARA */
-    tgl_diterima: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    semester: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
   }, {
     sequelize,
     modelName: 'Kelas',

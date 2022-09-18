@@ -85,6 +85,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    diterima_di_kelas: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    tgl_diterima: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    semester_diterima: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     alamat_siswa: {
       type: DataTypes.STRING,
       allowNull: false,

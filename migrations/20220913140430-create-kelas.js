@@ -22,15 +22,6 @@ module.exports = {
           key: 'id',
         },
       },
-      /* UNTUK TGL DITERIMA, DAN SEMESTER MASIH SEMENTARA */
-      tgl_diterima: {
-        type: Sequelize.DATEONLY,
-        allowNull: true,
-      },
-      semester: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

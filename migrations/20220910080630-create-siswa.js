@@ -59,6 +59,18 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      diterima_di_kelas: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      tgl_diterima: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+      },
+      semester_diterima: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       alamat_siswa: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -66,6 +78,10 @@ module.exports = {
       nama_sekolah_asal: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      alamat_sekolah_asal: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       tmp_lahir: {
         type: Sequelize.STRING,

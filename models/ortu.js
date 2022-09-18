@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Ortu.init({
     nik_ortu: {
       type: DataTypes.STRING(16),
-      allowNull: false,
+      allowNull: true,
     },
     nama: {
       type: DataTypes.STRING(100),
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     hubungan: {
       type: DataTypes.ENUM('Ibu', 'Ayah', 'Wali'),
-      allowNull: true,
+      allowNull: false,
     },
     alamat: {
       type: DataTypes.STRING,
@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     no_telp: {
       type: DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
     },
     pekerjaan: {
       type: DataTypes.STRING(50),
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING(100),
