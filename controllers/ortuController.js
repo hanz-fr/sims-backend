@@ -35,12 +35,12 @@ exports.createOrtu = async (req, res) => {
   try {
     // validate incoming request
     const schema = {
-      nik_ortu: { type: "string", max: 16 },
+      nik_ortu: { type: "string", max: 16, optional: true, },
       nama: { type: "string", max: 100 },
       hubungan: { type: "enum", values: ["Ibu", "Ayah", "Wali"] },
       alamat: { type: "string" },
       no_telp: { type: "string", max: 20 },
-      pekerjaan: { type: "string", max: 50 },
+      pekerjaan: { type: "string", max: 50, optional: true },
       email: { type: "string", max: 100, optional: true },
     };
 
