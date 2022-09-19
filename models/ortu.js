@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Ortu.hasOne(models.Siswa, {
-        foreignKey: 'OrtuId',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',                                                                          
-      });
+      // Ortu.hasOne(models.Siswa, {
+      //   foreignKey: 'OrtuId',
+      //   onDelete: 'CASCADE',
+      //   onUpdate: 'CASCADE',                                                                          
+      // });
     }
   }
   Ortu.init({

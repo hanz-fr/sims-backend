@@ -2,12 +2,12 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('siswa', {
-      nis: {
+      nis_siswa: {
         primaryKey: true,
         allowNull: false,
         type: Sequelize.STRING(10),
       },
-      OrtuId: {
+      /* OrtuId: {
         type: Sequelize.INTEGER,
         allowNull: true,
         onDelete: 'CASCADE',
@@ -16,7 +16,7 @@ module.exports = {
           model: 'Ortu',
           key: 'id',
         },
-      },
+      }, */
       KelasId: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -27,61 +27,13 @@ module.exports = {
           key: 'id',
         },
       },
-      nisn: {
+      nisn_siswa: {
         type: Sequelize.STRING(10),
         allowNull: false,
       },
-      nama: {
+      nama_siswa: {
         type: Sequelize.STRING(100),
         allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      nomor_ijazah_smk: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-      },
-      nomor_ijazah_smp: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-      },
-      tanggal_ijazah_smk: {
-        type: Sequelize.DATEONLY,
-        allowNull: true,
-      },
-      nomor_skhun: {
-        type: Sequelize.STRING(10),
-        allowNull: true,
-      },
-      tahun_ijazah_smp: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      diterima_di_kelas: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      tgl_diterima: {
-        type: Sequelize.DATEONLY,
-        allowNull: true,
-      },
-      semester_diterima: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      alamat_siswa: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      nama_sekolah_asal: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      alamat_sekolah_asal: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       tmp_lahir: {
         type: Sequelize.STRING,
@@ -95,6 +47,10 @@ module.exports = {
         type: Sequelize.ENUM('L', 'P'),
         allowNull: false,
       },
+      agama: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       anak_ke: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -103,17 +59,105 @@ module.exports = {
         type: Sequelize.ENUM('AA','AK','AT'),
         allowNull: true,
       },
-      agama: {
+      alamat_siswa: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      email_siswa: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      no_telp_siswa: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
+      },
+      tgl_diterima: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+      },
+      semester_diterima: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      sekolah_asal: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      alamat_sekolah_asal: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      thn_ijazah_smp: {
+        type: Sequelize.STRING(10),
+        allowNull: true,
+      },
+      no_ijazah_smp: {
+        type: Sequelize.STRING(20),
+        allowNull: true,
+      },
+      thn_skhun_smp: {
+        type: Sequelize.STRING(10),
+        allowNull: true,
+      },
+      no_skhun_smp: {
+        type: Sequelize.STRING(10),
+        allowNull: true,
+      },
+      nama_ayah: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      nama_ibu: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      alamat_ortu: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      no_telp_ortu: {
+        type: Sequelize.STRING(20),
+        allowNull: true,
+      },
+      email_ortu: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      nama_wali: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      alamat_wali: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      no_telp_wali: {
+        type: Sequelize.STRING(20),
+        allowNull: true,
+      },
+      pekerjaan_wali: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      tgl_meninggalkan_sekolah: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+      },
+      alasan_meninggalkan_sekolah: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      no_ijazah_smk: {
+        type: Sequelize.STRING(20),
+        allowNull: true,
+      },
+      tgl_ijazah_smk: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
       },
       keterangan_lain: {
         type: Sequelize.STRING,
         allowNull: true,
-      },
-      no_telp: {
-        type: Sequelize.STRING(20),
-        allowNull: false,
       },
       foto: {
         type: 'VARBINARY(100)',
@@ -129,10 +173,6 @@ module.exports = {
       },
       lingkar_kepala: {
         type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      tgl_masuk: {
-        type: Sequelize.DATEONLY,
         allowNull: true,
       },
       isAlumni: {

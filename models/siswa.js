@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Siswa.belongsTo(models.Ortu);
+      // Siswa.belongsTo(models.Ortu);
       Siswa.belongsTo(models.Kelas, {
         foreignKey: "KelasId",
         targetKey: "id",
@@ -28,12 +28,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Siswa.init({
-    nis: {
+    nis_siswa: {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.STRING(10),
     },
-    OrtuId: {
+    /* OrtuId: {
       type: DataTypes.INTEGER,
       allowNull: true,
       onDelete: 'CASCADE',
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Ortu',
         key: 'id',
       },
-    },
+    }, */
     KelasId: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -53,56 +53,12 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
-    nisn: {
+    nisn_siswa: {
       type: DataTypes.STRING(10),
       allowNull: false,
     },
-    nama: {
+    nama_siswa: {
       type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    nomor_ijazah_smk: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
-    nomor_ijazah_smp: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
-    tanggal_ijazah_smk: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    nomor_skhun: {
-      type: DataTypes.STRING(10),
-      allowNull: true,
-    },
-    tahun_ijazah_smp: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    diterima_di_kelas: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    tgl_diterima: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    semester_diterima: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    alamat_siswa: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    nama_sekolah_asal: {
-      type: DataTypes.STRING,
       allowNull: false,
     },
     tmp_lahir: {
@@ -117,25 +73,117 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('L', 'P'),
       allowNull: false,
     },
+    agama: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     anak_ke: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
     status: {
-      type: DataTypes.ENUM('AA', 'AK', 'AT'),
+      type: DataTypes.ENUM('AA','AK','AT'),
       allowNull: true,
     },
-    agama: {
+    alamat_siswa: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    email_siswa: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    no_telp_siswa: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    tgl_diterima: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    semester_diterima: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    sekolah_asal: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    alamat_sekolah_asal: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    thn_ijazah_smp: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+    no_ijazah_smp: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    thn_skhun_smp: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+    no_skhun_smp: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+    nama_ayah: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    nama_ibu: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    alamat_ortu: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    no_telp_ortu: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    email_ortu: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    nama_wali: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    alamat_wali: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    no_telp_wali: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    pekerjaan_wali: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    tgl_meninggalkan_sekolah: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    alasan_meninggalkan_sekolah: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    no_ijazah_smk: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    tgl_ijazah_smk: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
     },
     keterangan_lain: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
-    no_telp: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
     },
     foto: {
       type: 'VARBINARY(100)',
@@ -151,10 +199,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     lingkar_kepala: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    tgl_masuk: {
-      type: DataTypes.DATEONLY,
       allowNull: true,
     },
     isAlumni: {

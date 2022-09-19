@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Raport.belongsTo(models.Siswa, {
         foreignKey: "nis_siswa",
-        targetKey: "nis"
+        targetKey: "nis_siswa"
       });
       Raport.hasMany(models.NilaiMapel, {
         foreignKey: 'RaportId',
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       references: {
         model: 'Siswa',
-        key: 'nis'
+        key: 'nis_siswa'
       }
     },
     semester: {

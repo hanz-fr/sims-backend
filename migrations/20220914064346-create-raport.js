@@ -15,7 +15,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         references: {
           model: 'Siswa',
-          key: 'nis'
+          key: 'nis_siswa'
         }
       },
       semester: {

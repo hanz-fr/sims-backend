@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Mutasi.belongsTo(models.Siswa, {
         foreignKey: 'nis_siswa',
-        targetKey: 'nis',
+        targetKey: 'nis_siswa',
       });
     }
   }
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       references: {
         model: 'Siswa',
-        key: 'nis'
+        key: 'nis_siswa'
       }
     },
     alasan_mutasi: {

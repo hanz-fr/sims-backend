@@ -50,7 +50,7 @@ exports.createOrtu = async (req, res) => {
       return res.status(400).json(validate);
     }
 
-    // find Ortu where nik already exist
+    /* // find Ortu where nik already exist
     const ortuExist = await Ortu.findOne({
       where: { nik_ortu: req.body.nik_ortu },
     });
@@ -60,7 +60,7 @@ exports.createOrtu = async (req, res) => {
         status: "error",
         message: "NIK already exist",
       });
-    }
+    } */
 
     // find Ortu where email already exist
     /* const ortuEmailExist = await Ortu.findOne({
