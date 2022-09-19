@@ -6,7 +6,39 @@ const v = new Validator();
 
 // get all siswa
 exports.getAllSiswa = async (req, res) => {
-    const currentPage = req.query.page || 1;
+
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+  let page = 0;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    page = pageAsNumber
+  }
+
+  let perPage = 1;
+  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber;
+  }
+
+  const siswa = await Siswa.findAndCountAll({
+    limit: perPage,
+    offset: page * perPage,
+  });
+
+
+  res.status(200).json({
+    current_page: page,
+    data: siswa,
+    first_page_url: null,
+    from: null,
+    next_page_url: null,
+    path: null,
+    per_page: perPage,
+    prev_page_url: null,
+    to: null,
+  }); 
+
+    /* const currentPage = req.query.page || 1;
     const perPage = req.query.perPage || 1;
     let totalItems;
 
@@ -29,14 +61,14 @@ exports.getAllSiswa = async (req, res) => {
     })
     .catch(err => {
         next(err);
-    });
+    }); */
 
-//   const siswa = await sequelize.query("SELECT * FROM siswa", {
-//     model: Siswa,   
-//     mapToModel: true,
-//   });
+  /* const siswa = await sequelize.query("SELECT * FROM siswa", {
+    model: Siswa,   
+    mapToModel: true,
+  });
 
-//   res.status(200).json(siswa);
+  res.status(200).json(siswa); */
 };
 
 // get siswa
