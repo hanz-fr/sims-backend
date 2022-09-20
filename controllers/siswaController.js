@@ -10,7 +10,7 @@ exports.getAllSiswa = async (req, res) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const perPageAsNumber = Number.parseInt(req.query.perPage);
 
-  let page = 0;
+  let page = 1;
   if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
     page = pageAsNumber
   }
@@ -20,22 +20,40 @@ exports.getAllSiswa = async (req, res) => {
     perPage = perPageAsNumber;
   }
 
+
   const siswa = await Siswa.findAndCountAll({
     limit: perPage,
-    offset: page * perPage,
+    offset: ( page-1 ) * perPage,
   });
+
+  let from = ((page - 1) * perPage) + 1;
+
+  let to = page * perPage;
+
+  // pagination params
+  path = 'http://127.0.0.1:8000/api/siswa';
+  firstPageUrl = 'http://127.0.0.1:8000/api/siswa?page=1';
+  nextPageUrl = `http://127.0.0.1:8000/api/siswa?page=${page + 1}`;
+
+  if (page > 1) {
+    prevPageUrl = `http://127.0.0.1:8000/api/siswa?page=${page - 1}`
+  } 
+
+  if (page === 1) {
+    prevPageUrl = null
+  }
 
 
   res.status(200).json({
     current_page: page,
     data: siswa,
-    first_page_url: null,
-    from: null,
-    next_page_url: null,
-    path: null,
+    first_page_url: firstPageUrl,
+    from: from,
+    next_page_url: nextPageUrl,
+    path: path,
     per_page: perPage,
-    prev_page_url: null,
-    to: null,
+    prev_page_url: prevPageUrl,
+    to: to,
   }); 
 
     /* const currentPage = req.query.page || 1;
@@ -66,7 +84,7 @@ exports.getAllSiswa = async (req, res) => {
   /* const siswa = await sequelize.query("SELECT * FROM siswa", {
     model: Siswa,   
     mapToModel: true,
-  });
+  }); 
 
   res.status(200).json(siswa); */
 };
