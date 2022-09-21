@@ -18,7 +18,7 @@ module.exports = {
         },
       }, */
       KelasId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(50),
         allowNull: true,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
