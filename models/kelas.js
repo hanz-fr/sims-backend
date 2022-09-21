@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Kelas.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.STRING(50)
+    },
     kelas: {
       type: DataTypes.STRING,
       allowNull: false
