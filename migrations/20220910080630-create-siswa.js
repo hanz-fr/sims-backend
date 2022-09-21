@@ -92,7 +92,7 @@ module.exports = {
         allowNull: true,
       },
       no_ijazah_smp: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       thn_skhun_smp: {
@@ -100,7 +100,7 @@ module.exports = {
         allowNull: true,
       },
       no_skhun_smp: {
-        type: Sequelize.STRING(10),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       nama_ayah: {
@@ -148,7 +148,7 @@ module.exports = {
         allowNull: true,
       },
       no_ijazah_smk: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       tgl_ijazah_smk: {

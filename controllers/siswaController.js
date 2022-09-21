@@ -15,7 +15,7 @@ exports.getAllSiswa = async (req, res) => {
     page = pageAsNumber
   }
 
-  let perPage = 1;
+  let perPage = 10;
   if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
     perPage = perPageAsNumber;
   }
@@ -31,12 +31,12 @@ exports.getAllSiswa = async (req, res) => {
   let to = page * perPage;
 
   // pagination params
-  path = 'http://127.0.0.1:8000/api/siswa';
-  firstPageUrl = 'http://127.0.0.1:8000/api/siswa?page=1';
-  nextPageUrl = `http://127.0.0.1:8000/api/siswa?page=${page + 1}`;
+  path = 'http://127.0.0.1:8000/data-induk-siswa';
+  firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
+  nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
 
   if (page > 1) {
-    prevPageUrl = `http://127.0.0.1:8000/api/siswa?page=${page - 1}`
+    prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
   } 
 
   if (page === 1) {
@@ -152,7 +152,6 @@ exports.createSiswa = async (req, res) => {
       berat_badan: { type: "number", optional: true },
       tinggi_badan: { type: "number", optional: true },
       lingkar_kepala: { type: "number", optional: true },
-      tgl_masuk: { type: "date", convert: true, optional: true },
       isAlumni: { type: "boolean" },
     };
 

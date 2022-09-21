@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Mapel.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.STRING(50)
+    },
     nama: {
       type: DataTypes.STRING(100),
       allowNull: false,

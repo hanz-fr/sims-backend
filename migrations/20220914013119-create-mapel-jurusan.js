@@ -3,13 +3,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('mapel_jurusan', {
       mapelJurusanId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(50),
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
       },
       MapelId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(50),
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -19,7 +18,7 @@ module.exports = {
         },
       },
       JurusanId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(50),
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Jurusan.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.STRING(50)
+    },
     nama: {
       type: DataTypes.STRING,
       allowNull: false,

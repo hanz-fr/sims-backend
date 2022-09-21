@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false
       },
       JurusanId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(50),
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

@@ -19,13 +19,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   MapelJurusan.init({
     mapelJurusanId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       primaryKey: true,
-      autoIncrement: true,
       allowNull: false,
     },
     MapelId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
@@ -35,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     JurusanId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

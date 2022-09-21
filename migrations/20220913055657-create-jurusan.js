@@ -4,9 +4,8 @@ module.exports = {
     await queryInterface.createTable('jurusan', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING(50)
       },
       nama: {
         type: Sequelize.STRING(50),
