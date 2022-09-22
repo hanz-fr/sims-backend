@@ -160,7 +160,7 @@ module.exports = {
         allowNull: true,
       },
       foto: {
-        type: 'VARBINARY(100)',
+        type: Sequelize.STRING,
         allowNull: true,
       },
       berat_badan: {

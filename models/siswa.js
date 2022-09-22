@@ -186,7 +186,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     foto: {
-      type: 'VARBINARY(100)',
+      type: DataTypes.STRING,
       allowNull: true,
     },
     berat_badan: {
