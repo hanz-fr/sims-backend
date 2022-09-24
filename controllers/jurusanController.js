@@ -39,6 +39,7 @@ exports.createJurusan = async (req, res) => {
       nama: { type: "string", max: 50 },
       desc: { type: "string", optional: true },
       konsentrasi: { type: "string", max: 100 },
+      id: { type: "string", max: 50, optional: true },
     };
 
     const validate = v.validate(req.body, schema);
@@ -47,7 +48,23 @@ exports.createJurusan = async (req, res) => {
       return res.status(400).json(validate);
     }
 
-    var jurusan = await Jurusan.create(req.body);
+    let jurusanIdExist = await Jurusan.findOne({
+      where: { id: req.body.nama+req.body.konsentrasi }
+    });
+
+    if (jurusanIdExist) {
+      return res.status(400).json({
+        status: 'error',
+        message: `Jurusan with Id : '${jurusanIdExist.id}' already exist`
+      })
+    }
+
+    var jurusan = await Jurusan.create({
+      id: req.body.nama+req.body.konsentrasi,
+      konsentrasi: req.body.konsentrasi,
+      nama: req.body.nama,
+      desc: req.body.desc,
+    });
 
     res.status(200).json({
       status: "Data added successfully.",
@@ -74,6 +91,7 @@ exports.updateJurusan = async (req, res) => {
   }
 
   const schema = {
+    id: { type: "string", max: 50, optional: true },
     nama: { type: "string", max: 50, optional: true },
     desc: { type: "string", optional: true },
     konsentrasi: { type: "string", max: 100, optional: true },

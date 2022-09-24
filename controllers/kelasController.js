@@ -38,10 +38,11 @@ exports.createKelas = async (req, res) => {
     try {
 
         const schema = {
+            id: { type: "string", max: 50, optional: true },
             kelas: { type: "string", max: 50 },
-            JurusanId: { type: "number", optional: false},
-            tgl_diterima: { type: "date", convert: true, optional: true },
-            semester: { type: "number", optional: true },
+            jurusan: { type: "string", max: 50 },
+            JurusanId: { type: "string", optional: false},
+            rombel: { type: "string", max: 5 }
         }
 
         const validate = v.validate(req.body, schema);
@@ -60,7 +61,26 @@ exports.createKelas = async (req, res) => {
             });
         }
 
-        var kelas = await Kelas.create(req.body);
+        let kelasExist = await Kelas.findOne({
+            where: {id: req.body.kelas+req.body.JurusanId+req.body.rombel}
+        });
+
+        if (kelasExist) {
+            return res.status(400).json({
+                status: 'error',
+                message: `Kelas with id '${kelasExist.id}' already exist`
+            });
+        }
+
+        var kelas = await Kelas.create({
+            id: req.body.kelas+req.body.jurusan+req.body.rombel,
+            kelas: req.body.kelas,
+            JurusanId: req.body.JurusanId,
+            jurusan: req.body.jurusan,
+            rombel: req.body.rombel,
+        });
+
+
 
         res.status(200).json({
             status: "Data added successfully.",
@@ -98,10 +118,10 @@ exports.updateKelas = async (req, res) => {
     }
 
     const schema = {
-        kelas: { type: "string", max: 50, optional: true },
-        JurusanId: { type: "number", optional: true},
-        tgl_diterima: { type: "date", convert: true, optional: true },
-        semester: { type: "number", optional: true },
+        kelas: { type: "string", max: 50, optional: false },
+        JurusanId: { type: "string", optional: false },
+        jurusan: { type: "string", max: 50, optional: false },
+        rombel: { type: "string", max: 5, optional: false }
     }
 
     const validate = v.validate(req.body, schema);
@@ -110,7 +130,12 @@ exports.updateKelas = async (req, res) => {
         return res.status(400).json(validate);
     }
 
-    kelas = await kelas.update(req.body);
+    kelas = await kelas.update({
+        id: req.body.kelas+req.body.jurusan+req.body.rombel,
+        kelas: req.body.kelas,
+        JurusanId: req.body.JurusanId,
+        rombel: req.body.rombel,
+    });
 
     res.status(200).json({
         message: `Successfully updated kelas with id : ${kelas.id}`,

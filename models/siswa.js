@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, */
     KelasId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: true,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

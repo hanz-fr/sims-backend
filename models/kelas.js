@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    rombel: {
+      type: DataTypes.STRING(5),
+      allowNull: false,
+    },
+    jurusan: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
     JurusanId: {
       type: DataTypes.STRING(50),
       allowNull: false,

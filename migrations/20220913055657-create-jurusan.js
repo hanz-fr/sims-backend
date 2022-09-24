@@ -11,13 +11,13 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      desc: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       konsentrasi: {
         type: Sequelize.STRING(100),
         allowNull: false,
+      },
+      desc: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
