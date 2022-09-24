@@ -9,7 +9,7 @@ module.exports = {
       [
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: null,
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -56,7 +56,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: null,
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -98,7 +98,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: null,
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -140,7 +140,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: null,
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -187,7 +187,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: null,
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
