@@ -9,7 +9,7 @@ module.exports = {
       [
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "10TKJ1", "10TKJ2", "11MPLB1","11MPLB2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -18,7 +18,7 @@ module.exports = {
           agama: faker.helpers.arrayElement([
             "Islam",
             "Katolik",
-            "Kristen",
+            'Kristen Protestan',
             "Buddha",
           ]),
           anak_ke: faker.random.numeric(1),
@@ -56,13 +56,13 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "10TKJ1", "10TKJ2", "11MPLB1","11MPLB2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
           tgl_lahir: "2000-01-01",
           jenis_kelamin: faker.helpers.arrayElement(['L', 'P']),
-          agama: faker.helpers.arrayElement(['Islam','Katolik','Kristen','Buddha']),
+          agama: faker.helpers.arrayElement(['Islam','Katolik','Kristen Protestan','Buddha']),
           anak_ke: faker.random.numeric(1),
           status: faker.helpers.arrayElement(['AK', 'AA', 'AT']),
           alamat_siswa: faker.address.streetAddress(),
@@ -98,13 +98,13 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "10TKJ1", "10TKJ2", "11MPLB1","11MPLB2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
           tgl_lahir: "2000-01-01",
           jenis_kelamin: faker.helpers.arrayElement(['L', 'P']),
-          agama: faker.helpers.arrayElement(['Islam','Katolik','Kristen','Buddha']),
+          agama: faker.helpers.arrayElement(['Islam','Katolik','Kristen Protestan','Buddha']),
           anak_ke: faker.random.numeric(1),
           status: faker.helpers.arrayElement(['AK', 'AA', 'AT']),
           alamat_siswa: faker.address.streetAddress(),
@@ -140,7 +140,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "10TKJ1", "10TKJ2", "11MPLB1","11MPLB2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -149,7 +149,7 @@ module.exports = {
           agama: faker.helpers.arrayElement([
             "Islam",
             "Katolik",
-            "Kristen",
+            "Kristen Protestan",
             "Buddha",
           ]),
           anak_ke: faker.random.numeric(1),
@@ -187,7 +187,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "11RPL1", "11RPL2", "12RPL1", "12RPL2"]),
+          KelasId: faker.helpers.arrayElement(["10RPL1", "10RPL2", "10TKJ1", "10TKJ2", "11MPLB1","11MPLB2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -196,7 +196,7 @@ module.exports = {
           agama: faker.helpers.arrayElement([
             "Islam",
             "Katolik",
-            "Kristen",
+            "Kristen Protestan",
             "Buddha",
           ]),
           anak_ke: faker.random.numeric(1),
