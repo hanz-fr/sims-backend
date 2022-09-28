@@ -118,7 +118,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     no_ijazah_smp: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     thn_skhun_smp: {
@@ -126,7 +126,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     no_skhun_smp: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     nama_ayah: {
@@ -174,7 +174,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     no_ijazah_smk: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     tgl_ijazah_smk: {
