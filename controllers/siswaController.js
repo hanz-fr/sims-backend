@@ -123,7 +123,7 @@ exports.createSiswa = async (req, res) => {
       jenis_kelamin: { type: "enum", values: ["L", "P"] },
       agama: { type: "string" },
       anak_ke: { type: "number", optional: true },
-      status: { type: "enum", values: ["AA", "AK", "AT"] },
+      status: { type: "enum", values: ["AA", "AK", "AT"], optional: true },
       alamat_siswa: { type: "string" },
       email_siswa: { type: "string", optional: true },
       no_telp_siswa: { type: "string", max: 20 },
