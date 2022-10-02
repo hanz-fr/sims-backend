@@ -1,3 +1,4 @@
+const { json } = require("body-parser");
 const Validator = require("fastest-validator");
 const { Mutasi, Siswa, sequelize } = require("../models");
 
@@ -7,12 +8,55 @@ const v = new Validator();
 
 // get all mutasi
 exports.getAllMutasi = async (req, res) => {
-    const mutasi = await sequelize.query("SELECT * FROM mutasi", {
-        model: Mutasi,
-        mapToModel: true,
+
+    /* Pagination */
+    const pageAsNumber = Number.parseInt(req.query.page);
+    const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+    let page = 1;
+    if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+        page = pageAsNumber
+    }
+
+    let perPage = 10;
+    if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+        perPage = perPageAsNumber;
+    }
+    
+    const mutasi = await Mutasi.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
     });
 
-    res.status(200).json(mutasi);
+
+    let from = ((page -1) * perPage) + 1;
+
+    let to = page * perPage;
+
+    // pagination params
+    path = 'http://127.0.0.1:8000/siswa-keluar';
+    firstPageUrl = 'http://127.0.0.1:8000/siswa-keluar?page=1';
+    nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}`;
+
+    if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}`
+    } 
+
+    if (page === 1) {
+        prevPageUrl = null
+    }
+
+    res.status(200).json({
+        current_page: page,
+        data: mutasi,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
+      }); 
 }
 
 // get mutasi
@@ -37,8 +81,9 @@ exports.getMutasi = async (req, res) => {
 exports.createMutasi = async (req, res) => {
     try {
         const schema = {
-            nis_siswa: { type: "number" },
+            nis_siswa: { type: "string" },
             alasan_mutasi: { type: "string", optional: true },
+            keluar_di_kelas: { type: "string", optional: true },
             pindah_dari: { type: "string", optional: true },
             pindah_ke: { type: "string", optional: true },
             tgl_mutasi: { type: "date", convert: true },
@@ -53,7 +98,7 @@ exports.createMutasi = async (req, res) => {
         }
 
         const siswaExist = await Siswa.findOne({
-            where: { nis: req.body.nis_siswa }
+            where: { nis_siswa: req.body.nis_siswa }
         });
 
         if (!siswaExist) {
@@ -100,8 +145,9 @@ exports.updateMutasi = async (req, res) => {
     }
 
     const schema = {
-        nis_siswa: { type: "number", optional: true },
+        nis_siswa: { type: "string", optional: true },
         alasan_mutasi: { type: "string", optional: true },
+        keluar_di_kelas: { type: "string", optional: true },
         pindah_dari: { type: "string", optional: true },
         pindah_ke: { type: "string", optional: true },
         tgl_mutasi: { type: "date", optional: true },

@@ -7,6 +7,7 @@ const v = new Validator();
 // get all siswa
 exports.getAllSiswa = async (req, res) => {
 
+  /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
   const perPageAsNumber = Number.parseInt(req.query.perPage);
 
@@ -55,38 +56,6 @@ exports.getAllSiswa = async (req, res) => {
     prev_page_url: prevPageUrl,
     to: to,
   }); 
-
-    /* const currentPage = req.query.page || 1;
-    const perPage = req.query.perPage || 1;
-    let totalItems;
-
-    Siswa.find()
-    .countDocuments()
-    .then(count => {
-        totalItems = count;
-        return Siswa.find()
-        .skip((currentPage - 1) * perPage)
-        .limit(perPage);        
-    })
-    .then(result => {
-        res.status(200).json({
-            message: 'Displaying all siswa result',
-            data: result,
-            total_data: totalItems,
-            per_page: perPage,
-            current_page: currentPage,
-        });  
-    })
-    .catch(err => {
-        next(err);
-    }); */
-
-  /* const siswa = await sequelize.query("SELECT * FROM siswa", {
-    model: Siswa,   
-    mapToModel: true,
-  }); 
-
-  res.status(200).json(siswa); */
 };
 
 // get siswa

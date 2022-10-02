@@ -26,6 +26,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      keluar_di_kelas: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       pindah_ke: {
         type: Sequelize.STRING,
         allowNull: true,

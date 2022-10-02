@@ -35,10 +35,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    keluar_di_kelas: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     pindah_ke: {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    
     tgl_mutasi: {
       type: DataTypes.DATEONLY,
       allowNull: false
