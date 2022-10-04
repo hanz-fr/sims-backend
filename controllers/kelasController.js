@@ -61,8 +61,8 @@ exports.createKelas = async (req, res) => {
             });
         }
 
-        let kelasExist = await Kelas.findOne({
-            where: {id: req.body.kelas+req.body.JurusanId+req.body.rombel}
+        const kelasExist = await Kelas.findOne({
+            where: {id: req.body.kelas+req.body.jurusan+req.body.rombel}
         });
 
         if (kelasExist) {

@@ -34,7 +34,8 @@ exports.getMapel = async (req, res) => {
 exports.createMapel = async (req, res) => {
     try {
         const schema = {
-            nama: { type: "string" }
+            nama: { type: "string" },
+            id: { type: "string" },
         }
 
         const validate = v.validate(req.body, schema);
