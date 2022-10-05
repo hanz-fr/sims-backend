@@ -152,7 +152,7 @@ exports.updateMutasi = async (req, res) => {
         keluar_di_kelas: { type: "string", optional: true },
         pindah_dari: { type: "string", optional: true },
         pindah_ke: { type: "string", optional: true },
-        tgl_mutasi: { type: "date", optional: true },
+        tgl_mutasi: { type: "date", optional: true, convert: true },
         sk_mutasi: { type: "string", optional: true },
     }
 
@@ -164,7 +164,7 @@ exports.updateMutasi = async (req, res) => {
 
     if (req.body.nis_siswa) {
         const siswaExist = await Siswa.findOne({
-            where: { nis: req.body.nis_siswa }
+            where: { nis_siswa: req.body.nis_siswa }
         });
 
         if (!siswaExist) {
