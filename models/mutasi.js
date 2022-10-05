@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         key: 'nis_siswa'
       }
     },
+    nama_siswa: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
     alasan_mutasi: {
       type: DataTypes.STRING,
       allowNull: true,

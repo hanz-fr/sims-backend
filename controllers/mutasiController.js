@@ -82,6 +82,7 @@ exports.createMutasi = async (req, res) => {
     try {
         const schema = {
             nis_siswa: { type: "string" },
+            nama_siswa: { type: "string" },
             alasan_mutasi: { type: "string", optional: true },
             keluar_di_kelas: { type: "string", optional: true },
             pindah_dari: { type: "string", optional: true },
@@ -146,6 +147,7 @@ exports.updateMutasi = async (req, res) => {
 
     const schema = {
         nis_siswa: { type: "string", optional: true },
+        nama_siswa: { type: "string", optional: true },
         alasan_mutasi: { type: "string", optional: true },
         keluar_di_kelas: { type: "string", optional: true },
         pindah_dari: { type: "string", optional: true },

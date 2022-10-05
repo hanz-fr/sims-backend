@@ -18,6 +18,10 @@ module.exports = {
           key: 'nis_siswa'
         }
       },
+      nama_siswa: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
       alasan_mutasi: {
         type: Sequelize.STRING,
         allowNull: true,
