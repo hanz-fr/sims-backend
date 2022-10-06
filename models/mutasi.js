@@ -28,9 +28,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     nama_siswa: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    jenis_kelamin: {
+      type: DataTypes.ENUM('L', 'P'),
+      allowNull: true,
+    },
     alasan_mutasi: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -47,7 +51,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    
+    diterima_di_kelas: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     tgl_mutasi: {
       type: DataTypes.DATEONLY,
       allowNull: false

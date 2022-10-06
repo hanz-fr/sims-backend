@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
+      jenis_kelamin: {
+        type: Sequelize.ENUM('L', 'P'),
+        allowNull: true,
+      },
       alasan_mutasi: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -35,6 +39,10 @@ module.exports = {
         allowNull: true,
       },
       pindah_ke: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      diterima_di_kelas: {
         type: Sequelize.STRING,
         allowNull: true,
       },
