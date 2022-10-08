@@ -174,17 +174,6 @@ exports.createMutasi = async (req, res) => {
                 message: `Siswa with nis ${req.body.nis_siswa} does not exist`,
             });
         }
-
-        const mutasiExist = await Mutasi.findOne({
-            where: { nis_siswa: req.body.nis_siswa }
-        });
-
-        if (mutasiExist) {
-            return res.status(409).json({
-                status: 'error',
-                message: 'Mutasi already exist' 
-            });
-        }
         
         var mutasi = await Mutasi.create(req.body);
 

@@ -57,7 +57,7 @@ exports.createRaport = async (req, res) => {
 
         // check if nis siswa exist / valid
         const siswa = await Siswa.findOne({
-            where: { nis: req.body.nis_siswa }
+            where: { nis_siswa: req.body.nis_siswa }
         });
 
         if (!siswa) {
