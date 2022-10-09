@@ -1,5 +1,5 @@
 const Validator = require("fastest-validator");
-const { Kelas, Jurusan, sequelize } = require("../models");
+const { Kelas, Jurusan, Siswa, sequelize } = require("../models");
 
 const v = new Validator();
 
@@ -163,4 +163,49 @@ exports.deleteKelas = async (req, res) => {
         message: "Kelas deleted successfully."
     });
 
+}
+
+
+exports.getSiswaInKelas = async (req, res) => {
+
+    const id = req.params.id;
+
+    let kelas = await Kelas.findByPk(id);
+
+    if (!kelas) {
+        return res.json({
+            message: `Kelas with id ${id} does not exist`
+        });
+    } 
+
+    // cari semua siswa
+    let siswa = await Siswa.findAll({
+        where: {
+            KelasId: id
+        }
+    });
+
+    const siswaLaki = await Siswa.count({
+        where: {
+            KelasId: id,
+            jenis_kelamin: 'L'
+        }
+    });
+
+    const siswaPerempuan = await Siswa.count({
+        where: {
+            KelasId: id,
+            jenis_kelamin: 'P'
+        }
+    });
+
+    return res.status(200).json({
+        status: 'Success',
+        message: `Displaying all siswa in ${id}`,
+        result: {
+            jumlahSiswaLaki: siswaLaki,
+            jumlahSiswaPerempuan: siswaPerempuan,
+            siswa,
+        }
+    });
 }
