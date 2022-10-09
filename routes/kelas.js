@@ -8,6 +8,8 @@ router.get('/', controller.getAllKelas); // get all kelas
 
 router.get('/:id', controller.getKelas); // get kelas by id
 
+router.get('/siswa-by-kelas/:id', controller.getSiswaInKelas); // get siswa by kelas id
+
 router.post('/', controller.createKelas); // create route
 
 router.put('/:id', controller.updateKelas); // update route
