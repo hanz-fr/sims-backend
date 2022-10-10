@@ -31,6 +31,18 @@ module.exports = {
         jurusan: 'RPL',
         rombel: 2
       },
+      {
+        kelas: 11,
+        JurusanId: 'MPLBMLOG',
+        jurusan: 'MPLB',
+        rombel: 1
+      },      
+      {
+        kelas: 11,
+        JurusanId: 'MPLBMLOG',
+        jurusan: 'MPLB',
+        rombel: 2
+      },
     ]
     )
   },

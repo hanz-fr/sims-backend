@@ -1,5 +1,6 @@
 const Validator = require("fastest-validator");
-const { Kelas, Jurusan, Siswa, sequelize } = require("../models");
+const { Mutasi, Kelas, Jurusan, Siswa, sequelize } = require("../models");
+const { Op } = require("sequelize");
 
 const v = new Validator();
 
@@ -15,7 +16,7 @@ exports.getAllKelas = async (req, res) => {
 
 // get kelas by id
 exports.getKelas = async (req, res) => {
-    
+
     const id = req.params.id;
 
     const kelas = await Kelas.findByPk(id);
@@ -41,7 +42,7 @@ exports.createKelas = async (req, res) => {
             id: { type: "string", max: 50, optional: true },
             kelas: { type: "string", max: 50 },
             jurusan: { type: "string", max: 50 },
-            JurusanId: { type: "string", optional: false},
+            JurusanId: { type: "string", optional: false },
             rombel: { type: "string", max: 5 }
         }
 
@@ -52,7 +53,7 @@ exports.createKelas = async (req, res) => {
         }
 
         let jurusan = await Jurusan.findOne({
-            where: {id: req.body.JurusanId}
+            where: { id: req.body.JurusanId }
         });
 
         if (!jurusan) {
@@ -62,7 +63,7 @@ exports.createKelas = async (req, res) => {
         }
 
         const kelasExist = await Kelas.findOne({
-            where: {id: req.body.kelas+req.body.jurusan+req.body.rombel}
+            where: { id: req.body.kelas + req.body.jurusan + req.body.rombel }
         });
 
         if (kelasExist) {
@@ -73,7 +74,7 @@ exports.createKelas = async (req, res) => {
         }
 
         var kelas = await Kelas.create({
-            id: req.body.kelas+req.body.jurusan+req.body.rombel,
+            id: req.body.kelas + req.body.jurusan + req.body.rombel,
             kelas: req.body.kelas,
             JurusanId: req.body.JurusanId,
             jurusan: req.body.jurusan,
@@ -102,7 +103,7 @@ exports.createKelas = async (req, res) => {
             res.send({ status: "error", message: "Something went wrong. :(" });
         }
     }
-} 
+}
 
 // update kelas
 exports.updateKelas = async (req, res) => {
@@ -131,7 +132,7 @@ exports.updateKelas = async (req, res) => {
     }
 
     kelas = await kelas.update({
-        id: req.body.kelas+req.body.jurusan+req.body.rombel,
+        id: req.body.kelas + req.body.jurusan + req.body.rombel,
         kelas: req.body.kelas,
         JurusanId: req.body.JurusanId,
         rombel: req.body.rombel,
@@ -176,15 +177,14 @@ exports.getSiswaInKelas = async (req, res) => {
         return res.json({
             message: `Kelas with id ${id} does not exist`
         });
-    } 
+    }
 
-    // cari semua siswa
-    let siswa = await Siswa.findAll({
-        where: {
-            KelasId: id
-        }
+    const allKelasId = await Kelas.findAll({
+        attributes: ['id']
     });
 
+
+    // hitung jumlah siswa laki
     const siswaLaki = await Siswa.count({
         where: {
             KelasId: id,
@@ -192,6 +192,7 @@ exports.getSiswaInKelas = async (req, res) => {
         }
     });
 
+    // hitung jumlah siswa perempuan
     const siswaPerempuan = await Siswa.count({
         where: {
             KelasId: id,
@@ -199,13 +200,86 @@ exports.getSiswaInKelas = async (req, res) => {
         }
     });
 
-    return res.status(200).json({
-        status: 'Success',
-        message: `Displaying all siswa in ${id}`,
-        result: {
-            jumlahSiswaLaki: siswaLaki,
-            jumlahSiswaPerempuan: siswaPerempuan,
-            siswa,
+    // hitung siswa laki yang keluar
+    const totalSiswaLakiKeluar = await Mutasi.count({
+        where: {
+            keluar_di_kelas: id,
+            jenis_kelamin: 'L'
         }
     });
+
+    // hitung siswa perempuan yang keluar
+    const totalSiswaPerempuanKeluar = await Mutasi.count({
+        where: {
+            keluar_di_kelas: id,
+            jenis_kelamin: 'P'
+        }
+    });
+
+    // hitung siswa laki yang masuk
+    const totalSiswaLakiMasuk = await Mutasi.count({
+        where: {
+            diterima_di_kelas: id,
+            jenis_kelamin: 'L'
+        }
+    });
+
+    // hitung siswa perempuan yang masuk
+    const totalSiswaPerempuanMasuk = await Mutasi.count({
+        where: {
+            diterima_di_kelas: id,
+            jenis_kelamin: 'P'
+        }
+    });
+
+    // hitung jumlah siswa masuk
+    const totalSiswaMasuk = totalSiswaLakiMasuk + totalSiswaPerempuanMasuk;
+    const totalSiswaKeluar = totalSiswaLakiKeluar + totalSiswaPerempuanKeluar;
+
+    // hitung siswa di akhir bulan
+    const jumlahSiswaLakiAkhir = siswaLaki - totalSiswaLakiKeluar + totalSiswaLakiMasuk;
+    const jumlahSiswaPerempuanAkhir = siswaPerempuan - totalSiswaPerempuanKeluar + totalSiswaPerempuanMasuk;
+    const jumlahSiswaAkhir = jumlahSiswaLakiAkhir + jumlahSiswaPerempuanAkhir;
+
+
+    return res.status(200).json({
+        status: 'Success',
+        message: `Displaying all siswa data in ${id}`,
+        result: {
+            totalSiswaLaki: siswaLaki,
+            totalSiswaPerempuan: siswaPerempuan,
+            jumlahSiswaAwalBulan: siswaLaki + siswaPerempuan,
+            totalSiswaLakiKeluar: totalSiswaLakiKeluar,
+            totalSiswaPerempuanKeluar: totalSiswaPerempuanKeluar,
+            totalSiswaKeluar: totalSiswaKeluar,
+            totalSiswaLakiMasuk: totalSiswaLakiMasuk,
+            totalSiswaPerempuanMasuk: totalSiswaPerempuanMasuk,
+            totalSiswaMasuk: totalSiswaMasuk,
+            jumlahSiswaLakiAkhir: jumlahSiswaLakiAkhir,
+            jumlahSiswaPerempuanAkhir: jumlahSiswaPerempuanAkhir,
+            jumlahSiswaAkhir: jumlahSiswaAkhir
+        }
+    });
+}
+
+exports.getSiswaByKelas = async (req, res) => {
+
+    const kelas = await Kelas.findAll({
+        attributes: ['id'],
+        include: [
+            {
+                model: Siswa,
+                where: {
+                    jenis_kelamin: {
+                        [Op.eq]: 'L',
+                    }
+                },
+                attributes: [[sequelize.fn('COUNT', 'nis_siswa'), 'siswa']],
+            }
+        ],
+        limit: 100,
+    });
+
+
+    res.status(200).json(kelas);
 }
