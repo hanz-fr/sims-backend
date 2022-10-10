@@ -8,9 +8,7 @@ router.get('/', controller.getAllKelas); // get all kelas
 
 router.get('/:id', controller.getKelas); // get kelas by id
 
-// router.get('/siswa-by-kelas/:id', controller.getSiswaInKelas); // get siswa by kelas id
-
-router.get('/siswa-by-kelas/get', controller.getSiswaByKelas);
+router.get('/siswa-per-kelas/all', controller.getSiswaByKelas);
 
 router.post('/', controller.createKelas); // create route
 

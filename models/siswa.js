@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Siswa.belongsTo(models.Ortu);
       Siswa.belongsTo(models.Kelas, {
+        as: "kelas",
         foreignKey: "KelasId",
         targetKey: "id",
       });

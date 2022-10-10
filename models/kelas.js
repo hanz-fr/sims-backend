@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Kelas.hasMany(models.Siswa, {
+        as: 'siswa',
         foreignKey: 'KelasId',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE', 
