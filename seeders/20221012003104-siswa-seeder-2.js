@@ -9,7 +9,7 @@ module.exports = {
       [
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement(["10MM1", "10MM2"]),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -56,7 +56,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -103,7 +103,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -150,7 +150,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -197,7 +197,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -244,7 +244,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -291,7 +291,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -338,7 +338,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -385,7 +385,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -432,7 +432,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -479,7 +479,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -526,7 +526,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -573,7 +573,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -620,7 +620,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -667,7 +667,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -714,7 +714,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -761,7 +761,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -808,7 +808,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -855,7 +855,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -902,7 +902,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -949,7 +949,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -996,7 +996,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1043,7 +1043,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1090,7 +1090,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1137,7 +1137,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1184,7 +1184,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1231,7 +1231,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1278,7 +1278,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1325,7 +1325,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1372,7 +1372,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1419,7 +1419,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1466,7 +1466,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1513,7 +1513,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1560,7 +1560,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1607,7 +1607,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1654,7 +1654,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1701,7 +1701,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1748,7 +1748,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1795,7 +1795,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1842,7 +1842,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1889,7 +1889,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1936,7 +1936,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -1983,7 +1983,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2030,7 +2030,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2077,7 +2077,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2124,7 +2124,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2171,7 +2171,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2218,7 +2218,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2265,7 +2265,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2312,7 +2312,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2359,7 +2359,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2406,7 +2406,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2453,7 +2453,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2500,7 +2500,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2547,7 +2547,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2594,7 +2594,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2641,7 +2641,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2688,7 +2688,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2735,7 +2735,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2782,7 +2782,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2829,7 +2829,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2876,7 +2876,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2923,7 +2923,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -2970,7 +2970,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3017,7 +3017,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3064,7 +3064,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3111,7 +3111,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3158,7 +3158,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3205,7 +3205,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3252,7 +3252,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3299,7 +3299,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
@@ -3346,7 +3346,7 @@ module.exports = {
         },
         {
           nis_siswa: faker.random.numeric(10),
-          KelasId: faker.helpers.arrayElement(["10AKL1", "10AKL2", "10OTKP1", "10OTKP2", "10BDP1", "10BDP2"]),
+          KelasId: faker.helpers.arrayElement((["10MM1", "10MM2"])),
           nisn_siswa: faker.random.numeric(10),
           nama_siswa: faker.name.fullName(),
           tmp_lahir: faker.address.city(),
