@@ -60,7 +60,7 @@ exports.createJurusan = async (req, res) => {
     }
 
     var jurusan = await Jurusan.create({
-      id: req.body.nama+req.body.konsentrasi,
+      id: req.body.nama + '-' + req.body.konsentrasi,
       konsentrasi: req.body.konsentrasi,
       nama: req.body.nama,
       desc: req.body.desc,

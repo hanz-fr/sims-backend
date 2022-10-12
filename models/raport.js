@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "nis_siswa"
       });
       Raport.hasMany(models.NilaiMapel, {
+        as: 'NilaiMapel',
         foreignKey: 'RaportId',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'

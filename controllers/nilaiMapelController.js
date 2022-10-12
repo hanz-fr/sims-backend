@@ -36,7 +36,7 @@ exports.getNilaiMapel = async (req, res) => {
 exports.createNilaiMapel = async (req, res) => {
   try {
     const schema = {
-      idMapelJurusan: { type: "number" },
+      idMapelJurusan: { type: "string" },
       RaportId: { type: "number" },
       nilai_keterampilan: { type: "number", max: 100 },
       nilai_pengetahuan: { type: "number", max: 100 },
@@ -74,6 +74,25 @@ exports.createNilaiMapel = async (req, res) => {
       });
     }
 
+    
+    // check if NilaiMapel already exist
+    const idmapel =  req.body.idMapelJurusan;
+    const idraport = req.body.RaportId;
+
+    const nilaiMapelExist = await NilaiMapel.findOne({
+      where: {
+        idMapelJurusan: idmapel,
+        RaportId: idraport
+      }
+    });
+
+    if (nilaiMapelExist) {
+      return res.status(400).json({
+        status: 'error',
+        message: `Nilai Mapel '${idmapel}' for raport with id '${idraport}' already exist.`
+      });
+    }
+
     var nilaiMapel = await NilaiMapel.create(req.body);
 
     res.status(200).json({
@@ -100,7 +119,7 @@ exports.updateNilaiMapel = async (req, res) => {
   }
 
   const schema = {
-    idMapelJurusan: { type: "number", optional: true },
+    idMapelJurusan: { type: "string", optional: true },
     RaportId: { type: "number", optional: true },
     nilai_keterampilan: { type: "number", max: 100, optional: true },
     nilai_pengetahuan: { type: "number", max: 100, optional: true },

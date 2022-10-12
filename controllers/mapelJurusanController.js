@@ -36,8 +36,8 @@ exports.getMapelJurusan = async (req, res) => {
 exports.createMapelJurusan = async (req, res) => {
     try {
         const schema ={
-            MapelId: { type: "number" },
-            JurusanId: { type: "number" },
+            MapelId: { type: "string" },
+            JurusanId: { type: "string" },
         }
 
         const validate = v.validate(req.body, schema);
@@ -70,7 +70,30 @@ exports.createMapelJurusan = async (req, res) => {
             });
         }
 
-        var mapelJurusan = await MapelJurusan.create(req.body);
+
+        // find if mapelJurusan already exist
+        const id = req.body.JurusanId + '_' + req.body.MapelId;
+        
+        let mapelJurusanExist = await MapelJurusan.findOne({
+            where: {
+                mapelJurusanId: id
+            }
+        })
+
+
+        if (mapelJurusanExist) {
+            return res.status(400).json({
+                status: 'error',
+                message: `MapelJurusan with id ${id} already exist`
+            })
+        }
+
+
+        var mapelJurusan = await MapelJurusan.create({
+            mapelJurusanId: req.body.JurusanId + '_' + req.body.MapelId,
+            MapelId: req.body.MapelId,
+            JurusanId: req.body.JurusanId,
+        });
 
         res.status(200).json({
             status: "Data added successfully.",
@@ -98,8 +121,8 @@ exports.updateMapelJurusan = async (req, res) => {
 
 
     const schema = {
-        MapelId: { type: "number", optional: true },
-        JurusanId: { type: "number", optional: true },
+        MapelId: { type: "string", optional: true },
+        JurusanId: { type: "string", optional: true },
     }
 
     if (req.body.MapelId) {
@@ -137,7 +160,11 @@ exports.updateMapelJurusan = async (req, res) => {
         return res.status(400).json(validate);
     }
 
-    mapelJurusanExist = await mapelJurusanExist.update(req.body);
+    mapelJurusanExist = await mapelJurusanExist.update({
+        mapelJurusanId: req.body.JurusanId + '_' + req.body.MapelId,
+        MapelId: req.body.MapelId,
+        JurusanId: req.body.JurusanId,
+    });
 
     res.status(200).json({
         message: `Successfully updated Mapel Jurusan with id ${mapelJurusanId}`,

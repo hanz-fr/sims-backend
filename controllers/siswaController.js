@@ -1,5 +1,7 @@
+const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { Siswa, Ortu, Kelas, sequelize } = require("../models");
+const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, sequelize } = require("../models");
+const { Op } = require("sequelize");
 
 // import fastest-validator
 const v = new Validator();
@@ -25,6 +27,20 @@ exports.getAllSiswa = async (req, res) => {
   const siswa = await Siswa.findAndCountAll({
     limit: perPage,
     offset: ( page-1 ) * perPage,
+    include: [
+      {
+        model: Raport,
+        as: 'raport'
+      },
+      {
+        model: Kelas,
+        as: 'kelas'
+      },
+      {
+        model: Mutasi,
+        as: 'mutasi'
+      }
+    ]
   });
 
   let from = ((page - 1) * perPage) + 1;
@@ -63,13 +79,38 @@ exports.getSiswa = async (req, res) => {
   const nis = req.params.nis_siswa;
 
   // check if siswa exist
-  const siswa = await Siswa.findByPk(nis);
+  const siswa = await Siswa.findOne({
+    include: [
+      {
+        model: Raport,
+        as: 'raport',
+        include: [{
+          model: NilaiMapel,
+          as: 'NilaiMapel',
+          include: [{
+            model: MapelJurusan
+          }]
+        }]
+      },
+      {
+        model: Kelas,
+        as: 'kelas'
+      }
+    ],
+    where: {
+      nis_siswa: {
+        [Op.eq]: nis 
+      }
+    }
+  });
 
   if (!siswa) {
     return res.status(404).json({
       message: "Siswa does not exist",
     });
   }
+
+  /* res.status(200).json(siswa); */
 
   res.status(200).json({
     message: `Displaying siswa with nis : ${nis}`,
