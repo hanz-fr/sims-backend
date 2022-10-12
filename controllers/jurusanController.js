@@ -38,7 +38,7 @@ exports.createJurusan = async (req, res) => {
     const schema = {
       nama: { type: "string", max: 50 },
       desc: { type: "string", optional: true },
-      konsentrasi: { type: "string", max: 100 },
+      konsentrasi: { type: "string", max: 100, },
       id: { type: "string", max: 50, optional: true },
     };
 

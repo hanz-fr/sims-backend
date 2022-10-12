@@ -159,12 +159,12 @@ exports.deleteKelas = async (req, res) => {
 exports.getSiswaByKelas = async (req, res) => {
   const kelas = await Kelas.findAll({
     order: [
-        ['id', 'ASC']
+      ['id', 'ASC']
     ],
     attributes: [
       'id',
       [sequelize.fn("COUNT", sequelize.col("siswa.KelasId")), "jumlahSiswa"],
-      
+
       // jumlahSiswaLaki
       [
         sequelize.literal(`(
