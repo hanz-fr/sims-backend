@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Siswa extends Model {
+class Siswa extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -17,11 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
       });
       Siswa.hasMany(models.Raport, {
+        as: "raport",
         foreignKey: 'nis_siswa',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
       Siswa.hasOne(models.Mutasi, {
+        as: "mutasi",
         foreignKey: 'nis_siswa',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
