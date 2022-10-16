@@ -1,6 +1,5 @@
 const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { where } = require("sequelize");
 const { Mutasi, Siswa, sequelize } = require("../models");
 const { Op } = require("sequelize");
 

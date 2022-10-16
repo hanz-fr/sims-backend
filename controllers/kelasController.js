@@ -277,3 +277,382 @@ exports.getSiswaByKelas = async (req, res) => {
     result: kelas,
 });
 };
+
+// GET ALL SISWA KELAS 10
+exports.getSiswaByKelas10 = async (req, res) => {
+  const kelas = await Kelas.findAll({
+    where: {
+      kelas: '10'
+    },
+    order: [
+      ['id', 'ASC']
+    ],
+    attributes: [
+      'id',
+      [sequelize.fn("COUNT", sequelize.col("siswa.KelasId")), "jumlahSiswa"],
+
+      // jumlahSiswaLaki
+      [
+        sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM siswa AS s
+                        WHERE
+                            s.KelasId = Kelas.id
+                            AND
+                            s.jenis_kelamin = "L"
+                    )`),
+        "jumlahSiswaLaki",
+      ],
+
+      // jumlahSiswaPerempuan
+      [
+        sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM siswa AS s
+                        WHERE
+                            s.KelasId = Kelas.id
+                            AND
+                            s.jenis_kelamin = "P"
+                    )`),
+        "jumlahSiswaPerempuan",
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'L'
+        )`),
+        'siswaLakiKeluar'
+      ],
+      
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'P'
+        )`),
+        'siswaPerempuanKeluar'
+      ],
+
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+        )`),
+        'jumlahSiswaKeluar'
+      ],
+
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'L'
+        )`),
+        'siswaLakiMasuk'
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'P'
+        )`),
+        'siswaPerempuanMasuk'
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+        )`),
+        'jumlahSiswaMasuk'
+      ],
+      
+    ],
+    include: [
+      {
+        model: Siswa,
+        as: "siswa",
+        attributes: [],
+      },
+    ],
+    group: ["siswa.KelasId"],
+  });
+
+  res.status(200).json({
+    message: 'Success',
+    result: kelas,
+});
+};
+
+// GET ALL SISWA KELAS 11
+exports.getSiswaByKelas11 = async (req, res) => {
+  const kelas = await Kelas.findAll({
+    where: {
+      kelas: '11'
+    },
+    order: [
+      ['id', 'ASC']
+    ],
+    attributes: [
+      'id',
+      [sequelize.fn("COUNT", sequelize.col("siswa.KelasId")), "jumlahSiswa"],
+
+      // jumlahSiswaLaki
+      [
+        sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM siswa AS s
+                        WHERE
+                            s.KelasId = Kelas.id
+                            AND
+                            s.jenis_kelamin = "L"
+                    )`),
+        "jumlahSiswaLaki",
+      ],
+
+      // jumlahSiswaPerempuan
+      [
+        sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM siswa AS s
+                        WHERE
+                            s.KelasId = Kelas.id
+                            AND
+                            s.jenis_kelamin = "P"
+                    )`),
+        "jumlahSiswaPerempuan",
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'L'
+        )`),
+        'siswaLakiKeluar'
+      ],
+      
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'P'
+        )`),
+        'siswaPerempuanKeluar'
+      ],
+
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+        )`),
+        'jumlahSiswaKeluar'
+      ],
+
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'L'
+        )`),
+        'siswaLakiMasuk'
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'P'
+        )`),
+        'siswaPerempuanMasuk'
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+        )`),
+        'jumlahSiswaMasuk'
+      ],
+      
+    ],
+    include: [
+      {
+        model: Siswa,
+        as: "siswa",
+        attributes: [],
+      },
+    ],
+    group: ["siswa.KelasId"],
+  });
+
+  res.status(200).json({
+    message: 'Success',
+    result: kelas,
+});
+};
+
+
+// GET ALL SISWA KELAS 12
+exports.getSiswaByKelas12 = async (req, res) => {
+  const kelas = await Kelas.findAll({
+    where: {
+      kelas: '12'
+    },
+    order: [
+      ['id', 'ASC']
+    ],
+    attributes: [
+      'id',
+      [sequelize.fn("COUNT", sequelize.col("siswa.KelasId")), "jumlahSiswa"],
+
+      // jumlahSiswaLaki
+      [
+        sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM siswa AS s
+                        WHERE
+                            s.KelasId = Kelas.id
+                            AND
+                            s.jenis_kelamin = "L"
+                    )`),
+        "jumlahSiswaLaki",
+      ],
+
+      // jumlahSiswaPerempuan
+      [
+        sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM siswa AS s
+                        WHERE
+                            s.KelasId = Kelas.id
+                            AND
+                            s.jenis_kelamin = "P"
+                    )`),
+        "jumlahSiswaPerempuan",
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'L'
+        )`),
+        'siswaLakiKeluar'
+      ],
+      
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'P'
+        )`),
+        'siswaPerempuanKeluar'
+      ],
+
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.keluar_di_kelas = Kelas.id
+        )`),
+        'jumlahSiswaKeluar'
+      ],
+
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'L'
+        )`),
+        'siswaLakiMasuk'
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+                    AND
+                    m.jenis_kelamin = 'P'
+        )`),
+        'siswaPerempuanMasuk'
+      ],
+
+      [
+        sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM mutasi AS m
+                WHERE
+                    m.diterima_di_kelas = Kelas.id
+        )`),
+        'jumlahSiswaMasuk'
+      ],
+      
+    ],
+    include: [
+      {
+        model: Siswa,
+        as: "siswa",
+        attributes: [],
+      },
+    ],
+    group: ["siswa.KelasId"],
+  });
+
+  res.status(200).json({
+    message: 'Success',
+    result: kelas,
+});
+};
