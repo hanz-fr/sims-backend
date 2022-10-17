@@ -1,6 +1,6 @@
 const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, sequelize } = require("../models");
+const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Mapel, sequelize } = require("../models");
 const { Op } = require("sequelize");
 
 // import fastest-validator
@@ -38,7 +38,7 @@ exports.getAllSiswa = async (req, res) => {
       },
       {
         model: Mutasi,
-        as: 'mutasi'
+        as: 'mutasi',
       }
     ]
   });
@@ -87,10 +87,12 @@ exports.getSiswa = async (req, res) => {
         include: [{
           model: NilaiMapel,
           as: 'NilaiMapel',
-          include: [{
-            model: MapelJurusan
-          }]
-        }]
+          include: [
+            {
+              model: MapelJurusan
+            },
+          ]
+        }],
       },
       {
         model: Kelas,
@@ -101,7 +103,10 @@ exports.getSiswa = async (req, res) => {
       nis_siswa: {
         [Op.eq]: nis 
       }
-    }
+    },
+    order: [
+      [{model: Raport, as: 'raport'}, {model: NilaiMapel, as: 'NilaiMapel'}, 'idMapelJurusan', 'ASC']
+    ],
   });
 
   if (!siswa) {

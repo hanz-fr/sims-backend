@@ -16,6 +16,11 @@ module.exports = {
           JurusanId: 'RPL',
         },
         {
+          mapelJurusanId: 'RPL_B.INDONESIA',
+          MapelId: 'B.INDONESIA',
+          JurusanId: 'RPL',
+        },
+        {
           mapelJurusanId: 'RPL_B.JEPANG',
           MapelId: 'B.JEPANG',
           JurusanId: 'RPL',

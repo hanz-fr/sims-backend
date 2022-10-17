@@ -76,6 +76,22 @@ exports.createRaport = async (req, res) => {
             });
         }
 
+
+        // check if raport with the same semester already exist
+        const raportSemesterExist = await Raport.findOne({
+            where: {
+                nis_siswa: req.body.nis_siswa,
+                semester: req.body.semester
+            }
+        });
+
+        if (raportSemesterExist) {
+            return res.status(400).json({
+                status: 'error',
+                message: `Raport for siswa with nis '${req.body.nis_siswa}' semester '${req.body.semester}' already exist.`
+            })
+        }
+
         var raport = await Raport.create(req.body);
 
         res.status(200).json({
