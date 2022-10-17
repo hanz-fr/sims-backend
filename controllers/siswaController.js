@@ -1,6 +1,6 @@
 const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Mapel, sequelize } = require("../models");
+const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Jurusan, sequelize } = require("../models");
 const { Op } = require("sequelize");
 
 // import fastest-validator
@@ -34,7 +34,7 @@ exports.getAllSiswa = async (req, res) => {
       },
       {
         model: Kelas,
-        as: 'kelas'
+        as: 'kelas',
       },
       {
         model: Mutasi,
@@ -73,6 +73,80 @@ exports.getAllSiswa = async (req, res) => {
     to: to,
   }); 
 };
+
+
+exports.getAllSiswaByJurusanKelas = async (req, res) => {
+
+  const jurusan = req.params.jurusan;
+  const kelas = req.params.kelas;
+  
+  /* Pagination */
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+  let page = 1;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    page = pageAsNumber
+  }
+
+  let perPage = 10;
+  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber;
+  }
+
+  const siswa = await Siswa.findAndCountAll({
+    limit: perPage,
+    offset: ( page-1 ) * perPage,
+    include: [
+      {
+        model: Raport,
+        as: 'raport'
+      },
+      {
+        model: Kelas,
+        as: 'kelas',
+        where: {
+          kelas: kelas,
+          jurusan: jurusan
+        }
+      },
+      {
+        model: Mutasi,
+        as: 'mutasi',
+      }
+    ]
+  });
+
+  let from = ((page - 1) * perPage) + 1;
+
+  let to = page * perPage;
+
+  // pagination params
+  path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
+  firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1`;
+  nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}`;
+
+  if (page > 1) {
+    prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}`
+  } 
+
+  if (page === 1) {
+    prevPageUrl = null
+  }
+
+  res.status(200).json({
+    current_page: page,
+    data: siswa,
+    first_page_url: firstPageUrl,
+    from: from,
+    next_page_url: nextPageUrl,
+    path: path,
+    per_page: perPage,
+    prev_page_url: prevPageUrl,
+    to: to,
+  }); 
+}
+
 
 // get siswa
 exports.getSiswa = async (req, res) => {
