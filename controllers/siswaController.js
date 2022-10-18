@@ -1,6 +1,6 @@
 const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Jurusan, sequelize } = require("../models");
+const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, NilaiAkhir, MapelJurusan, Jurusan, sequelize } = require("../models");
 const { Op } = require("sequelize");
 
 // import fastest-validator
@@ -158,15 +158,20 @@ exports.getSiswa = async (req, res) => {
       {
         model: Raport,
         as: 'raport',
-        include: [{
-          model: NilaiMapel,
-          as: 'NilaiMapel',
-          include: [
-            {
-              model: MapelJurusan
-            },
-          ]
-        }],
+        include: [
+          {
+            model: NilaiMapel,
+            as: 'NilaiMapel',
+            include: [
+              {
+                model: MapelJurusan
+              },
+            ],
+          },
+          {
+            model: NilaiAkhir
+          }
+        ],
       },
       {
         model: Kelas,

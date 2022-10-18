@@ -5,7 +5,7 @@ const { faker } = require("@faker-js/faker");
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    await queryInterface.bulkInsert(
+    /* await queryInterface.bulkInsert(
       "raport",
       [
         {
@@ -20,126 +20,126 @@ module.exports = {
           tgl_kenaikan: "2000-10-01"
         }
       ]
-    )
+    ) */
 
     await queryInterface.bulkInsert(
       "nilai_mapel",
       [
         {
           idMapelJurusan: 'RPL_B.INDONESIA',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_B.INGGRIS',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_FISIKA',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_MATEMATIKA',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_SISKOM',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_KJD',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_PAI',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_SISKOMDIG',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_SEJARAH',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_SENBUD',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_KIMIA',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_DDG',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_BD',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_PPL',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_PWPB',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_PBO',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
         },
         {
           idMapelJurusan: 'RPL_PROGDAS',
-          RaportId: 10,
+          RaportId: 11,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false })
