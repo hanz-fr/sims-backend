@@ -1,5 +1,7 @@
 const Validator = require("fastest-validator");
 const { Raport, Siswa, NilaiMapel, MapelJurusan, sequelize } = require("../models");
+const { Op } = require("sequelize");
+
 
 // import fastest-validator
 const v = new Validator();
@@ -27,7 +29,14 @@ exports.getAllRaport = async (req, res) => {
 exports.getRaport = async (req, res) => {
     const id = req.params.id;
 
-    let raport = await Raport.findByPk(id);
+    let raport = await Raport.findOne({
+        where: {
+            id: {
+                [Op.eq]: id
+            }
+        },
+        include: { all: true }
+    });
 
     if (!raport) {
         return res.status(404).json({

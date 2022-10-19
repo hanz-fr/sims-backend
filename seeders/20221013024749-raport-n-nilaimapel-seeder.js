@@ -5,144 +5,212 @@ const { faker } = require("@faker-js/faker");
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    /* await queryInterface.bulkInsert(
+    await queryInterface.bulkInsert(
       "raport",
       [
         {
-          nis_siswa: "1008949269", // Change NIS Siswa
-          semester: 1,
-          thn_ajaran: 2020,
-          sakit: 0,
+          nis_siswa: "1167787145", // Change NIS Siswa
+          semester: 6,
+          thn_ajaran: 2022,
+          sakit: 2,
           ijin: 1,
           alpa: 0,
-          isNaik: null,
-          naikKelas: "-",
-          tgl_kenaikan: "2000-10-01"
+          isNaik: true,
+          naikKelas: "Lulus",
+          tgl_kenaikan: "2022-07-06"
         }
       ]
-    ) */
+    )
 
     await queryInterface.bulkInsert(
       "nilai_mapel",
       [
         {
           idMapelJurusan: 'RPL_B.INDONESIA',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_B.INGGRIS',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_FISIKA',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_MATEMATIKA',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_SISKOM',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_KJD',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_PAI',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_SISKOMDIG',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_SEJARAH',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_SENBUD',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_KIMIA',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_DDG',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_BD',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_PPL',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_PWPB',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_PBO',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
           idMapelJurusan: 'RPL_PROGDAS',
-          RaportId: 11,
+          RaportId: 3,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
-          kkm: faker.random.numeric(2, { allowLeadingZero: false })
+          kkm: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_us_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_teori: faker.random.numeric(2, { allowLeadingZero: false }),
+          nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
       ]
     )

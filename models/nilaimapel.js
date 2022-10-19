@@ -59,6 +59,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    nilai_us_teori: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    nilai_us_praktek: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    nilai_ukk_teori: {
+      type: DataTypes.INTEGER,
+      allowNull: true, 
+    },
+    nilai_ukk_praktek: {
+      type: DataTypes.INTEGER,
+      allowNull: true, 
+    },
+    nilai_akm: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'NilaiMapel',

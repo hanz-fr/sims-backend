@@ -47,7 +47,27 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      nilai_us_teori: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      nilai_us_praktek: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      nilai_ukk_teori: {
+        type: Sequelize.INTEGER,
+        allowNull: true, 
+      },
+      nilai_ukk_praktek: {
+        type: Sequelize.INTEGER,
+        allowNull: true, 
+      },
+      nilai_akm: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
