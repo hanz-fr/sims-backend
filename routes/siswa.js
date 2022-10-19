@@ -10,5 +10,6 @@ router.get('/:nis_siswa', controller.getSiswa); // get siswa by nis
 router.post('/', controller.createSiswa); // create route
 router.put('/:nis_siswa', controller.updateSiswa); // update route
 router.delete('/:nis_siswa', controller.deleteSiswa); // delete route
+router.post('/searchSiswa', controller.searchSiswa);
 
 module.exports = router;

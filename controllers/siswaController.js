@@ -148,6 +148,13 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
 }
 
 
+// search siswa
+exports.searchSiswa = async (req, res) => {
+  let payload = req.body.payload.trim();
+  console.log(payload);
+}
+
+
 // get siswa
 exports.getSiswa = async (req, res) => {
   const nis = req.params.nis_siswa;
