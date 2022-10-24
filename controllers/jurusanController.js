@@ -13,6 +13,13 @@ exports.getAllJurusan = async (req, res) => {
   res.status(200).json(jurusan);
 };
 
+// get all jurusan and count it
+exports.findAndCountAllJurusan = async (req, res) => {
+  const jurusan = await Jurusan.findAndCountAll();
+
+  res.status(200).json(jurusan);
+}
+
 // get jurusan by id
 exports.getJurusan = async (req, res) => {
   const id = req.params.id;
