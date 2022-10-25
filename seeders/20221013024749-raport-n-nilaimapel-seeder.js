@@ -9,15 +9,15 @@ module.exports = {
       "raport",
       [
         {
-          nis_siswa: "1167787145", // Change NIS Siswa
-          semester: 6,
-          thn_ajaran: 2022,
+          nis_siswa: "1006122216", // Change NIS Siswa
+          semester: 2,
+          thn_ajaran: 2020,
           sakit: 2,
           ijin: 1,
           alpa: 0,
-          isNaik: true,
-          naikKelas: "Lulus",
-          tgl_kenaikan: "2022-07-06"
+          isNaik: false,
+          naikKelas: "-",
+          tgl_kenaikan: null
         }
       ]
     )
@@ -27,7 +27,7 @@ module.exports = {
       [
         {
           idMapelJurusan: 'RPL_B.INDONESIA',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -38,7 +38,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_B.INGGRIS',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -49,7 +49,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_FISIKA',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -60,7 +60,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_MATEMATIKA',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -71,7 +71,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_SISKOM',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -82,7 +82,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_KJD',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -93,7 +93,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_PAI',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -104,7 +104,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_SISKOMDIG',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -115,7 +115,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_SEJARAH',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -126,7 +126,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_SENBUD',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -137,7 +137,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_KIMIA',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -148,7 +148,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_DDG',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -159,7 +159,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_BD',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -170,7 +170,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_PPL',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -181,7 +181,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_PWPB',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -192,7 +192,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_PBO',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -203,7 +203,7 @@ module.exports = {
         },
         {
           idMapelJurusan: 'RPL_PROGDAS',
-          RaportId: 3,
+          RaportId: 1,
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),

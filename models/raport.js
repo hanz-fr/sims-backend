@@ -70,7 +70,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     naikKelas: {
       type: DataTypes.STRING(10),
-      allowNull: false,
+      allowNull: true,
+    },
+    tinggal_di_Kelas: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+    },
+    alasan_tidak_naik: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     tgl_kenaikan: {
       type: DataTypes.DATEONLY,

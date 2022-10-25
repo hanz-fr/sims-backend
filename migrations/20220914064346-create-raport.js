@@ -44,7 +44,15 @@ module.exports = {
       },
       naikKelas: {
         type: Sequelize.STRING(10),
-        allowNull: false,
+        allowNull: true,
+      },
+      tinggal_di_Kelas: {
+        type: Sequelize.STRING(10),
+        allowNull: true,
+      },
+      alasan_tidak_naik: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       tgl_kenaikan: {
         type: Sequelize.DATEONLY,

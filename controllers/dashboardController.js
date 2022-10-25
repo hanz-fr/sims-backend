@@ -44,6 +44,44 @@ exports.getMainDashboardData = async (req, res) => {
             }
         ]
     });
+    const jumlahSiswaX = await Siswa.findAndCountAll({
+      attributes: [],
+      include: [{
+        model: Kelas,
+        as: 'kelas',
+        where: {
+          kelas: {
+            [Op.eq]: '10'
+          }
+        }
+      }]
+    });
+
+    const jumlahSiswaXI = await Siswa.findAndCountAll({
+      attributes: [],
+      include: [{
+        model: Kelas,
+        as: 'kelas',
+        where: {
+          kelas: {
+            [Op.eq]: '11'
+          }
+        }
+      }]
+    });
+
+    const jumlahSiswaXII = await Siswa.findAndCountAll({
+      attributes: [],
+      include: [{
+        model: Kelas,
+        as: 'kelas',
+        where: {
+          kelas: {
+            [Op.eq]: '12'
+          }
+        }
+      }]
+    });
 
     /* Rekap kelas 10 */
     const rekapKelas10 = await Kelas.findAll({
@@ -162,7 +200,7 @@ exports.getMainDashboardData = async (req, res) => {
           },
         ],
         group: ["siswa.KelasId"],
-      });
+    });
 
 
     /* Rekap Kelas 11 */
@@ -282,7 +320,7 @@ exports.getMainDashboardData = async (req, res) => {
           },
         ],
         group: ["siswa.KelasId"],
-      });
+    });
 
 
     /* Rekap Kelas 12 */
@@ -402,8 +440,9 @@ exports.getMainDashboardData = async (req, res) => {
           },
         ],
         group: ["siswa.KelasId"],
-      });
+    });
     
+
       
     res.status(200).json({
         status: 'success',
@@ -413,10 +452,36 @@ exports.getMainDashboardData = async (req, res) => {
         kelas: kelas,
         mapel: mapel,
         alumni: alumni,
+        jumlahSiswaX: jumlahSiswaX,
+        jumlahSiswaXI: jumlahSiswaXI,
+        jumlahSiswaXII: jumlahSiswaXII,
         siswaMasuk: siswaMasuk,
         siswaTdkNaik: siswaTdkNaik,
         rekapKelas10: rekapKelas10,
         rekapKelas11: rekapKelas11,
-        rekapKelas12: rekapKelas12
+        rekapKelas12: rekapKelas12,
     });
+}
+
+
+exports.getSiswaTidakNaik = async (req, res) => {
+
+  const siswaTdkNaik = await Siswa.findAndCountAll({
+    include: [
+        {
+            model: Raport,
+            as: 'raport',
+            where: 
+            {
+                isNaik: false
+            }
+        }
+    ]
+});
+
+  res.status(200).json({
+    status: 'success',
+    result: siswaTdkNaik
+  })
+
 }

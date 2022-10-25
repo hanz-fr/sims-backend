@@ -6,6 +6,7 @@ const { Op } = require("sequelize");
 // import fastest-validator
 const v = new Validator();
 
+
 // get all siswa
 exports.getAllSiswa = async (req, res) => {
 
@@ -153,6 +154,7 @@ exports.searchSiswa = async (req, res) => {
   let payload = req.body.payload.trim();
   console.log(payload);
 }
+
 
 
 // get siswa
@@ -457,3 +459,5 @@ exports.deleteSiswa = async (req, res) => {
     message: "Siswa deleted successfully",
   });
 };
+
+
