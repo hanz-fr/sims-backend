@@ -30,9 +30,8 @@ module.exports = (sequelize, DataTypes) => {
   Raport.init({
     id: {
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     nis_siswa: {
       type: DataTypes.STRING(10),

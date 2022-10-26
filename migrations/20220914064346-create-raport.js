@@ -4,9 +4,8 @@ module.exports = {
     await queryInterface.createTable('raport', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
       },
       nis_siswa: {
         type: Sequelize.STRING(10),

@@ -37,10 +37,15 @@ exports.createNilaiMapel = async (req, res) => {
   try {
     const schema = {
       idMapelJurusan: { type: "string" },
-      RaportId: { type: "number" },
+      RaportId: { type: "string" },
       nilai_keterampilan: { type: "number", max: 100 },
       nilai_pengetahuan: { type: "number", max: 100 },
       kkm: { type: "number", max: 100 },
+      nilai_us_teori: { type: "number", max: 100, optional: true },
+      nilai_us_praktek: { type: "number", max: 100, optional: true },
+      nilai_ukk_teori: { type: "number", max: 100, optional: true },
+      nilai_ukk_praktek: { type: "number", max: 100, optional: true },
+      nilai_akm: { type: "number", max: 100, optional: true },
     };
 
     const validate = v.validate(req.body, schema);
@@ -93,7 +98,19 @@ exports.createNilaiMapel = async (req, res) => {
       });
     }
 
-    var nilaiMapel = await NilaiMapel.create(req.body);
+    var nilaiMapel = await NilaiMapel.create({
+      id: 'NM' + req.body.RaportId + '-' + req.body.idMapelJurusan,
+      idMapelJurusan: req.body.idMapelJurusan,
+      RaportId: req.body.RaportId,
+      nilai_keterampilan: req.body.nilai_keterampilan,
+      nilai_pengetahuan: req.body.nilai_pengetahuan,
+      kkm: req.body.kkm,
+      nilai_us_teori: req.body.nilai_us_teori,
+      nilai_us_praktek: req.body.nilai_us_praktek,
+      nilai_ukk_teori: req.body.nilai_ukk_teori,
+      nilai_ukk_praktek: req.body.nilai_ukk_praktek,
+      nilai_akm: req.body.nilai_akm
+    });
 
     res.status(200).json({
       status: "Data added successfully.",
@@ -120,10 +137,15 @@ exports.updateNilaiMapel = async (req, res) => {
 
   const schema = {
     idMapelJurusan: { type: "string", optional: true },
-    RaportId: { type: "number", optional: true },
+    RaportId: { type: "string", optional: true },
     nilai_keterampilan: { type: "number", max: 100, optional: true },
     nilai_pengetahuan: { type: "number", max: 100, optional: true },
     kkm: { type: "number", max: 100, optional: true },
+    nilai_us_teori: { type: "number", max: 100, optional: true },
+    nilai_us_praktek: { type: "number", max: 100, optional: true },
+    nilai_ukk_teori: { type: "number", max: 100, optional: true },
+    nilai_ukk_praktek: { type: "number", max: 100, optional: true },
+    nilai_akm: { type: "number", max: 100, optional: true },
   };
 
   if (req.body.mapelJurusanId) {
@@ -158,7 +180,18 @@ exports.updateNilaiMapel = async (req, res) => {
     return res.status(400).json(validate);
   }
 
-  nilaiMapel = await nilaiMapel.update(req.body);
+  nilaiMapel = await nilaiMapel.update({
+    idMapelJurusan: req.body.idMapelJurusan,
+    RaportId: req.body.RaportId,
+    nilai_keterampilan: req.body.nilai_keterampilan,
+    nilai_pengetahuan: req.body.nilai_pengetahuan,
+    kkm: req.body.kkm,
+    nilai_us_teori: req.body.nilai_us_teori,
+    nilai_us_praktek: req.body.nilai_us_praktek,
+    nilai_ukk_teori: req.body.nilai_ukk_teori,
+    nilai_ukk_praktek: req.body.nilai_ukk_praktek,
+    nilai_akm: req.body.nilai_akm
+  });
 
   res.status(200).json({
     message: `Successfully updated Nilai Mapel with id '${id}'`,

@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       RaportId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

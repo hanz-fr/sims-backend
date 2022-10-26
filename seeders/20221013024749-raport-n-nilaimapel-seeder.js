@@ -5,29 +5,33 @@ const { faker } = require("@faker-js/faker");
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    await queryInterface.bulkInsert(
+    /* await queryInterface.bulkInsert(
       "raport",
       [
         {
-          nis_siswa: "1006122216", // Change NIS Siswa
+          id: 'RPT1002360737-2',
+          nis_siswa: "1002360737", // Change NIS Siswa
           semester: 2,
           thn_ajaran: 2020,
-          sakit: 2,
+          sakit: 1,
           ijin: 1,
           alpa: 0,
           isNaik: false,
           naikKelas: "-",
-          tgl_kenaikan: null
+          tgl_kenaikan: null,
+          tinggal_di_kelas: '10TKJ2',
+          alasan_tidak_naik: 'Nilai kurang cukup.'
         }
       ]
-    )
+    ) */
 
     await queryInterface.bulkInsert(
       "nilai_mapel",
       [
         {
+          id: 'NMRPT1002360737-2-RPL.B.INDONESIA',
           idMapelJurusan: 'RPL_B.INDONESIA',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -37,8 +41,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL.B.INGGRIS',
           idMapelJurusan: 'RPL_B.INGGRIS',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -48,8 +53,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_FISIKA',
           idMapelJurusan: 'RPL_FISIKA',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -59,8 +65,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_MATEMATIKA',
           idMapelJurusan: 'RPL_MATEMATIKA',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -70,8 +77,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_SISKOM',
           idMapelJurusan: 'RPL_SISKOM',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -81,8 +89,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_KJD',
           idMapelJurusan: 'RPL_KJD',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -92,8 +101,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_PAI',
           idMapelJurusan: 'RPL_PAI',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -103,8 +113,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_SISKOMDIG',
           idMapelJurusan: 'RPL_SISKOMDIG',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -114,8 +125,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_SEJARAH',
           idMapelJurusan: 'RPL_SEJARAH',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -125,8 +137,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_SENBUD',
           idMapelJurusan: 'RPL_SENBUD',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -136,8 +149,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_KIMIA',
           idMapelJurusan: 'RPL_KIMIA',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -147,8 +161,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_DDG',
           idMapelJurusan: 'RPL_DDG',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -158,8 +173,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_BD',
           idMapelJurusan: 'RPL_BD',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -169,8 +185,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_PPL',
           idMapelJurusan: 'RPL_PPL',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -180,8 +197,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_PWPB',
           idMapelJurusan: 'RPL_PWPB',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -191,8 +209,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_PBO',
           idMapelJurusan: 'RPL_PBO',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),
@@ -202,8 +221,9 @@ module.exports = {
           nilai_ukk_praktek: faker.random.numeric(2, { allowLeadingZero: false }),
         },
         {
+          id: 'NMRPT1002360737-2-RPL_PROGDAS',
           idMapelJurusan: 'RPL_PROGDAS',
-          RaportId: 1,
+          RaportId: "RPT1002360737-2",
           nilai_pengetahuan: faker.random.numeric(2, { allowLeadingZero: false }),
           nilai_keterampilan: faker.random.numeric(2, { allowLeadingZero: false }),
           kkm: faker.random.numeric(2, { allowLeadingZero: false }),

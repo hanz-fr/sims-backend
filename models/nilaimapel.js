@@ -23,9 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   NilaiMapel.init({
     id: {
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     idMapelJurusan: {
       type: DataTypes.STRING(50),
@@ -38,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     RaportId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

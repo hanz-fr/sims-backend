@@ -211,6 +211,7 @@ exports.getSiswa = async (req, res) => {
   });
 };
 
+
 // create siswa
 exports.createSiswa = async (req, res) => {
   try {

@@ -4,9 +4,8 @@ module.exports = {
     await queryInterface.createTable('nilai_mapel', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       idMapelJurusan: {
         type: Sequelize.STRING(50),
@@ -19,7 +18,7 @@ module.exports = {
         },
       },
       RaportId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
