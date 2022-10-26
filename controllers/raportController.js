@@ -259,7 +259,7 @@ exports.createRaportnNilaiMapel = async (req, res) => {
         var nilaiMapel = await NilaiMapel.create({
             id: 'NM' + raportID + '-' + req.body.idMapelJurusan,
             idMapelJurusan: req.body.idMapelJurusan,
-            RaportId: req.body.RaportId,
+            RaportId: raportID,
             nilai_keterampilan: req.body.nilai_keterampilan,
             nilai_pengetahuan: req.body.nilai_pengetahuan,
             kkm: req.body.kkm,
