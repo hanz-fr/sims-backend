@@ -64,7 +64,7 @@ exports.createRaport = async (req, res) => {
             isNaik: { type: "boolean", optional: true, },
             naikKelas: { type: "string" },
             tgl_kenaikan: { type: "date", convert: true, optional: true },
-            tinggal_di_kelas: { type: "string", optional: true },
+            tinggal_di_Kelas: { type: "string", optional: true },
             alasan_tidak_naik: { type: "string", optional: true },
         }
 
@@ -113,7 +113,9 @@ exports.createRaport = async (req, res) => {
             alpa: req.body.alpa,
             isNaik: req.body.isNaik,
             naikKelas: req.body.naikKelas,
-            tgl_kenaikan: req.body.tgl_kenaikan
+            tgl_kenaikan: req.body.tgl_kenaikan,
+            tinggal_di_Kelas: req.body.tinggal_di_Kelas,
+            alasan_tidak_naik: req.body.alasan_tidak_naik,
         });
 
         res.status(200).json({
@@ -189,7 +191,9 @@ exports.createRaportnNilaiMapel = async (req, res) => {
             alpa: req.body.alpa,
             isNaik: req.body.isNaik,
             naikKelas: req.body.naikKelas,
-            tgl_kenaikan: req.body.tgl_kenaikan
+            tgl_kenaikan: req.body.tgl_kenaikan,
+            tinggal_di_Kelas: req.body.tinggal_di_kelas,
+            alasan_tidak_naik: req.body.alasan_tidak_naik,
         });
 
         /* CREATE NILAIMAPEL */
@@ -310,7 +314,7 @@ exports.updateRaport = async (req, res) => {
         isNaik: { type: "boolean", optional: true },
         naikKelas: { type: "string", optional: true },
         tgl_kenaikan: { type: "date", convert: true, optional: true },
-        tinggal_di_kelas: { type: "string", optional: true },
+        tinggal_di_Kelas: { type: "string", optional: true },
         alasan_tidak_naik: { type: "string", optional: true },
     }
 
@@ -331,7 +335,9 @@ exports.updateRaport = async (req, res) => {
         alpa: req.body.alpa,
         isNaik: req.body.isNaik,
         naikKelas: req.body.naikKelas,
-        tgl_kenaikan: req.body.tgl_kenaikan
+        tgl_kenaikan: req.body.tgl_kenaikan,
+        tinggal_di_Kelas: req.body.tinggal_di_Kelas,
+        alasan_tidak_naik: req.body.alasan_tidak_naik,
     });
 
     res.status(200).json({
