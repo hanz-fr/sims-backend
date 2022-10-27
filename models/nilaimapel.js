@@ -48,15 +48,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     nilai_keterampilan: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     nilai_pengetahuan: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     kkm: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     nilai_us_teori: {
       type: DataTypes.INTEGER,

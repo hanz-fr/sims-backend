@@ -29,15 +29,15 @@ module.exports = {
       },
       nilai_keterampilan: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       nilai_pengetahuan: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       kkm: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

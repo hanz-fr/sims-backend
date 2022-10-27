@@ -38,9 +38,9 @@ exports.createNilaiMapel = async (req, res) => {
     const schema = {
       idMapelJurusan: { type: "string" },
       RaportId: { type: "string" },
-      nilai_keterampilan: { type: "number", max: 100 },
-      nilai_pengetahuan: { type: "number", max: 100 },
-      kkm: { type: "number", max: 100 },
+      nilai_keterampilan: { type: "number", max: 100, optional: true },
+      nilai_pengetahuan: { type: "number", max: 100, optional: true },
+      kkm: { type: "number", max: 100, optional: true },
       nilai_us_teori: { type: "number", max: 100, optional: true },
       nilai_us_praktek: { type: "number", max: 100, optional: true },
       nilai_ukk_teori: { type: "number", max: 100, optional: true },
