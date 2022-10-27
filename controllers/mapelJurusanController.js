@@ -5,13 +5,26 @@ const v = new Validator();
 
 // get all mapeljurusan
 exports.getAllMapelJurusan = async (req, res) => {
-    const mapelJurusan = await sequelize.query("SELECT * FROM mapel_jurusan", {
-        model: MapelJurusan,
-        mapToModel: true,
-    });
+    const mapelJurusan = await MapelJurusan.findAll();
 
     res.status(200).json(mapelJurusan);
 };
+
+
+exports.getAllMapelbyJurusan = async (req, res) => {
+
+    const jurusanId = req.params.jurusanId;
+
+    const mapelJurusan = await MapelJurusan.findAll({
+        where: {
+            JurusanId: jurusanId
+        }
+    });
+
+
+    res.status(200).json(mapelJurusan);
+}
+
 
 // get mapeljurusan by id
 exports.getMapelJurusan = async (req, res) => {

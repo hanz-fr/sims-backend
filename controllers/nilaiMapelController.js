@@ -6,10 +6,7 @@ const v = new Validator();
 
 // get all nilaiMapel
 exports.getAllNilaiMapel = async (req, res) => {
-  const nilaiMapel = await sequelize.query("SELECT * FROM nilai_mapel", {
-    model: NilaiMapel,
-    mapToModel: true,
-  });
+  const nilaiMapel = await NilaiMapel.findAll();
 
   res.status(200).json(nilaiMapel);
 };

@@ -63,7 +63,7 @@ exports.createRaport = async (req, res) => {
             alpa: { type: "number", optional: true },
             isNaik: { type: "boolean", optional: true, },
             naikKelas: { type: "string" },
-            tgl_kenaikan: { type: "date", convert: true },
+            tgl_kenaikan: { type: "date", convert: true, optional: true },
             tinggal_di_kelas: { type: "string", optional: true },
             alasan_tidak_naik: { type: "string", optional: true },
         }
