@@ -35,7 +35,19 @@ exports.getRaport = async (req, res) => {
                 [Op.eq]: id
             }
         },
-        include: { all: true }
+        include: [
+            {
+                model: Siswa,
+                as: 'Siswa',
+            },
+            {
+                model: NilaiMapel,
+                as: 'NilaiMapel',
+                include: [{
+                    model: MapelJurusan
+                }]
+            }
+        ]
     });
 
     if (!raport) {
