@@ -1,12 +1,15 @@
 const Validator = require("fastest-validator");
 const { NilaiMapel, MapelJurusan, Raport, sequelize } = require("../models");
+const { Op } = require("sequelize");
 
 // import fastest-validator
 const v = new Validator();
 
 // get all nilaiMapel
 exports.getAllNilaiMapel = async (req, res) => {
-  const nilaiMapel = await NilaiMapel.findAll();
+  const nilaiMapel = await NilaiMapel.findAll({
+    include: { all: true }
+  });
 
   res.status(200).json(nilaiMapel);
 };
@@ -15,7 +18,16 @@ exports.getAllNilaiMapel = async (req, res) => {
 exports.getNilaiMapel = async (req, res) => {
   const id = req.params.id;
 
-  const nilaiMapel = await NilaiMapel.findByPk(id);
+  const nilaiMapel = await NilaiMapel.findOne({
+    where: {
+      id: {
+        [Op.eq]: id,
+      },
+    },
+    include: [{
+      model: MapelJurusan,
+    }]
+  });
 
   if (!nilaiMapel) {
     return res.status(404).json({
