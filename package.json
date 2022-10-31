@@ -14,7 +14,8 @@
     "fastest-validator": "^1.15.0",
     "morgan": "~1.9.1",
     "sequelize": "^6.21.6",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "sequelize-search-builder": "^0.11.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.5.0",

@@ -126,16 +126,72 @@ exports.getSiswaTidakNaik = async (req, res) => {
 
 exports.getAlumni = async (req, res) => {
 
-  const alumni = await Siswa.findAll({
-    where: {
-      isAlumni: {
-        [Op.is]: true
-      }
-    }
-  })
+  const { search } = req.query;
 
-  res.status(200).json({
-    status: 'success',
-    result: alumni,
-  })
+  try {
+
+    if (!search) {
+
+      const alumni = await Siswa.findAll({
+        where: {
+          isAlumni: {
+            [Op.is]: true
+          }
+        }
+      });
+
+      res.status(200).json({
+        status: 'success',
+        result: alumni,
+      });
+
+    } else {
+
+      const alumni = await Siswa.findAll({
+        where: {
+          isAlumni: {
+            [Op.is]: true
+          },
+          [Op.or]: [
+            {
+              nis_siswa: {
+                [Op.like]: '%' + search + '%',
+              },
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + search + '%',
+              },
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + search + '%',
+              },
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + search + '%',
+              },
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + search + '%',
+              },
+            }
+          ]
+        }
+      });
+
+      res.status(200).json({
+        status: 'success',
+        result: alumni,
+      })
+
+    }
+
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
 }

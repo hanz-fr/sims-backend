@@ -2,13 +2,96 @@ const { json } = require("body-parser");
 const Validator = require("fastest-validator");
 const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, NilaiAkhir, MapelJurusan, Jurusan, sequelize } = require("../models");
 const { Op } = require("sequelize");
+const models = require('../models');
+const searchBuilder = require('sequelize-search-builder');
 
 // import fastest-validator
 const v = new Validator();
 
 
 // get all siswa
+// exports.getAllSiswa = async (req, res) => {
+
+//   const search = new searchBuilder(models.Sequelize, req.query),
+//   whereQuery  = search.getWhereQuery(),
+//   orderQuery  = search.getOrderQuery()
+
+//   /* Pagination */
+//   const pageAsNumber = Number.parseInt(req.query.page);
+//   const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+//   let page = 1;
+//   if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+//     page = pageAsNumber
+//   }
+
+//   let perPage = 10;
+//   if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+//     perPage = perPageAsNumber;
+//   }
+
+//   try {
+//     let siswa = await Siswa.findAndCountAll({
+//       limit: perPage,
+//       offset: ( page-1 ) * perPage,
+//       where:  whereQuery,
+//       order:  orderQuery,
+//       include: [
+//         {
+//           model: Raport,
+//           as: 'raport'
+//         },
+//         {
+//           model: Kelas,
+//           as: 'kelas',
+//         },
+//         {
+//           model: Mutasi,
+//           as: 'mutasi',
+//         }
+//       ],
+//     });
+
+//     let from = ((page - 1) * perPage) + 1;
+
+//     let to = page * perPage;
+
+//     // pagination params
+//     path = 'http://127.0.0.1:8000/data-induk-siswa';
+//     firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
+//     nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
+
+//     if (page > 1) {
+//       prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
+//     } 
+
+//     if (page === 1) {
+//       prevPageUrl = null
+//     }
+
+
+//     res.status(200).json({
+//       current_page: page,
+//       data: siswa,
+//       first_page_url: firstPageUrl,
+//       from: from,
+//       next_page_url: nextPageUrl,
+//       path: path,
+//       per_page: perPage,
+//       prev_page_url: prevPageUrl,
+//       to: to,
+//     });
+
+//   } catch (error) {
+//     res.status(404).json({
+//       message: error.message,
+//     });
+//   }
+// };
+
 exports.getAllSiswa = async (req, res) => {
+
+  const { search } = req.query;
 
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -24,59 +107,152 @@ exports.getAllSiswa = async (req, res) => {
     perPage = perPageAsNumber;
   }
 
+  try {
 
-  const siswa = await Siswa.findAndCountAll({
-    limit: perPage,
-    offset: ( page-1 ) * perPage,
-    include: [
-      {
-        model: Raport,
-        as: 'raport'
-      },
-      {
-        model: Kelas,
-        as: 'kelas',
-      },
-      {
-        model: Mutasi,
-        as: 'mutasi',
+    if (!search) {
+
+      let siswa = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
+        include: [
+          {
+            model: Raport,
+            as: 'raport'
+          },
+          {
+            model: Kelas,
+            as: 'kelas',
+          },
+          {
+            model: Mutasi,
+            as: 'mutasi',
+          }
+        ],
+      });
+
+      let from = ((page - 1) * perPage) + 1;
+
+      let to = page * perPage;
+
+      // pagination params
+      path = 'http://127.0.0.1:8000/data-induk-siswa';
+      firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
+      } 
+
+      if (page === 1) {
+        prevPageUrl = null
       }
-    ]
-  });
 
-  let from = ((page - 1) * perPage) + 1;
 
-  let to = page * perPage;
+      res.status(200).json({
+        current_page: page,
+        data: siswa,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
+      });
 
-  // pagination params
-  path = 'http://127.0.0.1:8000/data-induk-siswa';
-  firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
-  nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
+    } else {
 
-  if (page > 1) {
-    prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
-  } 
+      let siswa = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
+        where:  {
+          [Op.or]: [
+            {
+              nis_siswa: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + search + '%'
+              }
+            }
+          ]
+        },  
+        include: [
+          {
+            model: Raport,
+            as: 'raport'
+          },
+          {
+            model: Kelas,
+            as: 'kelas',
+          },
+          {
+            model: Mutasi,
+            as: 'mutasi',
+          }
+        ],
+      });
+      
+      let from = ((page - 1) * perPage) + 1;
 
-  if (page === 1) {
-    prevPageUrl = null
+      let to = page * perPage;
+
+      // pagination params
+      path = 'http://127.0.0.1:8000/data-induk-siswa';
+      firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
+      } 
+
+      if (page === 1) {
+        prevPageUrl = null
+      }
+
+
+      res.status(200).json({
+        current_page: page,
+        data: siswa,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
+      });
+
+    }    
+
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
   }
-
-
-  res.status(200).json({
-    current_page: page,
-    data: siswa,
-    first_page_url: firstPageUrl,
-    from: from,
-    next_page_url: nextPageUrl,
-    path: path,
-    per_page: perPage,
-    prev_page_url: prevPageUrl,
-    to: to,
-  }); 
-};
+}
 
 
 exports.getAllSiswaByJurusanKelas = async (req, res) => {
+
+  const { search } = req.query; 
 
   const jurusan = req.params.jurusan;
   const kelas = req.params.kelas;
@@ -95,65 +271,272 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
     perPage = perPageAsNumber;
   }
 
-  const siswa = await Siswa.findAndCountAll({
-    limit: perPage,
-    offset: ( page-1 ) * perPage,
-    include: [
-      {
-        model: Raport,
-        as: 'raport'
-      },
-      {
-        model: Kelas,
-        as: 'kelas',
-        where: {
-          kelas: kelas,
-          jurusan: jurusan
-        }
-      },
-      {
-        model: Mutasi,
-        as: 'mutasi',
+  try {
+
+    if (!search) {
+
+      const siswa = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
+        include: [
+          {
+            model: Raport,
+            as: 'raport'
+          },
+          {
+            model: Kelas,
+            as: 'kelas',
+            where: {
+              kelas: kelas,
+              jurusan: jurusan
+            }
+          },
+          {
+            model: Mutasi,
+            as: 'mutasi',
+          }
+        ]
+      });
+
+      let from = ((page - 1) * perPage) + 1;
+
+      let to = page * perPage;
+
+      // pagination params
+      path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
+      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}`
+      } 
+    
+      if (page === 1) {
+        prevPageUrl = null
       }
-    ]
-  });
+    
+      res.status(200).json({
+        current_page: page,
+        data: siswa,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
+      }); 
 
-  let from = ((page - 1) * perPage) + 1;
+    } else {
 
-  let to = page * perPage;
+      const siswa = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
+        where:  {
+          [Op.or]: [
+            {
+              nis_siswa: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
+          ]
+        },
+        include: [
+          {
+            model: Raport,
+            as: 'raport'
+          },
+          {
+            model: Kelas,
+            as: 'kelas',
+            where: {
+              kelas: kelas,
+              jurusan: jurusan
+            }
+          },
+          {
+            model: Mutasi,
+            as: 'mutasi',
+          }
+        ]
+      });
 
-  // pagination params
-  path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
-  firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1`;
-  nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}`;
+      let from = ((page - 1) * perPage) + 1;
 
-  if (page > 1) {
-    prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}`
-  } 
+      let to = page * perPage;
 
-  if (page === 1) {
-    prevPageUrl = null
+      // pagination params
+      path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
+      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}`
+      } 
+    
+      if (page === 1) {
+        prevPageUrl = null
+      }
+    
+      res.status(200).json({
+        current_page: page,
+        data: siswa,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
+      });
+
+    }
+
+
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
   }
-
-  res.status(200).json({
-    current_page: page,
-    data: siswa,
-    first_page_url: firstPageUrl,
-    from: from,
-    next_page_url: nextPageUrl,
-    path: path,
-    per_page: perPage,
-    prev_page_url: prevPageUrl,
-    to: to,
-  }); 
 }
 
 
 // search siswa
-exports.searchSiswa = async (req, res) => {
-  let payload = req.body.payload.trim();
-  console.log(payload);
-}
+// exports.searchSiswa = async (req, res) => {
+//   const search = req.query.search;
+
+//   /* Pagination */
+//   const pageAsNumber = Number.parseInt(req.query.page);
+//   const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+//   let page = 1;
+//   if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+//     page = pageAsNumber
+//   }
+
+//   let perPage = 10;
+//   if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+//     perPage = perPageAsNumber;
+//   }
+
+//   try {
+//     let siswa = await Siswa.findAndCountAll({
+//       limit: perPage,
+//       offset: ( page-1 ) * perPage,
+//       include: [
+//         {
+//           model: Raport,
+//           as: 'raport'
+//         },
+//         {
+//           model: Kelas,
+//           as: 'kelas',
+//           where: {
+//             kelas: kelas,
+//             jurusan: jurusan
+//           }
+//         },
+//         {
+//           model: Mutasi,
+//           as: 'mutasi',
+//         }
+//       ],
+//       where: {
+//         [Op.or]:
+//           ({
+//             nis_siswa: {
+//               [Op.like]: "%" + search + "%",
+//             },
+//           },
+//           {
+//             nisn_siswa: {
+//               [Op.like]: "%" + search + "%",
+//             },
+//           },
+//           {
+//             nama_siswa: {
+//               [Op.like]: "%" + search + "%",
+//             },
+//           },
+//           {
+//             jenis_kelamin: {
+//               [Op.like]: "%" + search + "%",
+//             },
+//           },
+//           {
+//             KelasId: {
+//               [Op.like]: "%" + search + "%",
+//             }
+//           }
+//         ),
+//       },
+//     });
+
+//     let from = ((page - 1) * perPage) + 1;
+
+//     let to = page * perPage;
+
+//     // pagination params
+//     path = 'http://127.0.0.1:8000/data-induk-siswa';
+//     firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
+//     nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
+
+//     if (page > 1) {
+//       prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
+//     } 
+
+//     if (page === 1) {
+//       prevPageUrl = null
+//     }
+
+//     if (siswa.length > 0) {
+//       res.status(200).json({
+//         current_page: page,
+//         data: siswa,
+//         first_page_url: firstPageUrl,
+//         from: from,
+//         next_page_url: nextPageUrl,
+//         path: path,
+//         per_page: perPage,
+//         prev_page_url: prevPageUrl,
+//         to: to,
+//       });
+//     } else {
+//       res.status(400).json({
+//         status: 'error',
+//         message: 'Siswa tidak ditemukan.',
+//         current_page: page,
+//         data: [],
+//         first_page_url: firstPageUrl,
+//         from: from,
+//         next_page_url: nextPageUrl,
+//         path: path,
+//         per_page: perPage,
+//         prev_page_url: prevPageUrl,
+//         to: to,
+//       });
+//     }
+//   } catch {
+//     res.status(404).json({
+//       message: error.message,
+//     });
+//   }
+// }
 
 
 
