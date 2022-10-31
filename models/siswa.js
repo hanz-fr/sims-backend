@@ -204,6 +204,10 @@ class Siswa extends Model {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    golongan_darah: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     isAlumni: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

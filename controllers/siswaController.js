@@ -257,6 +257,7 @@ exports.createSiswa = async (req, res) => {
       berat_badan: { type: "number", optional: true },
       tinggi_badan: { type: "number", optional: true },
       lingkar_kepala: { type: "number", optional: true },
+      golongan_darah: { type: "string", optional: true },
       isAlumni: { type: "boolean" },
     };
 
@@ -394,6 +395,7 @@ exports.updateSiswa = async (req, res) => {
       berat_badan: { type: "number", optional: true },
       tinggi_badan: { type: "number", optional: true },
       lingkar_kepala: { type: "number", optional: true },
+      golongan_darah: { type: "string", optional: true },
       isAlumni: { type: "boolean", optional: true },
   };
 

@@ -175,6 +175,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      golongan_darah: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       isAlumni: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
