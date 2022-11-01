@@ -101,26 +101,79 @@ exports.getMainDashboardData = async (req, res) => {
 }
 
 
-exports.getSiswaTidakNaik = async (req, res) => {
+exports.getSiswaTidakNaik = async (req, res) => { 
 
-  const siswaTdkNaik = await Siswa.findAndCountAll({
-    include: [
-        {
-            model: Raport,
-            as: 'raport',
-            where: 
+  const { search } = req.query;
+
+  try {
+
+    if (!search) {
+
+      const siswaTdkNaik = await Siswa.findAndCountAll({
+        include: [
             {
-                isNaik: false
-            }
-        }
-    ]
-});
+                model: Raport,
+                as: 'raport',
+                  where: 
+                  {
+                      isNaik: false
+                  }
+              }
+          ]
+      });
 
-  res.status(200).json({
-    status: 'success',
-    result: siswaTdkNaik
-  })
+      res.status(200).json({
+        status: 'success',
+        result: siswaTdkNaik
+      });
 
+    } else {
+
+      const siswaTdkNaik = await Siswa.findAndCountAll({
+        where: {
+          [Op.or]: [
+            {
+              nama_siswa: {
+                [Op.like]: '%' + search + '%'
+              },
+            },
+            {
+              tmp_lahir: {
+                [Op.like]: '%' + search + '%'
+              },
+            },
+            {
+              tgl_lahir: {
+                [Op.like]: '%' + search + '%'
+              },
+            },
+          ]
+        },
+        include: [
+            {
+                model: Raport,
+                as: 'raport',
+                  where: 
+                  {
+                    isNaik: false,
+                  },
+              }
+          ]
+      });
+
+      res.status(200).json({
+        status: 'success',
+        result: siswaTdkNaik
+      });
+
+    }
+
+
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
 }
 
 
