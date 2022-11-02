@@ -79,6 +79,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      diterima_di_kelas: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       sekolah_asal: {
         type: Sequelize.STRING,
         allowNull: false,

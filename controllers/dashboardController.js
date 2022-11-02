@@ -83,6 +83,78 @@ exports.getMainDashboardData = async (req, res) => {
       }]
     });
 
+    const jumlahSiswaAKL = await Siswa.findAndCountAll({
+      attributes: [],
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: [],
+        where: {
+          jurusan: 'AKL'
+        }
+      }]
+    });
+
+    const jumlahSiswaDKV = await Siswa.findAndCountAll({
+      attributes: [],
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: [],
+        where: {
+          jurusan: 'DKV'
+        }
+      }]
+    });
+
+    const jumlahSiswaMPLB = await Siswa.findAndCountAll({
+      attributes: [],
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: [],
+        where: {
+          jurusan: 'MPLB'
+        }
+      }]
+    });
+
+    const jumlahSiswaPM = await Siswa.findAndCountAll({
+      attributes: [],
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: [],
+        where: {
+          jurusan: 'PM'
+        }
+      }]
+    });
+
+    const jumlahSiswaPPLG = await Siswa.findAndCountAll({
+      attributes: [],
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: [],
+        where: {
+          jurusan: 'PPLG'
+        }
+      }]
+    });
+
+    const jumlahSiswaTJKT = await Siswa.findAndCountAll({
+      attributes: [],
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: [],
+        where: {
+          jurusan: 'TJKT'
+        }
+      }]
+    });
+
       
     res.status(200).json({
         status: 'success',
@@ -95,6 +167,13 @@ exports.getMainDashboardData = async (req, res) => {
         jumlahSiswaX: jumlahSiswaX,
         jumlahSiswaXI: jumlahSiswaXI,
         jumlahSiswaXII: jumlahSiswaXII,
+        jumlahSiswaAKL: jumlahSiswaAKL,
+        jumlahSiswaAKL: jumlahSiswaAKL,
+        jumlahSiswaDKV: jumlahSiswaDKV,
+        jumlahSiswaMPLB: jumlahSiswaMPLB,
+        jumlahSiswaPM: jumlahSiswaPM,
+        jumlahSiswaPPLG: jumlahSiswaPPLG,
+        jumlahSiswaTJKT: jumlahSiswaTJKT,
         siswaMasuk: siswaMasuk,
         siswaTdkNaik: siswaTdkNaik,
     });
