@@ -102,7 +102,9 @@ exports.getAllSiswa = async (req, res) => {
     page = pageAsNumber
   }
 
+
   let perPage = 10;
+  
   if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
     perPage = perPageAsNumber;
   }
@@ -136,11 +138,11 @@ exports.getAllSiswa = async (req, res) => {
 
       // pagination params
       path = 'http://127.0.0.1:8000/data-induk-siswa';
-      firstPageUrl = 'http://127.0.0.1:8000/data-induk-siswa?page=1';
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}`;
+      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}`
       } 
 
       if (page === 1) {
@@ -304,11 +306,11 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
 
       // pagination params
       path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
-      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}`;
+      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}`
       } 
     
       if (page === 1) {
