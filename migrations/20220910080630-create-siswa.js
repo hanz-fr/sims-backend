@@ -2,6 +2,11 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('siswa', {
+      id: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+        unique: true,
+      },
       nis_siswa: {
         primaryKey: true,
         allowNull: false,

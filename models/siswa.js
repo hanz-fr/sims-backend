@@ -31,6 +31,11 @@ class Siswa extends Model {
     }
   }
   Siswa.init({
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      unique: true,
+    },
     nis_siswa: {
       primaryKey: true,
       allowNull: false,
