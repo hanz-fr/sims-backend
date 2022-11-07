@@ -7,32 +7,44 @@ const kelasController = require('../controllers/kelasController');
 
 exports.getMainDashboardData = async (req, res) => {
 
-    const jurusan = await Jurusan.findAndCountAll();
-    const siswa = await Siswa.findAndCountAll();
+    const jurusan = await Jurusan.findAndCountAll({
+      attributes: ['id']
+    });
+    const siswa = await Siswa.findAndCountAll({
+      attributes: ['id']
+    });
     const mutasi = await Mutasi.findAndCountAll({
-        where: {
-            pindah_dari: {
-                [Op.is]: null
-            }
-        },
+      attributes: ['nis_siswa'],
+      where: {
+          pindah_dari: {
+              [Op.is]: null
+          }
+      },
     });
     const siswaMasuk = await Mutasi.findAndCountAll({
-        where: {
-            pindah_dari: {
-                [Op.ne]: null
-            }
-        }
+      attributes: ['nis_siswa'],
+      where: {
+          pindah_dari: {
+              [Op.ne]: null
+          }
+      }
     });
-    const kelas = await Kelas.findAndCountAll();
-    const mapel = await MapelJurusan.findAndCountAll();
+    const kelas = await Kelas.findAndCountAll({
+      attributes: ['id']
+    });
+    const mapel = await MapelJurusan.findAndCountAll({
+      attributes: ['mapelJurusanId']
+    });
     const alumni = await Siswa.findAndCountAll({
-        where: {
-            isAlumni: {
-                [Op.eq]: true
-            }
-        }
+      attributes: ['nis_siswa'],
+      where: {
+          isAlumni: {
+              [Op.eq]: true
+          }
+      }
     });
     const siswaTdkNaik = await Siswa.findAndCountAll({
+      attributes: ['nis_siswa'],
         include: [
             {
                 model: Raport,
@@ -49,9 +61,10 @@ exports.getMainDashboardData = async (req, res) => {
       include: [{
         model: Kelas,
         as: 'kelas',
+        attributes: ['id'],
         where: {
           kelas: {
-            [Op.eq]: '10'
+            [Op.eq]: '10',
           }
         }
       }]
@@ -62,6 +75,7 @@ exports.getMainDashboardData = async (req, res) => {
       include: [{
         model: Kelas,
         as: 'kelas',
+        attributes: ['id'],
         where: {
           kelas: {
             [Op.eq]: '11'
@@ -75,6 +89,7 @@ exports.getMainDashboardData = async (req, res) => {
       include: [{
         model: Kelas,
         as: 'kelas',
+        attributes: ['id'],
         where: {
           kelas: {
             [Op.eq]: '12'
@@ -88,7 +103,7 @@ exports.getMainDashboardData = async (req, res) => {
       include:[{
         model: Kelas,
         as: 'kelas',
-        attributes: [],
+        attributes: ['id'],
         where: {
           jurusan: 'AKL'
         }
@@ -100,7 +115,7 @@ exports.getMainDashboardData = async (req, res) => {
       include:[{
         model: Kelas,
         as: 'kelas',
-        attributes: [],
+        attributes: ['id'],
         where: {
           jurusan: 'DKV'
         }
@@ -112,7 +127,7 @@ exports.getMainDashboardData = async (req, res) => {
       include:[{
         model: Kelas,
         as: 'kelas',
-        attributes: [],
+        attributes: ['id'],
         where: {
           jurusan: 'MPLB'
         }
@@ -124,7 +139,7 @@ exports.getMainDashboardData = async (req, res) => {
       include:[{
         model: Kelas,
         as: 'kelas',
-        attributes: [],
+        attributes: ['id'],
         where: {
           jurusan: 'PM'
         }
@@ -136,7 +151,7 @@ exports.getMainDashboardData = async (req, res) => {
       include:[{
         model: Kelas,
         as: 'kelas',
-        attributes: [],
+        attributes: ['id'],
         where: {
           jurusan: 'PPLG'
         }
@@ -148,7 +163,7 @@ exports.getMainDashboardData = async (req, res) => {
       include:[{
         model: Kelas,
         as: 'kelas',
-        attributes: [],
+        attributes: ['id'],
         where: {
           jurusan: 'TJKT'
         }
