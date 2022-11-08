@@ -332,7 +332,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&search=${searchParams}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
       } 
     
       if (page === 1) {
