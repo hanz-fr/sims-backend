@@ -16,6 +16,7 @@ exports.getAllSiswa = async (req, res) => {
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
   const perPageAsNumber = Number.parseInt(req.query.perPage);
+  const searchParams = req.query.search;
 
   let page = 1;
   if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
@@ -62,10 +63,10 @@ exports.getAllSiswa = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-induk-siswa';
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
       } 
 
       if (page === 1) {
@@ -95,6 +96,11 @@ exports.getAllSiswa = async (req, res) => {
         ],
         where:  {
           [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
             {
               nis_siswa: {
                 [Op.like]: '%' + search + '%'
@@ -145,10 +151,10 @@ exports.getAllSiswa = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-induk-siswa';
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
       } 
 
       if (page === 1) {
@@ -188,6 +194,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
   const perPageAsNumber = Number.parseInt(req.query.perPage);
+  const searchParams = req.query.search;
 
   let page = 1;
   if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
@@ -236,10 +243,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       // pagination params
       path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
       } 
     
       if (page === 1) {
@@ -268,6 +275,11 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         ],
         where:  {
           [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + search + '%'
+              }
+            },
             {
               nis_siswa: {
                 [Op.like]: '%' + search + '%'
@@ -317,10 +329,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       // pagination params
       path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&search=${searchParams}`
       } 
     
       if (page === 1) {
@@ -476,33 +488,6 @@ exports.createSiswa = async (req, res) => {
       });
     }
 
-    // find Siswa where email already exist.
-    /* const siswaEmailExist = await Siswa.findOne({
-      where: { email: req.body.email },
-    });
-
-    // return error message to client if email siswa already exist.
-    if (siswaEmailExist) {
-      return res.status(409).json({
-        status: "error",
-        message: "Email already exist",
-      });
-    } */
-
-    /* // find if ortuid is exist or not
-    if (req.body.OrtuId) {
-      let ortuIdExist = await Ortu.findOne({
-        where: { id: req.body.OrtuId },
-      });
-
-      if (!ortuIdExist) {
-        return res.res.status(404).json({
-          status: "error",
-          message: `Ortu with id ${req.body.OrtuId} is invalid or does not exist`,
-        });
-      }
-    } */
-
     // if KelasId is not empty, check if the id exist
     if (req.body.KelasId) {
       let kelas = await Kelas.findOne({
@@ -602,19 +587,6 @@ exports.updateSiswa = async (req, res) => {
     return res.status(400).json(validate);
   }
 
-  /* // if OrtuId is not empty, check if the id exist
-  if (req.body.OrtuId) {
-    const ortuIdExist = await Ortu.findOne({
-      where: { id: req.body.OrtuId },
-    });
-
-    if (!ortuIdExist) {
-      return res.json({
-        status: "error",
-        message: "Ortu ID is invalid or does not exist",
-      });
-    }
-  } */
 
   // if KelasId is not empty, check if the id exist
   if (req.body.KelasId) {

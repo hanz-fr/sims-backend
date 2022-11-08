@@ -31,7 +31,7 @@ class Siswa extends Model {
     }
   }
   Siswa.init({
-    id: {
+    id: { 
       autoIncrement: true,
       type: DataTypes.INTEGER,
       unique: true,
