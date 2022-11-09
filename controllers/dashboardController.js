@@ -199,11 +199,31 @@ exports.getSiswaTidakNaik = async (req, res) => {
 
   const { search } = req.query;
 
+  /* Pagination */
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+  const searchParams = req.query.search;
+
+  let page = 1;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    page = pageAsNumber
+  }
+
+
+  let perPage = 10;
+  
+  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber;
+  }
+  
+
   try {
 
     if (!search) {
 
-      const siswaTdkNaik = await Siswa.findAndCountAll({
+      let siswaTdkNaik = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
         include: [
             {
                 model: Raport,
@@ -216,14 +236,41 @@ exports.getSiswaTidakNaik = async (req, res) => {
           ]
       });
 
+      let from = ((page - 1) * perPage) + 1;
+
+      let to = page * perPage;
+
+      // pagination params
+      path = 'http://127.0.0.1:8000/data-tidak-naik';
+      firstPageUrl = `http://127.0.0.1:8000/data-tidak-naik?page=1&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-tidak-naik?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-tidak-naik?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+      } 
+
+      if (page === 1) {
+        prevPageUrl = null
+      }
+
+
       res.status(200).json({
-        status: 'success',
-        result: siswaTdkNaik
+        current_page: page,
+        data: siswaTdkNaik,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
       });
 
     } else {
 
-      const siswaTdkNaik = await Siswa.findAndCountAll({
+      let siswaTdkNaik = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
         where: {
           [Op.or]: [
             {
@@ -255,9 +302,34 @@ exports.getSiswaTidakNaik = async (req, res) => {
           ]
       });
 
+      let from = ((page - 1) * perPage) + 1;
+
+      let to = page * perPage;
+
+      // pagination params
+      path = 'http://127.0.0.1:8000/data-tidak-naik';
+      firstPageUrl = `http://127.0.0.1:8000/data-tidak-naik?page=1&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-tidak-naik?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-tidak-naik?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+      } 
+
+      if (page === 1) {
+        prevPageUrl = null
+      }
+
+
       res.status(200).json({
-        status: 'success',
-        result: siswaTdkNaik
+        current_page: page,
+        data: siswaTdkNaik,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
       });
 
     }
@@ -275,11 +347,33 @@ exports.getAlumni = async (req, res) => {
 
   const { search } = req.query;
 
+  /* Pagination */
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+  const searchParams = req.query.search;
+
+  let page = 1;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    page = pageAsNumber
+  }
+
+
+  let perPage = 10;
+  
+  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber;
+  }
+
   try {
 
     if (!search) {
 
-      const alumni = await Siswa.findAll({
+      let alumni = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
+        order: [
+          ['nis_siswa', 'ASC']
+        ],
         where: {
           isAlumni: {
             [Op.is]: true
@@ -287,14 +381,41 @@ exports.getAlumni = async (req, res) => {
         }
       });
 
+      let from = ((page - 1) * perPage) + 1;
+
+      let to = page * perPage;
+
+      // pagination params
+      path = 'http://127.0.0.1:8000/data-alumni';
+      firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+      } 
+
+      if (page === 1) {
+        prevPageUrl = null
+      }
+
+
       res.status(200).json({
-        status: 'success',
-        result: alumni,
+        current_page: page,
+        data: alumni,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
       });
 
     } else {
 
-      const alumni = await Siswa.findAll({
+      let alumni = await Siswa.findAndCountAll({
+        limit: perPage,
+        offset: ( page-1 ) * perPage,
         where: {
           isAlumni: {
             [Op.is]: true
@@ -320,20 +441,39 @@ exports.getAlumni = async (req, res) => {
                 [Op.like]: '%' + search + '%',
               },
             },
-            {
-              KelasId: {
-                [Op.like]: '%' + search + '%',
-              },
-            }
           ]
         }
       });
 
-      res.status(200).json({
-        status: 'success',
-        result: alumni,
-      })
+      let from = ((page - 1) * perPage) + 1;
 
+      let to = page * perPage;
+
+      // pagination params
+      path = 'http://127.0.0.1:8000/data-alumni';
+      firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+
+      if (page > 1) {
+        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+      } 
+
+      if (page === 1) {
+        prevPageUrl = null
+      }
+
+
+      res.status(200).json({
+        current_page: page,
+        data: alumni,
+        first_page_url: firstPageUrl,
+        from: from,
+        next_page_url: nextPageUrl,
+        path: path,
+        per_page: perPage,
+        prev_page_url: prevPageUrl,
+        to: to,
+      });
     }
 
   } catch (error) {

@@ -11,6 +11,7 @@ const v = new Validator();
 exports.getAllMutasi = async (req, res) => {
 
     const { search } = req.query;
+    const searchParams = req.query.search;
 
     /* Pagination */
     const pageAsNumber = Number.parseInt(req.query.page);
@@ -48,10 +49,10 @@ exports.getAllMutasi = async (req, res) => {
             // pagination params
             path = 'http://127.0.0.1:8000/siswa-keluar';
             firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1&perPage=${perPage}`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}`;
+            nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
         
             if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}`
+                prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
             } 
         
             if (page === 1) {
@@ -122,10 +123,10 @@ exports.getAllMutasi = async (req, res) => {
             // pagination params
             path = 'http://127.0.0.1:8000/siswa-keluar';
             firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}`;
+            nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
         
             if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}`
+                prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
             } 
         
             if (page === 1) {
@@ -162,6 +163,7 @@ exports.getAllMutasiMasuk = async (req, res) => {
     /* Pagination */
     const pageAsNumber = Number.parseInt(req.query.page);
     const perPageAsNumber = Number.parseInt(req.query.perPage);
+    const searchParams = req.query.search;
 
     let page = 1;
     if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
@@ -194,10 +196,10 @@ exports.getAllMutasiMasuk = async (req, res) => {
             // pagination params
             path = 'http://127.0.0.1:8000/siswa-masuk';
             firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}`;
+            nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
         
             if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}`
+                prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
             } 
         
             if (page === 1) {
@@ -272,10 +274,10 @@ exports.getAllMutasiMasuk = async (req, res) => {
             // pagination params
             path = 'http://127.0.0.1:8000/siswa-masuk';
             firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}`;
+            nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
         
             if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}`
+                prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
             } 
         
             if (page === 1) {
