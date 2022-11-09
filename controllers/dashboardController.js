@@ -441,6 +441,11 @@ exports.getAlumni = async (req, res) => {
                 [Op.like]: '%' + search + '%',
               },
             },
+            {
+              KelasId: {
+                [Op.like]: '%' + search + '%',
+              },
+            },
           ]
         }
       });
