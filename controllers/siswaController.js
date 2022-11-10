@@ -38,7 +38,7 @@ exports.getAllSiswa = async (req, res) => {
         limit: perPage,
         offset: ( page-1 ) * perPage,
         order: [
-          ['id', 'ASC']
+          ['nama_siswa', 'ASC']
         ],
         include: [
           {
@@ -92,7 +92,7 @@ exports.getAllSiswa = async (req, res) => {
         limit: perPage,
         offset: ( page-1 ) * perPage,
         order: [
-          ['id', 'ASC']
+          ['nama_siswa', 'ASC']
         ],
         where:  {
           [Op.or]: [
