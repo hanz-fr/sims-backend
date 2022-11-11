@@ -9,6 +9,42 @@ const searchBuilder = require('sequelize-search-builder');
 const v = new Validator();
 
 
+exports.getSiswaFilterredTest = async (req, res) => {
+
+ let from = req.query.from;
+ let to = req.query.to;
+
+ if (!from) {
+  from = '2000-01-01'
+ }
+
+ if (!to) {
+
+  let siswa = await Siswa.findAndCountAll();
+
+  res.status(200).json(siswa);
+
+ } else {
+
+  let siswa = await Siswa.findAndCountAll({
+    where: {
+      tgl_lahir: {
+        [Op.between]: [from, to]
+      }
+    },
+    order: [
+      ['tgl_lahir', 'ASC']
+    ]
+  });
+ 
+  res.status(200).json(siswa);
+
+ }
+
+} 
+
+
+
 exports.getAllSiswa = async (req, res) => {
 
   const { search } = req.query;
