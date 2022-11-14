@@ -11,36 +11,131 @@ const v = new Validator();
 
 exports.getSiswaFilterredTest = async (req, res) => {
 
- let from = req.query.from;
- let to = req.query.to;
+  const search = req.query.search || "";
+  let fromDate = req.query.dibuatTglDari || "";
+  let toDate = req.query.dibuatTglKe || "";
+  let sort_by = req.query.sort_by || "nama_siswa";
+  let sort = req.query.sort || "ASC";
+  let nis_siswa = req.query.nis_siswa || "";
+  let nisn_siswa = req.query.nisn_siswa || "";
+  let nama_siswa = req.query.nama_siswa || "";
+  let jenis_kelamin = req.query.jenis_kelamin || "";
+  let KelasId = req.query.KelasId || "";
 
- if (!from) {
-  from = '2000-01-01'
- }
+    
 
- if (!to) {
-
-  let siswa = await Siswa.findAndCountAll();
-
-  res.status(200).json(siswa);
-
- } else {
-
-  let siswa = await Siswa.findAndCountAll({
-    where: {
-      tgl_lahir: {
-        [Op.between]: [from, to]
+  if (!search) {
+  
+    let siswa = await Siswa.findAndCountAll({
+      order: [
+        [sort_by, sort]
+      ],
+      limit: 30,
+      where: {
+        [Op.or]: [{
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          }
+        }]
       }
-    },
-    order: [
-      ['tgl_lahir', 'ASC']
-    ]
-  });
- 
-  res.status(200).json(siswa);
+    });
 
- }
+    res.status(200).json(siswa);
 
+  } else {
+
+    /* 
+    Initialize variable with +?+ so there wont
+    be any results of the following parameters.
+    */
+
+    let searchByNis = '+?+';
+    let searchByNisn = '+?+';
+    let searchByNama = '+?+';
+    let searchByGender = '+?+';
+    let searchByKelas = '+?+';
+
+    /*
+    If there's any parameters with search query is enabled,
+    the previous value of variable will be replaced with search.
+     */
+
+    if (nis_siswa === "true") {
+      searchByNis = search;
+    }
+
+    if (nisn_siswa === "true") {
+      searchByNisn = search;
+    }
+
+    if (nama_siswa === "true") {
+      searchByNama = search;
+    }
+
+    if (jenis_kelamin === "true") {
+      searchByGender = search;
+    }
+
+    if (KelasId === "true") {
+      searchByKelas = search;
+    }
+
+    /* 
+    If there are no parameters set to true,
+    All parameters will have the same value as search.
+    */
+
+   if (!nis_siswa && !nisn_siswa && !nama_siswa && !jenis_kelamin && !KelasId) {
+    searchByNis = search;
+    searchByNisn = search;
+    searchByNama = search;
+    searchByGender = search;
+    searchByKelas = search;
+   }
+
+
+
+    let siswa = await Siswa.findAndCountAll({
+      limit: 30,
+      order: [
+        [sort_by, sort]
+      ],
+      where:  {
+        jenis_kelamin: searchByGender,
+        [Op.or]: [
+          {
+            nis_siswa: {
+              [Op.like]: '%' + searchByNis + '%'
+            }
+          },
+          {
+            nisn_siswa: {
+              [Op.like]: '%' + searchByNisn + '%'
+            }
+          },
+          {
+            nama_siswa: {
+              [Op.like]: '%' + searchByNama + '%'
+            }
+          },
+          {
+            KelasId: {
+              [Op.like]: '%' + searchByKelas + '%'
+            }
+          },
+          {
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }
+        ]
+      },  
+
+    });
+
+    res.status(200).json(siswa);
+
+  }
 } 
 
 
@@ -48,6 +143,12 @@ exports.getSiswaFilterredTest = async (req, res) => {
 exports.getAllSiswa = async (req, res) => {
 
   const { search } = req.query;
+  const { nis_siswa } = req.query;
+  const { nisn_siswa } = req.query;
+  const { nama_siswa } = req.query;
+  const { jenis_kelamin } = req.query;
+  const { KelasId } = req.query; 
+
 
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -108,7 +209,6 @@ exports.getAllSiswa = async (req, res) => {
       if (page === 1) {
         prevPageUrl = null
       }
-
 
       res.status(200).json({
         current_page: page,

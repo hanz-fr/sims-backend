@@ -5,7 +5,7 @@ const controller = require('../controllers/siswaController');
 
 
 router.get('/', controller.getAllSiswa); // get all siswa
-router.get('/filter/tgl-lahir', controller.getSiswaFilterredTest); // get siswa filterred
+router.get('/filter/test-search', controller.getSiswaFilterredTest); // get siswa filterred
 router.get('/:jurusan/:kelas', controller.getAllSiswaByJurusanKelas)
 router.get('/:nis_siswa', controller.getSiswa); // get siswa by nis
 router.post('/', controller.createSiswa); // create route

@@ -29,6 +29,14 @@ exports.getMainDashboardData = async (req, res) => {
           }
       }
     });
+    const siswaKeluar = await Mutasi.findAndCountAll({
+      attributes: ['nis_siswa'],
+      where: {
+        keluar_di_kelas: {
+          [Op.ne]: null
+        }
+      }
+    });
     const kelas = await Kelas.findAndCountAll({
       attributes: ['id']
     });
@@ -190,6 +198,7 @@ exports.getMainDashboardData = async (req, res) => {
         jumlahSiswaPPLG: jumlahSiswaPPLG,
         jumlahSiswaTJKT: jumlahSiswaTJKT,
         siswaMasuk: siswaMasuk,
+        siswaKeluar: siswaKeluar,
         siswaTdkNaik: siswaTdkNaik,
     });
 }
