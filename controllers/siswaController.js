@@ -17,6 +17,13 @@ exports.getAllSiswa = async (req, res) => {
   let sort_by = req.query.sort_by || "nama_siswa";
   let sort = req.query.sort || "ASC";
 
+  let id = req.query.id || '';
+  let nis_siswa = req.query.nis_siswa || '';
+  let nisn_siswa = req.query.nisn_siswa || '';
+  let nama_siswa = req.query.nama_siswa || '';
+  let jenis_kelamin = req.query.jenis_kelamin || '';
+  let KelasId = req.query.KelasId || '';
+
 
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -75,10 +82,10 @@ exports.getAllSiswa = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-induk-siswa';
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}`
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`
       } 
 
       if (page === 1) {
@@ -110,46 +117,33 @@ exports.getAllSiswa = async (req, res) => {
       let searchByNama = '+?+';
       let searchByGender = '+?+';
       let searchByKelas = '+?+';
-
-      let id = '';
-      let nis_siswa = '';
-      let nisn_siswa = '';
-      let nama_siswa = '';
-      let jenis_kelamin = '';
-      let KelasId = '';
   
       /*
       If there's any parameters with search query is enabled,
       the previous value of variable will be replaced with search.
        */
   
-      if (req.query.id) {
-        id = "true";
+      if (id === "true") {
         searchById = search;
       }
 
-      if (req.query.nis_siswa) {
-        nis_siswa = "true";
+      if (nis_siswa === "true") {
         searchByNis = search;
       }
   
-      if (req.query.nisn_siswa) {
-        nisn_siswa = "true";
+      if (nisn_siswa === "true") {
         searchByNisn = search;
       }
   
-      if (req.query.nama_siswa) {
-        nama_siswa = "true";
+      if (nama_siswa === "true") {
         searchByNama = search;
       }
   
-      if (req.query.jenis_kelamin) {
-        jenis_kelamin = "true";
+      if (jenis_kelamin === "true") {
         searchByGender = search;
       }
   
-      if (req.query.KelasId) {
-        KelasId = "true";
+      if (KelasId === "true") {
         searchByKelas = search;
       }
   
@@ -204,7 +198,7 @@ exports.getAllSiswa = async (req, res) => {
             KelasId: {
               [Op.like]: '%' + searchByKelas + '%'
             }
-          }
+          },
         ]
       },  
       include: [
@@ -230,10 +224,10 @@ exports.getAllSiswa = async (req, res) => {
     // pagination params
     path = 'http://127.0.0.1:8000/data-induk-siswa';
     firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-    nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}`;
+    nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
 
     if (page > 1) {
-      prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}`
+      prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
     } 
 
     if (page === 1) {
