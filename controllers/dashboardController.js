@@ -355,6 +355,17 @@ exports.getSiswaTidakNaik = async (req, res) => {
 exports.getAlumni = async (req, res) => {
 
   const { search } = req.query;
+  let fromDate = req.query.dibuatTglDari || "";
+  let toDate = req.query.dibuatTglKe || "";
+  let sort_by = req.query.sort_by || "nama_siswa";
+  let sort = req.query.sort || "ASC";
+
+  let id = req.query.id || '';
+  let nis_siswa = req.query.nis_siswa || '';
+  let nisn_siswa = req.query.nisn_siswa || '';
+  let nama_siswa = req.query.nama_siswa || '';
+  let jenis_kelamin = req.query.jenis_kelamin || '';
+  let KelasId = req.query.KelasId || '';
 
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -381,7 +392,7 @@ exports.getAlumni = async (req, res) => {
         limit: perPage,
         offset: ( page-1 ) * perPage,
         order: [
-          ['nis_siswa', 'ASC']
+          [sort_by, sort]
         ],
         where: {
           isAlumni: {
@@ -397,10 +408,10 @@ exports.getAlumni = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-alumni';
       firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
       } 
 
       if (page === 1) {
@@ -422,6 +433,61 @@ exports.getAlumni = async (req, res) => {
 
     } else {
 
+      /* 
+      Initialize variable with +?+ so there wont
+      be any results of the following parameters.
+      */
+  
+      let searchById = '+?+';
+      let searchByNis = '+?+';
+      let searchByNisn = '+?+';
+      let searchByNama = '+?+';
+      let searchByGender = '+?+';
+      let searchByKelas = '+?+';
+  
+      /*
+      If there's any parameters with search query is enabled,
+      the previous value of variable will be replaced with search.
+       */
+  
+      if (id === "true") {
+        searchById = search;
+      }
+
+      if (nis_siswa === "true") {
+        searchByNis = search;
+      }
+  
+      if (nisn_siswa === "true") {
+        searchByNisn = search;
+      }
+  
+      if (nama_siswa === "true") {
+        searchByNama = search;
+      }
+  
+      if (jenis_kelamin === "true") {
+        searchByGender = search;
+      }
+  
+      if (KelasId === "true") {
+        searchByKelas = search;
+      }
+  
+      /* 
+      If there are no parameters set to true,
+      All parameters will have the same value as search.
+      */
+  
+     if (!req.query.nis_siswa && !req.query.nisn_siswa && !req.query.nama_siswa && !req.query.jenis_kelamin && !req.query.KelasId) {
+      searchById = search;
+      searchByNis = search;
+      searchByNisn = search;
+      searchByNama = search;
+      searchByGender = search;
+      searchByKelas = search;
+     }
+
       let alumni = await Siswa.findAndCountAll({
         limit: perPage,
         offset: ( page-1 ) * perPage,
@@ -431,28 +497,33 @@ exports.getAlumni = async (req, res) => {
           },
           [Op.or]: [
             {
+              id: {
+                [Op.like]: '%' + searchById + '%',
+              },
+            },
+            {
               nis_siswa: {
-                [Op.like]: '%' + search + '%',
+                [Op.like]: '%' + searchByNis + '%',
               },
             },
             {
               nisn_siswa: {
-                [Op.like]: '%' + search + '%',
+                [Op.like]: '%' + searchByNisn + '%',
               },
             },
             {
               nama_siswa: {
-                [Op.like]: '%' + search + '%',
+                [Op.like]: '%' + searchByNama + '%',
               },
             },
             {
               jenis_kelamin: {
-                [Op.like]: '%' + search + '%',
+                [Op.like]: '%' + searchByGender + '%',
               },
             },
             {
               KelasId: {
-                [Op.like]: '%' + search + '%',
+                [Op.like]: '%' + searchByKelas + '%',
               },
             },
           ]
@@ -466,10 +537,10 @@ exports.getAlumni = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-alumni';
       firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
 
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
       } 
 
       if (page === 1) {
