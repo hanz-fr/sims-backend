@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE'
       });
       Raport.belongsTo(models.Siswa, {
+        as: "siswa",
         foreignKey: "nis_siswa",
         targetKey: "nis_siswa"
       });
