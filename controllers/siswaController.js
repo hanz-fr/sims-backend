@@ -46,69 +46,139 @@ exports.getAllSiswa = async (req, res) => {
     
     if (!search) {
     
-      let siswa = await Siswa.findAndCountAll({
-        limit: perPage,
-        offset: ( page-1 ) * perPage,
-        order: [
-          [sort_by, sort]
-        ],
-        where: {
-          isAlumni: {
-            [Op.ne]: true
+      if (fromDate != "" || toDate != "") {
+
+        let siswa = await Siswa.findAndCountAll({
+          limit: perPage,
+          offset: ( page-1 ) * perPage,
+          order: [
+            [sort_by, sort]
+          ],
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+            [Op.or]: [{
+              createdAt: {
+                [Op.between]: [fromDate, toDate]
+              }
+            }]
           },
-          [Op.or]: [{
-            createdAt: {
-              [Op.between]: [fromDate, toDate]
+          include: [
+            {
+              model: Raport,
+              as: 'raport'
+            },
+            {
+              model: Kelas,
+              as: 'kelas',
+            },
+            {
+              model: Mutasi,
+              as: 'mutasi',
             }
-          }]
-        },
-        include: [
-          {
-            model: Raport,
-            as: 'raport'
-          },
-          {
-            model: Kelas,
-            as: 'kelas',
-          },
-          {
-            model: Mutasi,
-            as: 'mutasi',
-          }
-        ],
-      });
+          ],
+        });
+    
+        let from = ((page - 1) * perPage) + 1;
   
-      let from = ((page - 1) * perPage) + 1;
+        let to = page * perPage;
+  
+        // pagination params
+        path = 'http://127.0.0.1:8000/data-induk-siswa';
+        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+  
+        if (page > 1) {
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`
+        } 
+  
+        if (page === 1) {
+          prevPageUrl = null
+        }
+  
+        res.status(200).json({
+          resultId: 1,
+          current_page: page,
+          data: siswa,
+          first_page_url: firstPageUrl,
+          from: from,
+          next_page_url: nextPageUrl,
+          path: path,
+          per_page: perPage,
+          prev_page_url: prevPageUrl,
+          to: to,
+          fromDate: fromDate,
+          toDate: toDate,
+        });
 
-      let to = page * perPage;
+      } else {
 
-      // pagination params
-      path = 'http://127.0.0.1:8000/data-induk-siswa';
-      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+        let siswa = await Siswa.findAndCountAll({
+          limit: perPage,
+          offset: ( page-1 ) * perPage,
+          order: [
+            [sort_by, sort]
+          ],
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+            /* [Op.or]: [{
+              createdAt: {
+                [Op.between]: [fromDate, toDate]
+              }
+            }] */
+          },
+          include: [
+            {
+              model: Raport,
+              as: 'raport'
+            },
+            {
+              model: Kelas,
+              as: 'kelas',
+            },
+            {
+              model: Mutasi,
+              as: 'mutasi',
+            }
+          ],
+        });
+    
+        let from = ((page - 1) * perPage) + 1;
+  
+        let to = page * perPage;
+  
+        // pagination params
+        path = 'http://127.0.0.1:8000/data-induk-siswa';
+        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+  
+        if (page > 1) {
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`
+        } 
+  
+        if (page === 1) {
+          prevPageUrl = null
+        }
+  
+        res.status(200).json({
+          resultId: 2,
+          current_page: page,
+          data: siswa,
+          first_page_url: firstPageUrl,
+          from: from,
+          next_page_url: nextPageUrl,
+          path: path,
+          per_page: perPage,
+          prev_page_url: prevPageUrl,
+          to: to,
+          fromDate: fromDate,
+          toDate: toDate,
+        });
 
-      if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`
-      } 
-
-      if (page === 1) {
-        prevPageUrl = null
       }
-
-      res.status(200).json({
-        resultId: 1,
-        current_page: page,
-        data: siswa,
-        first_page_url: firstPageUrl,
-        from: from,
-        next_page_url: nextPageUrl,
-        path: path,
-        per_page: perPage,
-        prev_page_url: prevPageUrl,
-        to: to,
-        fromDate: fromDate,
-        toDate: toDate,
-      });
   
     } else {
   
@@ -183,6 +253,9 @@ exports.getAllSiswa = async (req, res) => {
           isAlumni: {
             [Op.ne]: true
           },
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          },
           [Op.or]: [
             {
               id: {
@@ -214,11 +287,6 @@ exports.getAllSiswa = async (req, res) => {
                 [Op.like]: '%' + searchByKelas + '%'
               }
             },
-            {
-              createdAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }
           ]
         },  
         include: [
@@ -244,10 +312,10 @@ exports.getAllSiswa = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-induk-siswa';
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
   
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
       } 
   
       if (page === 1) {
@@ -256,7 +324,7 @@ exports.getAllSiswa = async (req, res) => {
   
   
       res.status(200).json({
-        resultId: 2,
+        resultId: 3,
         current_page: page,
         data: siswa,
         first_page_url: firstPageUrl,
@@ -338,10 +406,10 @@ exports.getAllSiswa = async (req, res) => {
       // pagination params
       path = 'http://127.0.0.1:8000/data-induk-siswa';
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
   
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
       } 
   
       if (page === 1) {
@@ -350,7 +418,7 @@ exports.getAllSiswa = async (req, res) => {
   
   
       res.status(200).json({
-        resultId: 3,
+        resultId: 4,
         current_page: page,
         data: siswa,
         first_page_url: firstPageUrl,
@@ -376,180 +444,6 @@ exports.getAllSiswa = async (req, res) => {
 
 
 } 
-
-
-
-// exports.getAllSiswa2 = async (req, res) => {
-
-//   const search  = req.query.search;
-
-//   /* Pagination */
-//   const pageAsNumber = Number.parseInt(req.query.page);
-//   const perPageAsNumber = Number.parseInt(req.query.perPage);
-
-//   let page = 1;
-//   if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
-//     page = pageAsNumber
-//   }
-
-
-//   let perPage = 10;
-  
-//   if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
-//     perPage = perPageAsNumber;
-//   }
-
-//   try {
-
-//     if (!search) {
-
-//       let siswa = await Siswa.findAndCountAll({
-//         limit: perPage,
-//         offset: ( page-1 ) * perPage,
-//         order: [
-//           ['nama_siswa', 'ASC']
-//         ],
-//         include: [
-//           {
-//             model: Raport,
-//             as: 'raport'
-//           },
-//           {
-//             model: Kelas,
-//             as: 'kelas',
-//           },
-//           {
-//             model: Mutasi,
-//             as: 'mutasi',
-//           }
-//         ],
-//       });
-
-//       let from = ((page - 1) * perPage) + 1;
-
-//       let to = page * perPage;
-
-//       // pagination params
-//       path = 'http://127.0.0.1:8000/data-induk-siswa';
-//       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-//       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}`;
-
-//       if (page > 1) {
-//         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}`
-//       } 
-
-//       if (page === 1) {
-//         prevPageUrl = null
-//       }
-
-//       res.status(200).json({
-//         current_page: page,
-//         data: siswa,
-//         first_page_url: firstPageUrl,
-//         from: from,
-//         next_page_url: nextPageUrl,
-//         path: path,
-//         per_page: perPage,
-//         prev_page_url: prevPageUrl,
-//         to: to,
-//       });
-
-//     } else {
-
-//       let siswa = await Siswa.findAndCountAll({
-//         limit: perPage,
-//         offset: ( page-1 ) * perPage,
-//         order: [
-//           ['nama_siswa', 'ASC']
-//         ],
-//         where:  {
-//           [Op.or]: [
-//             {
-//               id: {
-//                 [Op.like]: '%' + search + '%'
-//               }
-//             },
-//             {
-//               nis_siswa: {
-//                 [Op.like]: '%' + search + '%'
-//               }
-//             },
-//             {
-//               nisn_siswa: {
-//                 [Op.like]: '%' + search + '%'
-//               }
-//             },
-//             {
-//               nama_siswa: {
-//                 [Op.like]: '%' + search + '%'
-//               }
-//             },
-//             {
-//               jenis_kelamin: {
-//                 [Op.like]: '%' + search + '%'
-//               }
-//             },
-//             {
-//               KelasId: {
-//                 [Op.like]: '%' + search + '%'
-//               }
-//             }
-//           ]
-//         },  
-//         include: [
-//           {
-//             model: Raport,
-//             as: 'raport'
-//           },
-//           {
-//             model: Kelas,
-//             as: 'kelas',
-//           },
-//           {
-//             model: Mutasi,
-//             as: 'mutasi',
-//           }
-//         ],
-//       });
-      
-//       let from = ((page - 1) * perPage) + 1;
-
-//       let to = page * perPage;
-
-//       // pagination params
-//       path = 'http://127.0.0.1:8000/data-induk-siswa';
-//       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-//       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}`;
-
-//       if (page > 1) {
-//         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}`
-//       } 
-
-//       if (page === 1) {
-//         prevPageUrl = null
-//       }
-
-
-//       res.status(200).json({
-//         current_page: page,
-//         data: siswa,
-//         first_page_url: firstPageUrl,
-//         from: from,
-//         next_page_url: nextPageUrl,
-//         path: path,
-//         per_page: perPage,
-//         prev_page_url: prevPageUrl,
-//         to: to,
-//       });
-
-//     }    
-
-//   } catch (error) {
-//     res.status(404).json({
-//       message: error.message,
-//     });
-//   }
-// }
 
 
 exports.getAllSiswaByJurusanKelas = async (req, res) => {
@@ -588,70 +482,143 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
 
     if (!search) {
 
-      const siswa = await Siswa.findAndCountAll({
-        limit: perPage,
-        offset: ( page-1 ) * perPage,
-        order: [
-          [sort_by, sort]
-        ],
-        where: {
-          isAlumni: {
-            [Op.ne]: true
+      if (fromDate != "" || toDate != "") {
+      
+        const siswa = await Siswa.findAndCountAll({
+          limit: perPage,
+          offset: ( page-1 ) * perPage,
+          order: [
+            [sort_by, sort]
+          ],
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+            [Op.or]: [{
+              createdAt: {
+                [Op.between]: [fromDate, toDate]
+              }
+            }]
           },
-          [Op.or]: [{
-            createdAt: {
-              [Op.between]: [fromDate, toDate]
+          include: [
+            {
+              model: Raport,
+              as: 'raport'
+            },
+            {
+              model: Kelas,
+              as: 'kelas',
+              where: {
+                kelas: kelas,
+                jurusan: jurusan
+              }
+            },
+            {
+              model: Mutasi,
+              as: 'mutasi',
             }
-          }]
-        },
-        include: [
-          {
-            model: Raport,
-            as: 'raport'
+          ]
+        });
+  
+        let from = ((page - 1) * perPage) + 1;
+  
+        let to = page * perPage;
+  
+        // pagination params
+        path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
+        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+  
+        if (page > 1) {
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+        } 
+      
+        if (page === 1) {
+          prevPageUrl = null
+        }
+      
+        res.status(200).json({
+          resultId: 1,
+          current_page: page,
+          data: siswa,
+          first_page_url: firstPageUrl,
+          from: from,
+          next_page_url: nextPageUrl,
+          path: path,
+          per_page: perPage,
+          prev_page_url: prevPageUrl,
+          to: to,
+        });
+      
+      } else {
+
+        const siswa = await Siswa.findAndCountAll({
+          limit: perPage,
+          offset: ( page-1 ) * perPage,
+          order: [
+            [sort_by, sort]
+          ],
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+            /* [Op.or]: [{
+              createdAt: {
+                [Op.between]: [fromDate, toDate]
+              }
+            }] */
           },
-          {
-            model: Kelas,
-            as: 'kelas',
-            where: {
-              kelas: kelas,
-              jurusan: jurusan
+          include: [
+            {
+              model: Raport,
+              as: 'raport'
+            },
+            {
+              model: Kelas,
+              as: 'kelas',
+              where: {
+                kelas: kelas,
+                jurusan: jurusan
+              }
+            },
+            {
+              model: Mutasi,
+              as: 'mutasi',
             }
-          },
-          {
-            model: Mutasi,
-            as: 'mutasi',
-          }
-        ]
-      });
+          ]
+        });
+  
+        let from = ((page - 1) * perPage) + 1;
+  
+        let to = page * perPage;
+  
+        // pagination params
+        path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
+        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+  
+        if (page > 1) {
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+        } 
+      
+        if (page === 1) {
+          prevPageUrl = null
+        }
+      
+        res.status(200).json({
+          resultId: 2,
+          current_page: page,
+          data: siswa,
+          first_page_url: firstPageUrl,
+          from: from,
+          next_page_url: nextPageUrl,
+          path: path,
+          per_page: perPage,
+          prev_page_url: prevPageUrl,
+          to: to,
+        }); 
 
-      let from = ((page - 1) * perPage) + 1;
-
-      let to = page * perPage;
-
-      // pagination params
-      path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
-      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
-
-      if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
-      } 
-    
-      if (page === 1) {
-        prevPageUrl = null
       }
-    
-      res.status(200).json({
-        current_page: page,
-        data: siswa,
-        first_page_url: firstPageUrl,
-        from: from,
-        next_page_url: nextPageUrl,
-        path: path,
-        per_page: perPage,
-        prev_page_url: prevPageUrl,
-        to: to,
-      }); 
 
     } else {
 
@@ -722,6 +689,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           isAlumni: {
             [Op.ne]: true
           },
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          },
           [Op.or]: [
             {
               id: {
@@ -753,11 +723,6 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
                 [Op.like]: '%' + searchByKelas + '%'
               }
             },
-            {
-              createdAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }
           ]
         },
         include: [
@@ -788,10 +753,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       // pagination params
       path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
   
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
       } 
     
       if (page === 1) {
@@ -799,6 +764,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       }
     
       res.status(200).json({
+        resultId: 3,
         current_page: page,
         data: siswa,
         first_page_url: firstPageUrl,
@@ -883,10 +849,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
        // pagination params
        path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
    
        if (page > 1) {
-         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe${toDate}`;
+         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
        } 
      
        if (page === 1) {
@@ -894,6 +860,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
        }
      
        res.status(200).json({
+        resultId: 4,
          current_page: page,
          data: siswa,
          first_page_url: firstPageUrl,
@@ -947,6 +914,10 @@ exports.getSiswa = async (req, res) => {
       {
         model: Kelas,
         as: 'kelas'
+      },
+      {
+        model: Mutasi,
+        as: 'mutasi',
       }
     ],
     where: {
