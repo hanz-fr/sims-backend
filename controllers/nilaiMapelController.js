@@ -226,3 +226,25 @@ exports.deleteNilaiMapel = async (req, res) => {
     message: 'Nilai mapel deleted successfully'
   });
 };
+
+
+exports.getNilaiMapelByRaportId = async (req, res) => {
+
+  const raportId = req.params.raportId;
+
+  let mapel = await NilaiMapel.findAndCountAll({
+    where: {
+      RaportId: {
+        [Op.eq]: raportId
+      }
+    },
+    include: [
+      {
+        model: MapelJurusan
+      }
+    ]
+  });
+
+  res.status(200).json(mapel);
+
+}

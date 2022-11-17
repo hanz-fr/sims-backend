@@ -5,6 +5,7 @@ const controller = require('../controllers/nilaiMapelController');
 
 router.get('/', controller.getAllNilaiMapel);
 router.get('/:id', controller.getNilaiMapel);
+router.get('/get-by/:raportId',  controller.getNilaiMapelByRaportId);
 router.post('/', controller.createNilaiMapel);
 router.put('/:id', controller.updateNilaiMapel);
 router.delete('/:id', controller.deleteNilaiMapel);

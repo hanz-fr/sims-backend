@@ -38,7 +38,7 @@ exports.getRaport = async (req, res) => {
         include: [
             {
                 model: Siswa,
-                as: 'Siswa',
+                as: 'siswa',
             },
             {
                 model: NilaiMapel,
