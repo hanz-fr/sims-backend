@@ -264,8 +264,8 @@ exports.getSiswaTidakNaik = async (req, res) => {
   const { search } = req.query;
   let fromDate = req.query.dibuatTglDari || "";
   let toDate = req.query.dibuatTglKe || "";
-  let sort_by= req.query.sort_by|| "id";
-  let sort= req.query.sort|| "ASC";'nis_siswa'
+  let sort_by = req.query.sort_by || "id";
+  let sort = req.query.sort || "ASC";
 
 
   let nama_siswa = req.query.nama_siswa || '';
