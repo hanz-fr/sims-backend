@@ -379,7 +379,18 @@ exports.getAllMutasi = async (req, res) => {
 exports.getAllMutasiMasuk = async (req, res) => {
 
     const { search } = req.query;
+    let fromDate = req.query.tgl_masuk_dari || "";
+    let toDate = req.query.tgl_masuk_ke || "";
+    let sort_by = req.query.sort_by || "nama_siswa";
+    let sort = req.query.sort || "ASC"; 
 
+    let nama_siswa = req.query.nama_siswa || '';
+    let nis_siswa = req.query.nis_siswa || '';
+    let jenis_kelamin    = req.query.jenis_kelamin  || '';
+    let tgl_mutasi = req.query.tgl_mutasi || '';
+    let diterima_di_kelas = req.query.diterima_di_kelas || '';
+    let pindah_dari = req.query.pindah_dari || '';
+    let alasan_mutasi = req.query.alasan_mutasi || '';
 
     /* Pagination */
     const pageAsNumber = Number.parseInt(req.query.page);
@@ -400,44 +411,115 @@ exports.getAllMutasiMasuk = async (req, res) => {
 
         if (!search) {
 
-            const mutasi = await Mutasi.findAndCountAll({
-                where: {
-                    pindah_dari: {
-                        [Op.ne]: null
-                    }
-                },
-                limit: perPage,
-                offset: ( page-1 ) * perPage,
-            });
-        
-            let from = ((page -1) * perPage) + 1;
-        
-            let to = page * perPage;
-        
-            // pagination params
-            path = 'http://127.0.0.1:8000/siswa-masuk';
-            firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
-        
-            if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
-            } 
-        
-            if (page === 1) {
-                prevPageUrl = null
+            if (fromDate != "" || toDate != "") {
+            
+                const mutasi = await Mutasi.findAndCountAll({
+                    limit: perPage,
+                    offset: ( page-1 ) * perPage,
+                    order: [
+                        ['siswa', sort_by, sort]
+                    ],
+                    where: {
+                        pindah_dari: {
+                            [Op.ne]: null
+                        },
+                        [Op.or]: [{
+                            tgl_mutasi: {
+                              [Op.between]: [fromDate, toDate]
+                            }
+                        }]
+                    },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
+                });
+            
+                let from = ((page -1) * perPage) + 1;
+            
+                let to = page * perPage;
+            
+                // pagination params
+                path = 'http://127.0.0.1:8000/siswa-masuk';
+                firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+            
+                if (page > 1) {
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+                } 
+            
+                if (page === 1) {
+                    prevPageUrl = null
+                }
+            
+                res.status(200).json({
+                    resultId: 1,
+                    current_page: page,
+                    data: mutasi,
+                    first_page_url: firstPageUrl,
+                    from: from,
+                    next_page_url: nextPageUrl,
+                    path: path,
+                    per_page: perPage,
+                    prev_page_url: prevPageUrl,
+                    to: to,
+                }); 
+
+            } else {
+
+                const mutasi = await Mutasi.findAndCountAll({
+                    limit: perPage,
+                    offset: ( page-1 ) * perPage,
+                    order: [
+                        ['siswa', sort_by, sort]
+                    ],
+                    where: {
+                        pindah_dari: {
+                            [Op.ne]: null
+                        },
+                    },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
+                });
+            
+                let from = ((page -1) * perPage) + 1;
+            
+                let to = page * perPage;
+            
+                // pagination params
+                path = 'http://127.0.0.1:8000/siswa-masuk';
+                firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+            
+                if (page > 1) {
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+                } 
+            
+                if (page === 1) {
+                    prevPageUrl = null
+                }
+            
+                res.status(200).json({
+                    resultId: 1,
+                    current_page: page,
+                    data: mutasi,
+                    first_page_url: firstPageUrl,
+                    from: from,
+                    next_page_url: nextPageUrl,
+                    path: path,
+                    per_page: perPage,
+                    prev_page_url: prevPageUrl,
+                    to: to,
+                }); 
+
             }
-        
-            res.status(200).json({
-                current_page: page,
-                data: mutasi,
-                first_page_url: firstPageUrl,
-                from: from,
-                next_page_url: nextPageUrl,
-                path: path,
-                per_page: perPage,
-                prev_page_url: prevPageUrl,
-                to: to,
-            }); 
+
 
         } else {
 
