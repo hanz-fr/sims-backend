@@ -11,7 +11,17 @@ const v = new Validator();
 exports.getAllMutasi = async (req, res) => {
 
     const { search } = req.query;
-    const searchParams = req.query.search;
+    let fromDate = req.query.tgl_keluar_dari || "";
+    let toDate = req.query.tgl_keluar_ke || "";
+    let sort_by = req.query.sort_by || "nama_siswa";
+    let sort = req.query.sort || "ASC"; 
+
+    let nama_siswa = req.query.nama_siswa || '';
+    let nis_siswa = req.query.nis_siswa || '';
+    let keluar_di_kelas = req.query.keluar_di_kelas || '';
+    let tgl_mutasi = req.query.tgl_mutasi || '';
+    let sk_mutasi = req.query.sk_mutasi || '';
+    let alasan_mutasi = req.query.alasan_mutasi || '';
 
     /* Pagination */
     const pageAsNumber = Number.parseInt(req.query.page);
@@ -31,120 +41,331 @@ exports.getAllMutasi = async (req, res) => {
 
         if (!search) {
 
-            const mutasi = await Mutasi.findAndCountAll({
-                where: {
-                    pindah_dari: {
-                        [Op.is]: null
+            if (fromDate != "" || toDate != "") {
+
+                let mutasi = await Mutasi.findAndCountAll({
+                    limit: perPage,
+                    offset: ( page-1 ) * perPage,
+                    order: [
+                        ['siswa', sort_by, sort]
+                    ],
+                    where: {
+                        pindah_dari: {
+                            [Op.is]: null
+                        },
+                        [Op.or]: [{
+                            tgl_mutasi: {
+                              [Op.between]: [fromDate, toDate]
+                            }
+                        }]
                     },
-                },
-                limit: perPage,
-                offset: ( page-1 ) * perPage,
-            });
-        
-        
-            let from = ((page -1) * perPage) + 1;
-        
-            let to = page * perPage;
-        
-            // pagination params
-            path = 'http://127.0.0.1:8000/siswa-keluar';
-            firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1&perPage=${perPage}`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
-        
-            if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
-            } 
-        
-            if (page === 1) {
-                prevPageUrl = null
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
+                });
+            
+            
+                let from = ((page -1) * perPage) + 1;
+            
+                let to = page * perPage;
+            
+                // pagination params
+                path = 'http://127.0.0.1:8000/siswa-keluar';
+                firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1&perPage=${perPage}`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+            
+                if (page > 1) {
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+                } 
+            
+                if (page === 1) {
+                    prevPageUrl = null
+                }
+            
+                res.status(200).json({
+                    resultId: 1,
+                    current_page: page,
+                    data: mutasi,
+                    first_page_url: firstPageUrl,
+                    from: from,
+                    next_page_url: nextPageUrl,
+                    path: path,
+                    per_page: perPage,
+                    prev_page_url: prevPageUrl,
+                    to: to,
+                });
+
+            } else {
+
+                let mutasi = await Mutasi.findAndCountAll({
+                    limit: perPage,
+                    offset: ( page-1 ) * perPage,
+                    order: [
+                        ['siswa', sort_by, sort]
+                    ],
+                    where: {
+                        pindah_dari: {
+                            [Op.is]: null
+                        },
+                    },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
+                });
+            
+            
+                let from = ((page -1) * perPage) + 1;
+            
+                let to = page * perPage;
+            
+                // pagination params
+                path = 'http://127.0.0.1:8000/siswa-keluar';
+                firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1&perPage=${perPage}`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+            
+                if (page > 1) {
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+                } 
+            
+                if (page === 1) {
+                    prevPageUrl = null
+                }
+            
+                res.status(200).json({
+                    resultId: 2,
+                    current_page: page,
+                    data: mutasi,
+                    first_page_url: firstPageUrl,
+                    from: from,
+                    next_page_url: nextPageUrl,
+                    path: path,
+                    per_page: perPage,
+                    prev_page_url: prevPageUrl,
+                    to: to,
+                });
+
             }
-        
-            res.status(200).json({
-                current_page: page,
-                data: mutasi,
-                first_page_url: firstPageUrl,
-                from: from,
-                next_page_url: nextPageUrl,
-                path: path,
-                per_page: perPage,
-                prev_page_url: prevPageUrl,
-                to: to,
-            });
+
 
         } else {
 
-            const mutasi = await Mutasi.findAndCountAll({
-                where: {
-                    pindah_dari: {
-                        [Op.is]: null
-                    },
-                    [Op.or]: [
-                        {
-                            nama_siswa: {
-                                [Op.like]: '%' + search + '%'
-                            }
-                        },
-                        {
-                            nis_siswa: {
-                                [Op.like]: '%' + search + '%'
-                            }
-                        },
-                        {
-                            keluar_di_kelas: {
-                                [Op.like]: '%' + search + '%'
-                            }
-                        },
-                        {
-                            tgl_mutasi: {
-                                [Op.like]: '%' + search + '%'
-                            }
-                        },
-                        {
-                            sk_mutasi: {
-                                [Op.like]: '%' + search + '%'
-                            }
-                        },
-                        {
-                            alasan_mutasi: {
-                                [Op.like]: '%' + search + '%'
-                            }
-                        },
-                    ]
-                },
-                limit: perPage,
-                offset: ( page-1 ) * perPage,
-            });
-        
-        
-            let from = ((page -1) * perPage) + 1;
-        
-            let to = page * perPage;
-        
-            // pagination params
-            path = 'http://127.0.0.1:8000/siswa-keluar';
-            firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1`;
-            nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
-        
-            if (page > 1) {
-                prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
-            } 
-        
-            if (page === 1) {
-                prevPageUrl = null
-            }
-        
-            res.status(200).json({
-                current_page: page,
-                data: mutasi,
-                first_page_url: firstPageUrl,
-                from: from,
-                next_page_url: nextPageUrl,
-                path: path,
-                per_page: perPage,
-                prev_page_url: prevPageUrl,
-                to: to,
-            });
+            let searchByNama = '+?+'; 
+            let searchByNis = '+?+'; 
+            let searchByKeluarDiKelas = '+?+'; 
+            let searchByTglMutasi = '+?+'; 
+            let searchBySkMutasi = '+?+'; 
+            let searchByAlasan = '+?+'; 
 
+            if (nama_siswa === "true") {
+                searchByNama = search;
+            }
+
+            if (nis_siswa === "true") {
+                searchByNis = search;
+            }
+
+            if (keluar_di_kelas === "true") {
+                searchByKeluarDiKelas = search;
+            }
+
+            if (tgl_mutasi === "true") {
+                searchByTglMutasi = search;
+            }
+
+            if (sk_mutasi === "true") {
+                searchBySkMutasi = search;
+            }
+
+            if (alasan_mutasi === "true") {
+                searchByAlasan = search;
+            }
+            
+           
+            if (!req.query.nama_siswa && !req.query.nis_siswa && !req.query.keluar_di_kelas && !req.query.tgl_mutasi && !req.query.sk_mutasi && !req.query.alasan_mutasi) {
+                searchByNama = search;
+                searchByNis = search;
+                searchByKeluarDiKelas = search;
+                searchByTglMutasi = search;
+                searchBySkMutasi = search;
+                searchByAlasan = search;
+            }
+
+            if (fromDate != "" || toDate != "") {
+
+                let mutasi = await Mutasi.findAndCountAll({
+                    limit: perPage,
+                    offset: ( page-1 ) * perPage,
+                    order: [
+                        ['siswa', sort_by, sort]
+                    ],
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ],
+                    where: {
+                        pindah_dari: {
+                            [Op.is]: null
+                        },
+                        tgl_mutasi: {
+                            [Op.between]: [fromDate, toDate]  
+                        },
+                        [Op.or]: [
+                            {
+                                '$siswa.nama_siswa$': {
+                                    [Op.like]: '%' + searchByNama + '%'
+                                }
+                            },
+                            {
+                                '$siswa.nis_siswa$': {
+                                    [Op.like]: '%' + searchByNis + '%'
+                                }
+                            },
+                            {
+                                keluar_di_kelas: {
+                                    [Op.like]: '%' + searchByKeluarDiKelas + '%'
+                                }
+                            },
+                            {
+                                tgl_mutasi: {
+                                    [Op.like]: '%' + searchByTglMutasi + '%'
+                                }
+                            },
+                            {
+                                sk_mutasi: {
+                                    [Op.like]: '%' + searchBySkMutasi + '%'
+                                }
+                            },
+                            {
+                                alasan_mutasi: {
+                                    [Op.like]: '%' + searchByAlasan + '%'
+                                }
+                            },
+                        ]
+                    },
+                });
+            
+            
+                let from = ((page -1) * perPage) + 1;
+            
+                let to = page * perPage;
+            
+                // pagination params
+                path = 'http://127.0.0.1:8000/siswa-keluar';
+                firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+            
+                if (page > 1) {
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+                } 
+            
+                if (page === 1) {
+                    prevPageUrl = null
+                }
+            
+                res.status(200).json({
+                    resultId: 3,
+                    current_page: page,
+                    data: mutasi,
+                    first_page_url: firstPageUrl,
+                    from: from,
+                    next_page_url: nextPageUrl,
+                    path: path,
+                    per_page: perPage,
+                    prev_page_url: prevPageUrl,
+                    to: to,
+                });
+
+            } else {
+
+                let mutasi = await Mutasi.findAndCountAll({
+                    limit: perPage,
+                    offset: ( page-1 ) * perPage,
+                    order: [
+                        ['siswa', sort_by, sort]
+                    ],
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ],
+                    where: {
+                        pindah_dari: {
+                            [Op.is]: null
+                        },
+                        [Op.or]: [
+                            {
+                                '$siswa.nama_siswa$': {
+                                    [Op.like]: '%' + searchByNama + '%'
+                                }
+                            },
+                            {
+                                '$siswa.nis_siswa$': {
+                                    [Op.like]: '%' + searchByNis + '%'
+                                }
+                            },
+                            {
+                                keluar_di_kelas: {
+                                    [Op.like]: '%' + searchByKeluarDiKelas + '%'
+                                }
+                            },
+                            {
+                                tgl_mutasi: {
+                                    [Op.like]: '%' + searchByTglMutasi + '%'
+                                }
+                            },
+                            {
+                                sk_mutasi: {
+                                    [Op.like]: '%' + searchBySkMutasi + '%'
+                                }
+                            },
+                            {
+                                alasan_mutasi: {
+                                    [Op.like]: '%' + searchByAlasan + '%'
+                                }
+                            },
+                        ]
+                    },
+                });
+                
+                let from = ((page -1) * perPage) + 1;
+            
+                let to = page * perPage;
+            
+                // pagination params
+                path = 'http://127.0.0.1:8000/siswa-keluar';
+                firstPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=1`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+            
+                if (page > 1) {
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-keluar?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&keluar_di_kelas=${keluar_di_kelas}&tgl_mutasi=${tgl_mutasi}&sk_mutasi=${sk_mutasi}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_keluar_dari=${fromDate}&tgl_keluar_ke=${toDate}`;
+                } 
+            
+                if (page === 1) {
+                    prevPageUrl = null
+                }
+            
+                res.status(200).json({
+                    resultId: 4,
+                    current_page: page,
+                    data: mutasi,
+                    first_page_url: firstPageUrl,
+                    from: from,
+                    next_page_url: nextPageUrl,
+                    path: path,
+                    per_page: perPage,
+                    prev_page_url: prevPageUrl,
+                    to: to,
+                });
+            }
         }
 
     } catch (error) {

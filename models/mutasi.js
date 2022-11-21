@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Mutasi.belongsTo(models.Siswa, {
         foreignKey: 'nis_siswa',
         targetKey: 'nis_siswa',
+        as: 'siswa',
       });
     }
   }
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       references: {
         model: 'Siswa',
-        key: 'nis_siswa'
+        key: 'nis_siswa',
       }
     },
     nama_siswa: {
