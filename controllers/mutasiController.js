@@ -59,6 +59,12 @@ exports.getAllMutasi = async (req, res) => {
                             }
                         }]
                     },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
                 });
             
             
@@ -105,6 +111,12 @@ exports.getAllMutasi = async (req, res) => {
                             [Op.is]: null
                         },
                     },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
                 });
             
             
@@ -190,7 +202,7 @@ exports.getAllMutasi = async (req, res) => {
                     limit: perPage,
                     offset: ( page-1 ) * perPage,
                     order: [
-                        ['siswa', sort_by, sort]
+                        [sort_by, sort]
                     ],
                     include: [
                         {
@@ -207,12 +219,12 @@ exports.getAllMutasi = async (req, res) => {
                         },
                         [Op.or]: [
                             {
-                                nama_siswa: {
+                                '$siswa.nama_siswa$': {
                                     [Op.like]: '%' + searchByNama + '%'
                                 }
                             },
                             {
-                                nis_siswa: {
+                                '$siswa.nis_siswa$': {
                                     [Op.like]: '%' + searchByNis + '%'
                                 }
                             },
@@ -277,7 +289,7 @@ exports.getAllMutasi = async (req, res) => {
                     limit: perPage,
                     offset: ( page-1 ) * perPage,
                     order: [
-                        ['siswa', sort_by, sort]
+                        [sort_by, sort]
                     ],
                     include: [
                         {
@@ -291,12 +303,12 @@ exports.getAllMutasi = async (req, res) => {
                         },
                         [Op.or]: [
                             {
-                                nama_siswa: {
+                                '$siswa.nama_siswa$': {
                                     [Op.like]: '%' + searchByNama + '%'
                                 }
                             },
                             {
-                                nis_siswa: {
+                                '$siswa.nis_siswa$': {
                                     [Op.like]: '%' + searchByNis + '%'
                                 }
                             },
@@ -383,6 +395,7 @@ exports.getAllMutasiMasuk = async (req, res) => {
     /* Pagination */
     const pageAsNumber = Number.parseInt(req.query.page);
     const perPageAsNumber = Number.parseInt(req.query.perPage);
+    const searchParams = req.query.search;
 
     let page = 1;
     if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
@@ -400,7 +413,7 @@ exports.getAllMutasiMasuk = async (req, res) => {
 
             if (fromDate != "" || toDate != "") {
             
-                let mutasi = await Mutasi.findAndCountAll({
+                const mutasi = await Mutasi.findAndCountAll({
                     limit: perPage,
                     offset: ( page-1 ) * perPage,
                     order: [
@@ -416,6 +429,12 @@ exports.getAllMutasiMasuk = async (req, res) => {
                             }
                         }]
                     },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
                 });
             
                 let from = ((page -1) * perPage) + 1;
@@ -425,10 +444,10 @@ exports.getAllMutasiMasuk = async (req, res) => {
                 // pagination params
                 path = 'http://127.0.0.1:8000/siswa-masuk';
                 firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
             
                 if (page > 1) {
-                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
                 } 
             
                 if (page === 1) {
@@ -450,7 +469,7 @@ exports.getAllMutasiMasuk = async (req, res) => {
 
             } else {
 
-                let mutasi = await Mutasi.findAndCountAll({
+                const mutasi = await Mutasi.findAndCountAll({
                     limit: perPage,
                     offset: ( page-1 ) * perPage,
                     order: [
@@ -461,6 +480,12 @@ exports.getAllMutasiMasuk = async (req, res) => {
                             [Op.ne]: null
                         },
                     },
+                    include: [
+                        {
+                            model: Siswa,
+                            as: 'siswa'
+                        }
+                    ]
                 });
             
                 let from = ((page -1) * perPage) + 1;
@@ -470,10 +495,10 @@ exports.getAllMutasiMasuk = async (req, res) => {
                 // pagination params
                 path = 'http://127.0.0.1:8000/siswa-masuk';
                 firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`;
+                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
             
                 if (page > 1) {
-                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`
+                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
                 } 
             
                 if (page === 1) {
@@ -481,7 +506,7 @@ exports.getAllMutasiMasuk = async (req, res) => {
                 }
             
                 res.status(200).json({
-                    resultId: 2,
+                    resultId: 1,
                     current_page: page,
                     data: mutasi,
                     first_page_url: firstPageUrl,
@@ -498,230 +523,91 @@ exports.getAllMutasiMasuk = async (req, res) => {
 
         } else {
 
-            let searchByNama = '+?+';
-            let searchByNis = '+?+';
-            let searchByGender = '+?+';
-            let searchByTanggalMasuk = '+?+';
-            let searchByDiterimaDiKelas = '+?+';
-            let searchByPindahDari = '+?+';
-            let searchByAlasan = '+?+';
-
-
-            if (nama_siswa === "true") {
-                searchByNama = search;
-            }
-
-            if (nis_siswa === "true") {
-                searchByNis = search;
-            }
-
-            if (jenis_kelamin === "true") {
-                searchByGender = search;
-            }
-
-            if (tgl_mutasi === "true") {
-                searchByTanggalMasuk = search;
-            }
-
-            if (diterima_di_kelas === "true") {
-                searchByDiterimaDiKelas = search;
-            }
-
-            if (pindah_dari === "true") {
-                searchByPindahDari = search;
-            }
-            
-            if (alasan_mutasi === "true") {
-                searchByAlasan = search;
-            }
-    
-            
-            if (!req.query.nama_siswa && !req.query.nis_siswa && !req.query.jenis_kelamin && !req.query.tgl_mutasi && !req.query.diterima_di_kelas && !req.query.pindah_dari && !req.query.alasan_mutasi ) {
-                searchByNama = search;
-                searchByNis = search;
-                searchByGender = search;
-                searchByTanggalMasuk = search;
-                searchByDiterimaDiKelas = search;
-                searchByPindahDari = search;
-                searchByAlasan = search;
-            }
-
-
-            if (fromDate != "" || toDate != "") {
-
-                let mutasi = await Mutasi.findAndCountAll({
-                    limit: perPage,
-                    offset: ( page-1 ) * perPage,
-                    order: [
-                        [sort_by, sort]
-                    ],
-                    where: {
-                        pindah_dari: {
-                            [Op.ne]: null
-                        },
-                        tgl_mutasi: {
-                            [Op.between]: [fromDate, toDate]
-                        },
-                        [Op.or]: [
-                            {
-                                nama_siswa: {
-                                    [Op.like]: '%' + searchByNama + '%'
-                                }
-                            },
-                            {
-                                nis_siswa: {
-                                    [Op.like]: '%' + searchByNis + '%'
-                                }
-                            },
-                            {
-                                jenis_kelamin: {
-                                    [Op.like]: '%' + searchByGender + '%'
-                                }
-                            },
-                            {
-                                tgl_mutasi: {
-                                    [Op.like]: '%' + searchByTanggalMasuk + '%'
-                                }
-                            },
-                            {
-                                alasan_mutasi: {
-                                    [Op.like]: '%' + searchByAlasan + '%'
-                                }
-                            },
-                            {
-                                diterima_di_kelas: {
-                                    [Op.like]: '%' + searchByDiterimaDiKelas + '%'
-                                }
-                            },
-                            {
-                                pindah_dari: {
-                                    [Op.like]: '%' + searchByPindahDari + '%'
-                                }
-                            },
-                        ]
+            const mutasi = await Mutasi.findAndCountAll({
+                limit: perPage,
+                offset: ( page-1 ) * perPage,
+                where: {
+                    pindah_dari: {
+                        [Op.ne]: null
                     },
-                });
-            
-                let from = ((page -1) * perPage) + 1;
-            
-                let to = page * perPage;
-            
-                // pagination params
-                path = 'http://127.0.0.1:8000/siswa-masuk';
-                firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`;
-            
-                if (page > 1) {
-                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`
-                } 
-            
-                if (page === 1) {
-                    prevPageUrl = null
-                }
-            
-                res.status(200).json({
-                    resultId: 3,
-                    current_page: page,
-                    data: mutasi,
-                    first_page_url: firstPageUrl,
-                    from: from,
-                    next_page_url: nextPageUrl,
-                    path: path,
-                    per_page: perPage,
-                    prev_page_url: prevPageUrl,
-                    to: to,
-                });
-
-            } else {
-
-                let mutasi = await Mutasi.findAndCountAll({
-                    limit: perPage,
-                    offset: ( page-1 ) * perPage,
-                    order: [
-                        [sort_by, sort]
-                    ],
-                    where: {
-                        pindah_dari: {
-                            [Op.ne]: null
+                    [Op.or]: [
+                        {
+                            nama_siswa: {
+                                [Op.like]: '%' + search + '%'
+                            }
                         },
-                        [Op.or]: [
-                            {
-                                nama_siswa: {
-                                    [Op.like]: '%' + searchByNama + '%'
-                                }
-                            },
-                            {
-                                nis_siswa: {
-                                    [Op.like]: '%' + searchByNis + '%'
-                                }
-                            },
-                            {
-                                jenis_kelamin: {
-                                    [Op.like]: '%' + searchByGender + '%'
-                                }
-                            },
-                            {
-                                tgl_mutasi: {
-                                    [Op.like]: '%' + searchByTanggalMasuk + '%'
-                                }
-                            },
-                            {
-                                alasan_mutasi: {
-                                    [Op.like]: '%' + searchByAlasan + '%'
-                                }
-                            },
-                            {
-                                diterima_di_kelas: {
-                                    [Op.like]: '%' + searchByDiterimaDiKelas + '%'
-                                }
-                            },
-                            {
-                                pindah_dari: {
-                                    [Op.like]: '%' + searchByPindahDari + '%'
-                                }
-                            },
-                        ]
-                    },
-                });
-            
-                let from = ((page -1) * perPage) + 1;
-            
-                let to = page * perPage;
-            
-                // pagination params
-                path = 'http://127.0.0.1:8000/siswa-masuk';
-                firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
-                nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`;
-            
-                if (page > 1) {
-                    prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${search}&nama_siswa=${nama_siswa}&nis_siswa=${nis_siswa}&jenis_kelamin=${jenis_kelamin}&tgl_mutasi=${tgl_mutasi}&diterima_di_kelas=${diterima_di_kelas}&pindah_dari=${pindah_dari}&alasan_mutasi=${alasan_mutasi}&sort_by=${sort_by}&sort=${sort}&tgl_masuk_dari=${fromDate}&tgl_masuk_ke=${toDate}`
-                } 
-            
-                if (page === 1) {
-                    prevPageUrl = null
-                }
-            
-                res.status(200).json({
-                    resultId: 4,
-                    current_page: page,
-                    data: mutasi,
-                    first_page_url: firstPageUrl,
-                    from: from,
-                    next_page_url: nextPageUrl,
-                    path: path,
-                    per_page: perPage,
-                    prev_page_url: prevPageUrl,
-                    to: to,
-                });
-
+                        {
+                            nis_siswa: {
+                                [Op.like]: '%' + search + '%'
+                            }
+                        },
+                        {
+                            jenis_kelamin: {
+                                [Op.like]: '%' + search + '%'
+                            }
+                        },
+                        {
+                            tgl_mutasi: {
+                                [Op.like]: '%' + search + '%'
+                            }
+                        },
+                        {
+                            alasan_mutasi: {
+                                [Op.like]: '%' + search + '%'
+                            }
+                        },
+                        {
+                            diterima_di_kelas: {
+                                [Op.like]: '%' + search + '%'
+                            }
+                        },
+                        {
+                            pindah_dari: {
+                                [Op.like]: '%' + search + '%'
+                            }
+                        },
+                    ]
+                },
+            });
+        
+            let from = ((page -1) * perPage) + 1;
+        
+            let to = page * perPage;
+        
+            // pagination params
+            path = 'http://127.0.0.1:8000/siswa-masuk';
+            firstPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=1&perPage=${perPage}`;
+            nextPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page + 1}&perPage=${perPage}&search=${searchParams}`;
+        
+            if (page > 1) {
+                prevPageUrl = `http://127.0.0.1:8000/siswa-masuk?page=${page - 1}&perPage=${perPage}&search=${searchParams}`
+            } 
+        
+            if (page === 1) {
+                prevPageUrl = null
             }
+        
+            res.status(200).json({
+                current_page: page,
+                data: mutasi,
+                first_page_url: firstPageUrl,
+                from: from,
+                next_page_url: nextPageUrl,
+                path: path,
+                per_page: perPage,
+                prev_page_url: prevPageUrl,
+                to: to,
+            });
+
         }
+
     } catch (error) {
         res.status(404).json({
           message: error.message,
         });
     }
 
+    
 }
 
 
