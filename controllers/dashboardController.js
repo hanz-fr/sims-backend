@@ -7,6 +7,11 @@ const kelasController = require('../controllers/kelasController');
 
 exports.getMainDashboardData = async (req, res) => {
 
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
     const jurusan = await Jurusan.findAndCountAll({
       attributes: ['id']
     });
@@ -42,6 +47,8 @@ exports.getMainDashboardData = async (req, res) => {
         }
       }
     });
+
+
     const kelas = await Kelas.findAndCountAll({
       attributes: ['id']
     });
@@ -256,6 +263,48 @@ exports.getMainDashboardData = async (req, res) => {
         siswaKeluar: siswaKeluar,
         siswaTdkNaik: siswaTdkNaik,
     });
+}
+
+
+exports.getSiswaMasukByMonth = async (req, res) => {
+
+  let fromDate = req.params.fromDate;
+  let toDate = req.params.toDate;
+
+  const siswaMasuk = await Mutasi.findAndCountAll({
+    where: {
+      pindah_dari: {
+        [Op.ne]: null
+      },
+      tgl_mutasi: {
+        [Op.between]: [fromDate, toDate],
+      }
+    }
+  });
+
+  res.status(200).json(siswaMasuk);
+
+}
+
+
+exports.getSiswaKeluarByMonth = async (req, res) => {
+
+  let fromDate = req.params.fromDate;
+  let toDate = req.params.toDate;
+
+  const siswaMasuk = await Mutasi.findAndCountAll({
+    where: {
+      keluar_di_kelas: {
+        [Op.ne]: null
+      },
+      tgl_mutasi: {
+        [Op.between]: [fromDate, toDate],
+      }
+    }
+  });
+
+  res.status(200).json(siswaMasuk);
+
 }
 
 

@@ -282,7 +282,7 @@ exports.getSiswaByKelas = async (req, res) => {
 exports.getSiswaByKelas10 = async (req, res) => {
   const kelas = await Kelas.findAll({
     where: {
-      kelas: '10'
+      kelas: '10',
     },
     order: [
       ['id', 'ASC']
