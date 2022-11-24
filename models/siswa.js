@@ -41,16 +41,6 @@ class Siswa extends Model {
       allowNull: false,
       type: DataTypes.STRING(10),
     },
-    /* OrtuId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-      references: {
-        model: 'Ortu',
-        key: 'id',
-      },
-    }, */
     KelasId: {
       type: DataTypes.STRING(50),
       allowNull: true,

@@ -12,16 +12,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(10),
       },
-      /* OrtuId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-        references: {
-          model: 'Ortu',
-          key: 'id',
-        },
-      }, */
       KelasId: {
         type: Sequelize.STRING(50),
         allowNull: true,
