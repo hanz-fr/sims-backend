@@ -21,6 +21,9 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
             [Op.ne]: true
         },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
     });
     const mutasi = await Mutasi.findAndCountAll({
@@ -30,17 +33,50 @@ exports.getMainDashboardData = async (req, res) => {
               [Op.is]: null
           }
       },
+      include: [
+        {
+          model: Siswa,
+          as: 'siswa',
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+          }
+        }
+      ]
     });
     const siswaMasuk = await Mutasi.findAndCountAll({
       attributes: ['nis_siswa'],
       where: {
           pindah_dari: {
-              [Op.ne]: null
+            [Op.ne]: null
           }
-      }
+      },
+      include: [
+        {
+          model: Siswa,
+          as: 'siswa',
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+          }
+        }
+      ]
     });
     const siswaKeluar = await Mutasi.findAndCountAll({
       attributes: ['nis_siswa'],
+      include: [
+        {
+          model: Siswa,
+          as: 'siswa',
+          where: {
+            isAlumni: {
+              [Op.ne]: true
+            },
+          }
+        }
+      ],
       where: {
         keluar_di_kelas: {
           [Op.ne]: null
@@ -57,10 +93,13 @@ exports.getMainDashboardData = async (req, res) => {
     });
     const alumni = await Siswa.findAndCountAll({
       attributes: ['nis_siswa'],
-      where: {
-          isAlumni: {
-              [Op.eq]: true
-          }
+      where: {  
+        isAlumni: {
+          [Op.eq]: true
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       }
     });
     const siswaTdkNaik = await Siswa.findAndCountAll({
@@ -68,7 +107,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include: [
         {
@@ -86,7 +128,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include: [{
         model: Kelas,
@@ -105,7 +150,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include: [{
         model: Kelas,
@@ -124,7 +172,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include: [{
         model: Kelas,
@@ -143,7 +194,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include:[{
         model: Kelas,
@@ -160,7 +214,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include:[{
         model: Kelas,
@@ -177,7 +234,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include:[{
         model: Kelas,
@@ -194,7 +254,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include:[{
         model: Kelas,
@@ -211,7 +274,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include:[{
         model: Kelas,
@@ -228,7 +294,10 @@ exports.getMainDashboardData = async (req, res) => {
       where: {
         isAlumni: {
           [Op.ne]: true
-        }
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
       },
       include:[{
         model: Kelas,
@@ -236,6 +305,27 @@ exports.getMainDashboardData = async (req, res) => {
         attributes: ['id'],
         where: {
           jurusan: 'TJKT'
+        }
+      }]
+    });
+
+
+    const jumlahSiswaMLOG = await Siswa.findAndCountAll({
+      attributes: [],
+      where: {
+        isAlumni: {
+          [Op.ne]: true
+        },
+        tgl_meninggalkan_sekolah: {
+          [Op.is]: null
+        },
+      },
+      include:[{
+        model: Kelas,
+        as: 'kelas',
+        attributes: ['id'],
+        where: {
+          jurusan: 'MLOG'
         }
       }]
     });
@@ -259,6 +349,7 @@ exports.getMainDashboardData = async (req, res) => {
         jumlahSiswaPM: jumlahSiswaPM,
         jumlahSiswaPPLG: jumlahSiswaPPLG,
         jumlahSiswaTJKT: jumlahSiswaTJKT,
+        jumlahSiswaMLOG: jumlahSiswaMLOG,
         siswaMasuk: siswaMasuk,
         siswaKeluar: siswaKeluar,
         siswaTdkNaik: siswaTdkNaik,
