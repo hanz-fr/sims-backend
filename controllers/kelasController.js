@@ -266,6 +266,11 @@ exports.getSiswaByKelas = async (req, res) => {
       {
         model: Siswa,
         as: "siswa",
+        where: {
+          isAlumni: {
+            [Op.ne]: true
+          },
+        },
         attributes: [],
       },
     ],
@@ -392,6 +397,11 @@ exports.getSiswaByKelas10 = async (req, res) => {
       {
         model: Siswa,
         as: "siswa",
+        where: {
+          isAlumni: {
+            [Op.ne]: true
+          },
+        },
         attributes: [],
       },
     ],
@@ -518,6 +528,11 @@ exports.getSiswaByKelas11 = async (req, res) => {
       {
         model: Siswa,
         as: "siswa",
+        where: {
+          isAlumni: {
+            [Op.ne]: true
+          },
+        },
         attributes: [],
       },
     ],
@@ -645,6 +660,11 @@ exports.getSiswaByKelas12 = async (req, res) => {
       {
         model: Siswa,
         as: "siswa",
+        where: {
+          isAlumni: {
+            [Op.ne]: true
+          },
+        },
         attributes: [],
       },
     ],
