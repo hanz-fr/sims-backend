@@ -127,14 +127,6 @@ exports.getAllSiswa = async (req, res) => {
             isAlumni: {
               [Op.ne]: true
             },
-            /* mutasi: {
-              [Op.is]: null
-            }, */
-            /* [Op.or]: [{
-              createdAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }] */
           },
           include: [
             {
@@ -571,11 +563,6 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             isAlumni: {
               [Op.ne]: true
             },
-            /* [Op.or]: [{
-              createdAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }] */
           },
           include: [
             {
