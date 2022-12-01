@@ -32,6 +32,37 @@ exports.getAllHistory = async (req, res) => {
 }
 
 
+/* get all history with specific author */
+exports.getAllAuthorHistory = async (req, res) =>{
+
+    const authorName = req.params.authorName;
+
+    try {
+
+        let history = await History.findAndCountAll({
+            where: {
+                activityAuthor: {
+                    [Op.eq]: authorName
+                },
+            },
+            limit: 5,
+            order: [
+                ['createdAt', 'DESC']
+            ],
+        });
+
+        res.status(200).json(history);
+
+    } catch (error) {
+        res.status(404).json({
+          status: 'error',
+          message: error.message,
+        });
+    }
+
+}
+
+
 /* get history */
 exports.getHistory = async (req, res) => {
 
