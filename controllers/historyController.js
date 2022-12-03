@@ -33,19 +33,25 @@ exports.getAllHistory = async (req, res) => {
 
 
 /* get all history with specific author */
-exports.getAllAuthorHistory = async (req, res) =>{
+exports.getAllUserHistory = async (req, res) =>{
 
-    const authorName = req.params.authorName;
+    const username = req.params.username;                  // user name
+    let limitAsNumber = Number.parseInt(req.query.limit);  // limit how much data to show
+
+    let limit = null;
+    if(!Number.isNaN(limitAsNumber) && limitAsNumber > 0) {
+        limit = limitAsNumber;
+    }
 
     try {
 
         let history = await History.findAndCountAll({
             where: {
                 activityAuthor: {
-                    [Op.eq]: authorName
+                    [Op.eq]: username
                 },
             },
-            limit: 5,
+            limit: limit,
             order: [
                 ['createdAt', 'DESC']
             ],
