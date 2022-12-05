@@ -10,15 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Raport.hasOne(models.NilaiAkhir, {
-        foreignKey: 'RaportId',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      });
       Raport.belongsTo(models.Siswa, {
         as: "siswa",
         foreignKey: "nis_siswa",
-        targetKey: "nis_siswa"
+        targetKey: "nis_siswa",
       });
       Raport.hasMany(models.NilaiMapel, {
         as: 'NilaiMapel',

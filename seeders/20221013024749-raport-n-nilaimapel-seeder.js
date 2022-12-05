@@ -5,26 +5,6 @@ const { faker } = require("@faker-js/faker");
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    /* await queryInterface.bulkInsert(
-      "raport",
-      [
-        {
-          id: 'RPT1002360737-2',
-          nis_siswa: "1002360737", // Change NIS Siswa
-          semester: 2,
-          thn_ajaran: 2020,
-          sakit: 1,
-          ijin: 1,
-          alpa: 0,
-          isNaik: false,
-          naikKelas: "-",
-          tgl_kenaikan: null,
-          tinggal_di_kelas: '10TKJ2',
-          alasan_tidak_naik: 'Nilai kurang cukup.'
-        }
-      ]
-    ) */
-
     await queryInterface.bulkInsert(
       "nilai_mapel",
       [

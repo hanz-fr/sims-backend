@@ -460,36 +460,6 @@ exports.getSiswaTidakNaik = async (req, res) => {
             }
           ]
         });
-
-        // let siswaTdkNaik = await Siswa.findAndCountAll({
-        //   where: {
-        //     isAlumni: {
-        //       [Op.ne]: true
-        //     },
-        //   },
-        //   limit: perPage,
-        //   offset: ( page-1 ) * perPage,
-        //   order: [
-        //     [sort_by, sort]
-        //   ],
-        //   include: [
-        //       {
-        //         model: Raport,
-        //         as: 'raport',
-        //         where: 
-        //         {
-        //           isNaik: {
-        //             [Op.is]: false
-        //           },
-        //           [Op.or]: [{
-        //             createdAt: {
-        //               [Op.between]: [fromDate, toDate]
-        //             }
-        //           }]
-        //         },
-        //       }
-        //     ]
-        // });
   
         let from = ((page - 1) * perPage) + 1;
   
@@ -544,26 +514,6 @@ exports.getSiswaTidakNaik = async (req, res) => {
             }
           ]
         });
-
-
-        // let siswaTdkNaik = await Siswa.findAndCountAll({
-        //   limit: perPage,
-        //   offset: ( page-1 ) * perPage,
-        //   order: [
-        //     [sort_by, sort]
-        //   ],
-        //   where: {
-        //     isAlumni: {
-        //       [Op.ne]: true
-        //     },
-        //   },
-        //   include: [
-        //       {
-        //         model: Raport,
-        //         as: 'raport',
-        //       }
-        //     ]
-        // });
   
         let from = ((page - 1) * perPage) + 1;
   
@@ -686,61 +636,6 @@ exports.getSiswaTidakNaik = async (req, res) => {
             }
           ]
         });
-
-
-        // let siswaTdkNaik = await Siswa.findAndCountAll({
-        //   where: {
-        //     isAlumni: {
-        //       [Op.ne]: true
-        //     }
-        //   },
-        //   limit: perPage,
-        //   offset: ( page-1 ) * perPage,
-        //   order: [
-        //     [sort_by, sort]
-        //   ],
-        //   where: {
-        //     '$raport.isNaik$': {
-        //       [Op.is]: false
-        //     },
-        //     '$raport.createdAt': {
-        //       [Op.between]: [fromDate, toDate]
-        //     },
-        //     [Op.or]: [
-        //       {
-        //         nama_siswa: {
-        //           [Op.like]: '%' + searchByNama + '%'
-        //         },
-        //       },
-        //       {
-        //         tmp_lahir: {
-        //           [Op.like]: '%' + searchByTempatLahir + '%'
-        //         },
-        //       },
-        //       {
-        //         tgl_lahir: {
-        //           [Op.like]: '%' + searchByTanggalLahir + '%'
-        //         },
-        //       },
-        //       {
-        //         '$raport.tinggal_di_Kelas$': {
-        //           [Op.like]: '%' + searchByTinggalDiKelas + '%' 
-        //         }
-        //       },
-        //       {
-        //         '$raport.alasan_tidak_naik$': {
-        //           [Op.like]: '%' + searchByAlasan + '%' 
-        //         }
-        //       },
-        //     ]
-        //   },
-        //   include: [
-        //     {
-        //       model: Raport,
-        //       as: 'raport',
-        //     }
-        //   ]
-        // });
   
         let from = ((page - 1) * perPage) + 1;
   
@@ -822,58 +717,6 @@ exports.getSiswaTidakNaik = async (req, res) => {
             }
           ]
         });
-
-
-        // let siswaTdkNaik = await Siswa.findAndCountAll({
-        //   where: {
-        //     isAlumni: {
-        //       [Op.ne]: true
-        //     }
-        //   },
-        //   limit: perPage,
-        //   offset: ( page-1 ) * perPage,
-        //   order: [
-        //     [sort_by, sort]
-        //   ],
-        //   where: {
-        //     '$raport.isNaik$': {
-        //       [Op.is]: false
-        //     },
-        //     [Op.or]: [
-        //       {
-        //         nama_siswa: {
-        //           [Op.like]: '%' + searchByNama + '%'
-        //         },
-        //       },
-        //       {
-        //         tmp_lahir: {
-        //           [Op.like]: '%' + searchByTempatLahir + '%'
-        //         },
-        //       },
-        //       {
-        //         tgl_lahir: {
-        //           [Op.like]: '%' + searchByTanggalLahir + '%'
-        //         },
-        //       },
-        //       {
-        //         '$raport.tinggal_di_Kelas$': {
-        //           [Op.like]: '%' + searchByTinggalDiKelas + '%' 
-        //         }
-        //       },
-        //       {
-        //         '$raport.alasan_tidak_naik$': {
-        //           [Op.like]: '%' + searchByAlasan + '%' 
-        //         }
-        //       },
-        //     ]
-        //   },
-        //   include: [
-        //       {
-        //         model: Raport,
-        //         as: 'raport',
-        //       }
-        //     ]
-        // });
   
         
         let from = ((page - 1) * perPage) + 1;
