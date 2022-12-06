@@ -12,9 +12,16 @@ const v = new Validator();
 /* get all history */
 exports.getAllHistory = async (req, res) => {
 
+    const year = req.query.year;
+
     try {
 
         let history = await History.findAndCountAll({
+            where: {
+                createdAt: {
+                    [Op.between]: [`${year}-01-01`, `${year}-12-31`] 
+                }
+            },
             order: [
                 ['createdAt', 'DESC']
             ],
@@ -38,6 +45,8 @@ exports.getAllUserHistory = async (req, res) =>{
     const username = req.params.username;                  // user name
     let limitAsNumber = Number.parseInt(req.query.limit);  // limit how much data to show
 
+    const year = req.query.year;
+
     let limit = null;
     if(!Number.isNaN(limitAsNumber) && limitAsNumber > 0) {
         limit = limitAsNumber;
@@ -50,6 +59,9 @@ exports.getAllUserHistory = async (req, res) =>{
                 activityAuthor: {
                     [Op.eq]: username
                 },
+                createdAt: {
+                    [Op.between]: [`${year}-01-01`, `${year}-12-31`] 
+                }
             },
             limit: limit,
             order: [
