@@ -475,57 +475,69 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
     // kalau ada thn_ajaran
     if (thn_ajaran) { 
   
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        thn_ajaran: thn_ajaran,
-      }
-  
-    // kalau ada thn_ajaran, fromDate & toDate
-    } else if (thn_ajaran || fromDate != "" || toDate != "") {
-  
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        thn_ajaran: thn_ajaran,
-        [Op.or]: [{
-          createdAt: {
-            [Op.between]: [fromDate, toDate]
-          }
-        }]
-      }
-  
-    // kalau gaada thn_ajaran, tapi ada fromDate & toDate
-    } else if (!thn_ajaran || fromDate != "" || toDate != "") {
 
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        [Op.or]: [{
-          createdAt: {
-            [Op.between]: [fromDate, toDate]
-          }
-        }]
-      }
+      // kalau ada thn_ajaran, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+      
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
+        }
+      
+      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      } else {
 
-    // kalau gaada thn_ajaran, fromDate & toDate
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+        }
+
+      }
+  
     } else {
 
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
+
+      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+
+        }
+
       }
 
     }
 
+    
 
   // kalau ada search
   } else {
@@ -545,7 +557,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       /*
       If there's any parameters with search query is enabled,
       the previous value of variable will be replaced with search.
-       */
+      */
   
       if (id === "true") {
         searchById = search;
@@ -586,179 +598,190 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
      }
 
     // kalau ada thn_ajaran
-    if (thn_ajaran) {
+    if (thn_ajaran) { 
   
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        thn_ajaran: thn_ajaran,
-        [Op.or]: [
-          {
-            id: {
-              [Op.like]: '%' + searchById + '%'
-            }
-          },
-          {
-            nis_siswa: {
-              [Op.like]: '%' + searchByNis + '%'
-            }
-          },
-          {
-            nisn_siswa: {
-              [Op.like]: '%' + searchByNisn + '%'
-            }
-          },
-          {
-            nama_siswa: {
-              [Op.like]: '%' + searchByNama + '%'
-            }
-          },
-          {
-            jenis_kelamin: {
-              [Op.like]: '%' + searchByGender + '%'
-            }
-          },
-          {
-            KelasId: {
-              [Op.like]: '%' + searchByKelas + '%'
-            }
-          },
-        ]
-      }
-  
-    // kalau ada thn_ajaran, fromDate & toDate
-    } else if (thn_ajaran || fromDate != "" || toDate != "") {
-  
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        thn_ajaran: thn_ajaran,
-        createdAt: {
-          [Op.between]: [fromDate, toDate]
-        },
-        [Op.or]: [
-          {
-            id: {
-              [Op.like]: '%' + searchById + '%'
-            }
-          },
-          {
-            nis_siswa: {
-              [Op.like]: '%' + searchByNis + '%'
-            }
-          },
-          {
-            nisn_siswa: {
-              [Op.like]: '%' + searchByNisn + '%'
-            }
-          },
-          {
-            nama_siswa: {
-              [Op.like]: '%' + searchByNama + '%'
-            }
-          },
-          {
-            jenis_kelamin: {
-              [Op.like]: '%' + searchByGender + '%'
-            }
-          },
-          {
-            KelasId: {
-              [Op.like]: '%' + searchByKelas + '%'
-            }
-          },
-        ]
-      }
-  
-    // kalau gaada thn_ajaran, tapi ada fromDate & toDate
-    } else if (!thn_ajaran || fromDate != "" || toDate != "") {
 
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        createdAt: {
-          [Op.between]: [fromDate, toDate]
-        },
-        [Op.or]: [
-          {
-            id: {
-              [Op.like]: '%' + searchById + '%'
-            }
+      // kalau ada thn_ajaran, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+      
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
           },
-          {
-            nis_siswa: {
-              [Op.like]: '%' + searchByNis + '%'
-            }
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
           },
-          {
-            nisn_siswa: {
-              [Op.like]: '%' + searchByNisn + '%'
-            }
-          },
-          {
-            nama_siswa: {
-              [Op.like]: '%' + searchByNama + '%'
-            }
-          },
-          {
-            jenis_kelamin: {
-              [Op.like]: '%' + searchByGender + '%'
-            }
-          },
-          {
-            KelasId: {
-              [Op.like]: '%' + searchByKelas + '%'
-            }
-          },
-        ]
-      }
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+      
+      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      } else {
 
-    // kalau gaada thn_ajaran, fromDate & toDate
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+
+      }
+  
     } else {
 
-      where = {
-        isAlumni: {
-          [Op.ne]: true,
-        },
-        status_siswa: 'aktif',
-        [Op.or]: [
-          {
-            id: {
-              [Op.like]: '%' + searchById + '%'
-            }
+
+      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
           },
-          {
-            nis_siswa: {
-              [Op.like]: '%' + searchByNis + '%'
-            }
+          status_siswa: 'aktif',
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
           },
-          {
-            nisn_siswa: {
-              [Op.like]: '%' + searchByNisn + '%'
-            }
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.ne]: true,
           },
-          {
-            nama_siswa: {
-              [Op.like]: '%' + searchByNama + '%'
-            }
-          },
-          {
-            jenis_kelamin: {
-              [Op.like]: '%' + searchByGender + '%'
-            }
-          },
-          {
-            KelasId: {
-              [Op.like]: '%' + searchByKelas + '%'
-            }
-          },
-        ]
+          status_siswa: 'aktif',
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+
+        }
+
       }
 
     }
