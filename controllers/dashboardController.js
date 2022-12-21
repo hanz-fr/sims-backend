@@ -21,6 +21,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
             [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -129,6 +130,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -151,6 +153,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -173,6 +176,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -195,6 +199,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -215,6 +220,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -235,6 +241,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -255,6 +262,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -275,6 +283,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -295,6 +304,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },
@@ -316,6 +326,7 @@ exports.getMainDashboardData = async (req, res) => {
         isAlumni: {
           [Op.ne]: true
         },
+        status_siswa: 'aktif',
         tgl_meninggalkan_sekolah: {
           [Op.is]: null
         },

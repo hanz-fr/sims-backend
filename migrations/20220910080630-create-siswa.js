@@ -78,6 +78,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      thn_ajaran: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      status_siswa: {
+        type: Sequelize.ENUM('aktif', 'non-aktif'),
+        allowNull: false,
+      },
       sekolah_asal: {
         type: Sequelize.STRING,
         allowNull: false,

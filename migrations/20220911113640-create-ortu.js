@@ -1,4 +1,4 @@
-/* 'use strict';
+'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ortu', {
@@ -49,4 +49,4 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('ortu');
   }
-}; */
+};

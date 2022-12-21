@@ -26,6 +26,336 @@ exports.getAllSiswa = async (req, res) => {
   let KelasId = req.query.KelasId || '';
 
 
+  /* CONDITIONAL WHERE QUERY */
+  let where = {
+    isAlumni: {
+      [Op.ne]: true,
+    },
+    status_siswa: 'aktif',
+  };
+
+
+  // kalau gaada search
+  if (!search) { 
+
+
+    // kalau ada thn_ajaran
+    if (thn_ajaran) { 
+  
+
+      // kalau ada thn_ajaran, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+      
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
+        }
+      
+      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      } else {
+
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+        }
+
+      }
+  
+    } else {
+
+
+      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+
+        }
+
+      }
+
+    }
+
+    
+
+  // kalau ada search
+  } else {
+
+    /* 
+      Initialize variable with +?+ so there wont
+      be any results of the following parameters.
+      */
+  
+      let searchById = '+?+';
+      let searchByNis = '+?+';
+      let searchByNisn = '+?+';
+      let searchByNama = '+?+';
+      let searchByGender = '+?+';
+      let searchByKelas = '+?+';
+  
+      /*
+      If there's any parameters with search query is enabled,
+      the previous value of variable will be replaced with search.
+      */
+  
+      if (id === "true") {
+        searchById = search;
+      }
+
+      if (nis_siswa === "true") {
+        searchByNis = search;
+      }
+  
+      if (nisn_siswa === "true") {
+        searchByNisn = search;
+      }
+  
+      if (nama_siswa === "true") {
+        searchByNama = search;
+      }
+  
+      if (jenis_kelamin === "true") {
+        searchByGender = search;
+      }
+  
+      if (KelasId === "true") {
+        searchByKelas = search;
+      }
+  
+      /* 
+      If there are no parameters set to true,
+      All parameters will have the same value as search.
+      */
+  
+     if (!req.query.nis_siswa && !req.query.nisn_siswa && !req.query.nama_siswa && !req.query.jenis_kelamin && !req.query.KelasId) {
+      searchById = search;
+      searchByNis = search;
+      searchByNisn = search;
+      searchByNama = search;
+      searchByGender = search;
+      searchByKelas = search;
+     }
+
+    // kalau ada thn_ajaran
+    if (thn_ajaran) { 
+  
+
+      // kalau ada thn_ajaran, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+      
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          },
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+      
+      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      } else {
+
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          thn_ajaran: thn_ajaran,
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+
+      }
+  
+    } else {
+
+
+      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          },
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.ne]: true,
+          },
+          status_siswa: 'aktif',
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+
+        }
+
+      }
+
+    }
+
+  }
+
+
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
   const perPageAsNumber = Number.parseInt(req.query.perPage);
@@ -45,140 +375,162 @@ exports.getAllSiswa = async (req, res) => {
 
   try {
     
-    if (!search) {
-    
-      if (fromDate != "" || toDate != "") {
-
-        let siswa = await Siswa.findAndCountAll({
-          limit: perPage,
-          offset: ( page-1 ) * perPage,
-          order: [
-            [sort_by, sort]
-          ],
-          where: {
-            isAlumni: {
-              [Op.ne]: true
-            },
-            [Op.or]: [{
-              createdAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }]
-          },
-          include: [
-            {
-              model: Raport,
-              as: 'raport'
-            },
-            {
-              model: Kelas,
-              as: 'kelas',
-            },
-            {
-              model: Mutasi,
-              as: 'mutasi',
-            }
-          ],
-        });
-    
-        let from = ((page - 1) * perPage) + 1;
-  
-        let to = page * perPage;
-  
-        // pagination params
-        path = 'http://127.0.0.1:8000/data-induk-siswa';
-        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
-  
-        if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`
-        } 
-  
-        if (page === 1) {
-          prevPageUrl = null
+    let siswa = await Siswa.findAndCountAll({
+      limit: perPage,
+      offset: ( page-1 ) * perPage,
+      order: [
+        [sort_by, sort]
+      ],
+      where,
+      include: [
+        {
+          model: Raport,
+          as: 'raport'
+        },
+        {
+          model: Kelas,
+          as: 'kelas',
+        },
+        {
+          model: Mutasi,
+          as: 'mutasi',
         }
-  
-        res.status(200).json({
-          resultId: 1,
-          current_page: page,
-          data: siswa,
-          first_page_url: firstPageUrl,
-          from: from,
-          next_page_url: nextPageUrl,
-          path: path,
-          per_page: perPage,
-          prev_page_url: prevPageUrl,
-          to: to,
-          fromDate: fromDate,
-          toDate: toDate,
-        });
+      ],
+    });
 
-      } else {
+    let from = ((page - 1) * perPage) + 1;
 
-        let siswa = await Siswa.findAndCountAll({
-          limit: perPage,
-          offset: ( page-1 ) * perPage,
-          order: [
-            [sort_by, sort]
-          ],
-          where: {
-            isAlumni: {
-              [Op.ne]: true
-            },
-          },
-          include: [
-            {
-              model: Raport,
-              as: 'raport'
-            },
-            {
-              model: Kelas,
-              as: 'kelas',
-            },
-            {
-              model: Mutasi,
-              as: 'mutasi',
-            }
-          ],
-        });
-    
-        let from = ((page - 1) * perPage) + 1;
-  
-        let to = page * perPage;
-  
-        // pagination params
-        path = 'http://127.0.0.1:8000/data-induk-siswa';
-        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
-  
-        if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`
-        } 
-  
-        if (page === 1) {
-          prevPageUrl = null
-        }
-  
-        res.status(200).json({
-          resultId: 2,
-          current_page: page,
-          data: siswa,
-          first_page_url: firstPageUrl,
-          from: from,
-          next_page_url: nextPageUrl,
-          path: path,
-          per_page: perPage,
-          prev_page_url: prevPageUrl,
-          to: to,
-          fromDate: fromDate,
-          toDate: toDate,
-        });
+    let to = page * perPage;
 
+    // pagination params
+    path = 'http://127.0.0.1:8000/data-induk-siswa';
+    firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
+    nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+
+    if (page > 1) {
+      prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`
+    } 
+
+    if (page === 1) {
+      prevPageUrl = null
+    }
+
+    res.status(200).json({
+      resultId: 1,
+      current_page: page,
+      data: siswa,
+      first_page_url: firstPageUrl,
+      from: from,
+      next_page_url: nextPageUrl,
+      path: path,
+      per_page: perPage,
+      prev_page_url: prevPageUrl,
+      to: to,
+      fromDate: fromDate,
+      toDate: toDate,
+    });
+
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+
+
+} 
+
+
+exports.getAllSiswaByJurusanKelas = async (req, res) => {
+
+  const search = req.query.search || "";
+  let fromDate = req.query.dibuatTglDari || "";
+  let toDate = req.query.dibuatTglKe || "";
+  let sort_by = req.query.sort_by || "nama_siswa";
+  let sort = req.query.sort || "ASC";
+  let thn_ajaran = req.query.thn_ajaran || '';
+
+  let id = req.query.id || '';
+  let nis_siswa = req.query.nis_siswa || '';
+  let nisn_siswa = req.query.nisn_siswa || '';
+  let nama_siswa = req.query.nama_siswa || '';
+  let jenis_kelamin = req.query.jenis_kelamin || '';
+  let KelasId = req.query.KelasId || ''; 
+
+  const jurusan = req.params.jurusan;
+  const kelas = req.params.kelas;
+
+  /* CONDITIONAL WHERE QUERY */
+  let where = {
+    isAlumni: {
+      [Op.ne]: true,
+    },
+    status_siswa: 'aktif',
+  };
+
+
+  // kalau gaada search
+  if (!search) { 
+
+
+    // kalau ada thn_ajaran
+    if (thn_ajaran) { 
+  
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        thn_ajaran: thn_ajaran,
       }
   
-    } else {
+    // kalau ada thn_ajaran, fromDate & toDate
+    } else if (thn_ajaran || fromDate != "" || toDate != "") {
   
-      /* 
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        thn_ajaran: thn_ajaran,
+        [Op.or]: [{
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          }
+        }]
+      }
+  
+    // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+    } else if (!thn_ajaran || fromDate != "" || toDate != "") {
+
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        [Op.or]: [{
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          }
+        }]
+      }
+
+    // kalau gaada thn_ajaran, fromDate & toDate
+    } else {
+
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+      }
+
+    }
+
+
+  // kalau ada search
+  } else {
+
+    /* 
       Initialize variable with +?+ so there wont
       be any results of the following parameters.
       */
@@ -232,237 +584,186 @@ exports.getAllSiswa = async (req, res) => {
       searchByGender = search;
       searchByKelas = search;
      }
+
+    // kalau ada thn_ajaran
+    if (thn_ajaran) {
   
-     /* 
-     If fromDate and toDate is not equal to null,
-     data will be displayed by given date.
-     */
-     if (fromDate != "" || toDate != "") {
-      
-      let siswa = await Siswa.findAndCountAll({
-        limit: perPage,
-        offset: ( page-1 ) * perPage,
-        order: [
-          [sort_by, sort]
-        ],
-        where:  {
-          isAlumni: {
-            [Op.ne]: true
-          },
-          /* mutasi: {
-            [Op.is]: null
-          }, */
-          createdAt: {
-            [Op.between]: [fromDate, toDate]
-          },
-          [Op.or]: [
-            {
-              id: {
-                [Op.like]: '%' + searchById + '%'
-              }
-            },
-            {
-              nis_siswa: {
-                [Op.like]: '%' + searchByNis + '%'
-              }
-            },
-            {
-              nisn_siswa: {
-                [Op.like]: '%' + searchByNisn + '%'
-              }
-            },
-            {
-              nama_siswa: {
-                [Op.like]: '%' + searchByNama + '%'
-              }
-            },
-            {
-              jenis_kelamin: {
-                [Op.like]: '%' + searchByGender + '%'
-              }
-            },
-            {
-              KelasId: {
-                [Op.like]: '%' + searchByKelas + '%'
-              }
-            },
-          ]
-        },  
-        include: [
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        thn_ajaran: thn_ajaran,
+        [Op.or]: [
           {
-            model: Raport,
-            as: 'raport'
+            id: {
+              [Op.like]: '%' + searchById + '%'
+            }
           },
           {
-            model: Kelas,
-            as: 'kelas',
+            nis_siswa: {
+              [Op.like]: '%' + searchByNis + '%'
+            }
           },
           {
-            model: Mutasi,
-            as: 'mutasi',
-          }
-        ],
-      });
-    
-      let from = ((page - 1) * perPage) + 1;
-  
-      let to = page * perPage;
-  
-      // pagination params
-      path = 'http://127.0.0.1:8000/data-induk-siswa';
-      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
-  
-      if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
-      } 
-  
-      if (page === 1) {
-        prevPageUrl = null
+            nisn_siswa: {
+              [Op.like]: '%' + searchByNisn + '%'
+            }
+          },
+          {
+            nama_siswa: {
+              [Op.like]: '%' + searchByNama + '%'
+            }
+          },
+          {
+            jenis_kelamin: {
+              [Op.like]: '%' + searchByGender + '%'
+            }
+          },
+          {
+            KelasId: {
+              [Op.like]: '%' + searchByKelas + '%'
+            }
+          },
+        ]
       }
   
+    // kalau ada thn_ajaran, fromDate & toDate
+    } else if (thn_ajaran || fromDate != "" || toDate != "") {
   
-      res.status(200).json({
-        resultId: 3,
-        current_page: page,
-        data: siswa,
-        first_page_url: firstPageUrl,
-        from: from,
-        next_page_url: nextPageUrl,
-        path: path,
-        per_page: perPage,
-        prev_page_url: prevPageUrl,
-        to: to,
-        fromDate: fromDate,
-        toDate: toDate,
-      });
-
-     } else {
-
-       let siswa = await Siswa.findAndCountAll({
-        limit: perPage,
-        offset: ( page-1 ) * perPage,
-        order: [
-          [sort_by, sort]
-        ],
-        where:  {
-          isAlumni: {
-            [Op.ne]: true
-          },
-          [Op.or]: [
-            {
-              id: {
-                [Op.like]: '%' + searchById + '%'
-              }
-            },
-            {
-              nis_siswa: {
-                [Op.like]: '%' + searchByNis + '%'
-              }
-            },
-            {
-              nisn_siswa: {
-                [Op.like]: '%' + searchByNisn + '%'
-              }
-            },
-            {
-              nama_siswa: {
-                [Op.like]: '%' + searchByNama + '%'
-              }
-            },
-            {
-              jenis_kelamin: {
-                [Op.like]: '%' + searchByGender + '%'
-              }
-            },
-            {
-              KelasId: {
-                [Op.like]: '%' + searchByKelas + '%'
-              }
-            },
-          ]
-        },  
-        include: [
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        thn_ajaran: thn_ajaran,
+        createdAt: {
+          [Op.between]: [fromDate, toDate]
+        },
+        [Op.or]: [
           {
-            model: Raport,
-            as: 'raport'
+            id: {
+              [Op.like]: '%' + searchById + '%'
+            }
           },
           {
-            model: Kelas,
-            as: 'kelas',
+            nis_siswa: {
+              [Op.like]: '%' + searchByNis + '%'
+            }
           },
           {
-            model: Mutasi,
-            as: 'mutasi',
-          }
-        ],
-      });
-    
-      let from = ((page - 1) * perPage) + 1;
-  
-      let to = page * perPage;
-  
-      // pagination params
-      path = 'http://127.0.0.1:8000/data-induk-siswa';
-      firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
-  
-      if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
-      } 
-  
-      if (page === 1) {
-        prevPageUrl = null
+            nisn_siswa: {
+              [Op.like]: '%' + searchByNisn + '%'
+            }
+          },
+          {
+            nama_siswa: {
+              [Op.like]: '%' + searchByNama + '%'
+            }
+          },
+          {
+            jenis_kelamin: {
+              [Op.like]: '%' + searchByGender + '%'
+            }
+          },
+          {
+            KelasId: {
+              [Op.like]: '%' + searchByKelas + '%'
+            }
+          },
+        ]
       }
   
-  
-      res.status(200).json({
-        resultId: 4,
-        current_page: page,
-        data: siswa,
-        first_page_url: firstPageUrl,
-        from: from,
-        next_page_url: nextPageUrl,
-        path: path,
-        per_page: perPage,
-        prev_page_url: prevPageUrl,
-        to: to,
-        fromDate: fromDate,
-        toDate: toDate,
-      });
+    // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+    } else if (!thn_ajaran || fromDate != "" || toDate != "") {
 
-     }
-  
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        createdAt: {
+          [Op.between]: [fromDate, toDate]
+        },
+        [Op.or]: [
+          {
+            id: {
+              [Op.like]: '%' + searchById + '%'
+            }
+          },
+          {
+            nis_siswa: {
+              [Op.like]: '%' + searchByNis + '%'
+            }
+          },
+          {
+            nisn_siswa: {
+              [Op.like]: '%' + searchByNisn + '%'
+            }
+          },
+          {
+            nama_siswa: {
+              [Op.like]: '%' + searchByNama + '%'
+            }
+          },
+          {
+            jenis_kelamin: {
+              [Op.like]: '%' + searchByGender + '%'
+            }
+          },
+          {
+            KelasId: {
+              [Op.like]: '%' + searchByKelas + '%'
+            }
+          },
+        ]
+      }
+
+    // kalau gaada thn_ajaran, fromDate & toDate
+    } else {
+
+      where = {
+        isAlumni: {
+          [Op.ne]: true,
+        },
+        status_siswa: 'aktif',
+        [Op.or]: [
+          {
+            id: {
+              [Op.like]: '%' + searchById + '%'
+            }
+          },
+          {
+            nis_siswa: {
+              [Op.like]: '%' + searchByNis + '%'
+            }
+          },
+          {
+            nisn_siswa: {
+              [Op.like]: '%' + searchByNisn + '%'
+            }
+          },
+          {
+            nama_siswa: {
+              [Op.like]: '%' + searchByNama + '%'
+            }
+          },
+          {
+            jenis_kelamin: {
+              [Op.like]: '%' + searchByGender + '%'
+            }
+          },
+          {
+            KelasId: {
+              [Op.like]: '%' + searchByKelas + '%'
+            }
+          },
+        ]
+      }
+
     }
 
-  } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
   }
-
-
-} 
-
-
-exports.getAllSiswaByJurusanKelas = async (req, res) => {
-
-  const search = req.query.search || "";
-  let fromDate = req.query.dibuatTglDari || "";
-  let toDate = req.query.dibuatTglKe || "";
-  let sort_by = req.query.sort_by || "nama_siswa";
-  let sort = req.query.sort || "ASC";
-  let thn_ajaran = req.query.thn_ajaran || '';
-
-  let id = req.query.id || '';
-  let nis_siswa = req.query.nis_siswa || '';
-  let nisn_siswa = req.query.nisn_siswa || '';
-  let nama_siswa = req.query.nama_siswa || '';
-  let jenis_kelamin = req.query.jenis_kelamin || '';
-  let KelasId = req.query.KelasId || ''; 
-
-  const jurusan = req.params.jurusan;
-  const kelas = req.params.kelas;
   
   /* Pagination */
   const pageAsNumber = Number.parseInt(req.query.page);
@@ -490,16 +791,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           order: [
             [sort_by, sort]
           ],
-          where: {
-            isAlumni: {
-              [Op.ne]: true
-            },
-            [Op.or]: [{
-              createdAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }]
-          },
+          where,
           include: [
             {
               model: Raport,
@@ -558,11 +850,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           order: [
             [sort_by, sort]
           ],
-          where: {
-            isAlumni: {
-              [Op.ne]: true
-            },
-          },
+          where,
           include: [
             {
               model: Raport,
@@ -617,60 +905,60 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
 
     } else {
 
-      /* 
-      Initialize variable with +?+ so there wont
-      be any results of the following parameters.
-      */
+    //   /* 
+    //   Initialize variable with +?+ so there wont
+    //   be any results of the following parameters.
+    //   */
   
-      let searchById = '+?+';
-      let searchByNis = '+?+';
-      let searchByNisn = '+?+';
-      let searchByNama = '+?+';
-      let searchByGender = '+?+';
-      let searchByKelas = '+?+';
+    //   let searchById = '+?+';
+    //   let searchByNis = '+?+';
+    //   let searchByNisn = '+?+';
+    //   let searchByNama = '+?+';
+    //   let searchByGender = '+?+';
+    //   let searchByKelas = '+?+';
   
-      /*
-      If there's any parameters with search query is enabled,
-      the previous value of variable will be replaced with search.
-       */
+    //   /*
+    //   If there's any parameters with search query is enabled,
+    //   the previous value of variable will be replaced with search.
+    //    */
   
-      if (id === "true") {
-        searchById = search;
-      }
+    //   if (id === "true") {
+    //     searchById = search;
+    //   }
 
-      if (nis_siswa === "true") {
-        searchByNis = search;
-      }
+    //   if (nis_siswa === "true") {
+    //     searchByNis = search;
+    //   }
   
-      if (nisn_siswa === "true") {
-        searchByNisn = search;
-      }
+    //   if (nisn_siswa === "true") {
+    //     searchByNisn = search;
+    //   }
   
-      if (nama_siswa === "true") {
-        searchByNama = search;
-      }
+    //   if (nama_siswa === "true") {
+    //     searchByNama = search;
+    //   }
   
-      if (jenis_kelamin === "true") {
-        searchByGender = search;
-      }
+    //   if (jenis_kelamin === "true") {
+    //     searchByGender = search;
+    //   }
   
-      if (KelasId === "true") {
-        searchByKelas = search;
-      }
+    //   if (KelasId === "true") {
+    //     searchByKelas = search;
+    //   }
   
-      /* 
-      If there are no parameters set to true,
-      All parameters will have the same value as search.
-      */
+    //   /* 
+    //   If there are no parameters set to true,
+    //   All parameters will have the same value as search.
+    //   */
   
-    if (!req.query.nis_siswa && !req.query.nisn_siswa && !req.query.nama_siswa && !req.query.jenis_kelamin && !req.query.KelasId) {
-      searchById = search;
-      searchByNis = search;
-      searchByNisn = search;
-      searchByNama = search;
-      searchByGender = search;
-      searchByKelas = search;
-    }
+    // if (!req.query.nis_siswa && !req.query.nisn_siswa && !req.query.nama_siswa && !req.query.jenis_kelamin && !req.query.KelasId) {
+    //   searchById = search;
+    //   searchByNis = search;
+    //   searchByNisn = search;
+    //   searchByNama = search;
+    //   searchByGender = search;
+    //   searchByKelas = search;
+    // }
 
     if (fromDate != "" || toDate != "") {
 
@@ -680,46 +968,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         order: [
           [sort_by, sort]
         ],
-        where:  {
-          isAlumni: {
-            [Op.ne]: true
-          },
-          createdAt: {
-            [Op.between]: [fromDate, toDate]
-          },
-          [Op.or]: [
-            {
-              id: {
-                [Op.like]: '%' + searchById + '%'
-              }
-            },
-            {
-              nis_siswa: {
-                [Op.like]: '%' + searchByNis + '%'
-              }
-            },
-            {
-              nisn_siswa: {
-                [Op.like]: '%' + searchByNisn + '%'
-              }
-            },
-            {
-              nama_siswa: {
-                [Op.like]: '%' + searchByNama + '%'
-              }
-            },
-            {
-              jenis_kelamin: {
-                [Op.like]: '%' + searchByGender + '%'
-              }
-            },
-            {
-              KelasId: {
-                [Op.like]: '%' + searchByKelas + '%'
-              }
-            },
-          ]
-        },
+        where,
         include: [
           {
             model: Raport,
@@ -779,43 +1028,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
          order: [
            [sort_by, sort]
          ],
-         where:  {
-          isAlumni: {
-            [Op.ne]: true
-          },
-           [Op.or]: [
-             {
-               id: {
-                 [Op.like]: '%' + searchById + '%'
-               }
-             },
-             {
-               nis_siswa: {
-                 [Op.like]: '%' + searchByNis + '%'
-               }
-             },
-             {
-               nisn_siswa: {
-                 [Op.like]: '%' + searchByNisn + '%'
-               }
-             },
-             {
-               nama_siswa: {
-                 [Op.like]: '%' + searchByNama + '%'
-               }
-             },
-             {
-               jenis_kelamin: {
-                 [Op.like]: '%' + searchByGender + '%'
-               }
-             },
-             {
-               KelasId: {
-                 [Op.like]: '%' + searchByKelas + '%'
-               }
-             },
-           ]
-         },
+         where,
          include: [
            {
              model: Raport,
@@ -947,7 +1160,6 @@ exports.createSiswa = async (req, res) => {
     const schema = {
       nis_siswa: { type: "string", max: 10 },
       KelasId: { type: "string", optional: true },
-      /* OrtuId: { type: "number", optional: true }, */
       nisn_siswa: { type: "string", max: 10 },
       nama_siswa: { type: "string", max: 100 },
       tmp_lahir: { type: "string" },
@@ -962,6 +1174,8 @@ exports.createSiswa = async (req, res) => {
       tgl_diterima: { type: "date", convert: true, optional: true },
       semester_diterima: { type: "number", optional: true },
       diterima_di_kelas: { type: "string", optional: false },
+      status_siswa: { type: "enum", values: ["aktif", "non-aktif"], optional: false },
+      thn_ajaran: { type: "string", optional: true },
       sekolah_asal: { type: "string" },
       alamat_sekolah_asal: { type: "string", optional: true },
       thn_ijazah_smp: { type: "string", optional: true },
@@ -1058,48 +1272,50 @@ exports.updateSiswa = async (req, res) => {
   // validate incoming request
   const schema = {
     nis_siswa: { type: "string", max: 10, optional: true },
-      KelasId: { type: "string", optional: true },
-      /* OrtuId: { type: "number", optional: true }, */
-      nisn_siswa: { type: "string", max: 10, optional: true },
-      nama_siswa: { type: "string", max: 100, optional: true },
-      tmp_lahir: { type: "string", optional: true },
-      tgl_lahir: { type: "date", convert: true, optional: true },
-      jenis_kelamin: { type: "enum", values: ["L", "P"], optional: true },
-      agama: { type: "string", optional: true },
-      anak_ke: { type: "number", optional: true },
-      status: { type: "enum", values: ["AA", "AK", "AT"], optional: true },
-      alamat_siswa: { type: "string", optional: true },
-      email_siswa: { type: "string", optional: true },
-      no_telp_siswa: { type: "string", max: 20, optional: true },
-      tgl_diterima: { type: "date", convert: true, optional: true },
-      semester_diterima: { type: "number", optional: true },
-      diterima_di_kelas: { type: "string", optional: true },
-      sekolah_asal: { type: "string", optional: true },
-      alamat_sekolah_asal: { type: "string", optional: true },
-      thn_ijazah_smp: { type: "string", optional: true },
-      no_ijazah_smp: { type: "string", optional: true },
-      thn_skhun_smp: { type: "string", optional: true },
-      no_skhun_smp: { type: "string", max: 100, optional: true },
-      nama_ayah: { type: "string", optional: true },
-      nama_ibu: { type: "string", optional: true },
-      alamat_ortu: { type: "string", optional: true },
-      no_telp_ortu: { type: "string", optional: true, max: 20 },
-      email_ortu: { type: "string", optional: true },
-      nama_wali: { type: "string", optional: true },
-      alamat_wali: { type: "string", optional: true },
-      no_telp_wali: { type: "string", optional: true },
-      pekerjaan_wali: { type: "string", optional: true },
-      tgl_meninggalkan_sekolah: { type: "date", convert: true, optional: true },
-      alasan_meninggalkan_sekolah: { type: "string", optional: true },
-      no_ijazah_smk: { type: "string", optional: true },
-      foto: { type: "string", optional: true },
-      tgl_ijazah_smk: { type: "date", convert: true, optional: true },
-      keterangan_lain: { type: "string", optional: true },
-      berat_badan: { type: "number", optional: true },
-      tinggi_badan: { type: "number", optional: true },
-      lingkar_kepala: { type: "number", optional: true },
-      golongan_darah: { type: "string", optional: true },
-      isAlumni: { type: "boolean", optional: true },
+    KelasId: { type: "string", optional: true },
+    /* OrtuId: { type: "number", optional: true }, */
+    nisn_siswa: { type: "string", max: 10, optional: true },
+    nama_siswa: { type: "string", max: 100, optional: true },
+    tmp_lahir: { type: "string", optional: true },
+    tgl_lahir: { type: "date", convert: true, optional: true },
+    jenis_kelamin: { type: "enum", values: ["L", "P"], optional: true },
+    agama: { type: "string", optional: true },
+    anak_ke: { type: "number", optional: true },
+    status: { type: "enum", values: ["AA", "AK", "AT"], optional: true },
+    alamat_siswa: { type: "string", optional: true },
+    email_siswa: { type: "string", optional: true },
+    no_telp_siswa: { type: "string", max: 20, optional: true },
+    tgl_diterima: { type: "date", convert: true, optional: true },
+    semester_diterima: { type: "number", optional: true },
+    diterima_di_kelas: { type: "string", optional: true },
+    status_siswa: { type: "enum", values: ["aktif", "non-aktif"], optional: true },
+    thn_ajaran: { type: "string", optional: true },
+    sekolah_asal: { type: "string", optional: true },
+    alamat_sekolah_asal: { type: "string", optional: true },
+    thn_ijazah_smp: { type: "string", optional: true },
+    no_ijazah_smp: { type: "string", optional: true },
+    thn_skhun_smp: { type: "string", optional: true },
+    no_skhun_smp: { type: "string", max: 100, optional: true },
+    nama_ayah: { type: "string", optional: true },
+    nama_ibu: { type: "string", optional: true },
+    alamat_ortu: { type: "string", optional: true },
+    no_telp_ortu: { type: "string", optional: true, max: 20 },
+    email_ortu: { type: "string", optional: true },
+    nama_wali: { type: "string", optional: true },
+    alamat_wali: { type: "string", optional: true },
+    no_telp_wali: { type: "string", optional: true },
+    pekerjaan_wali: { type: "string", optional: true },
+    tgl_meninggalkan_sekolah: { type: "date", convert: true, optional: true },
+    alasan_meninggalkan_sekolah: { type: "string", optional: true },
+    no_ijazah_smk: { type: "string", optional: true },
+    foto: { type: "string", optional: true },
+    tgl_ijazah_smk: { type: "date", convert: true, optional: true },
+    keterangan_lain: { type: "string", optional: true },
+    berat_badan: { type: "number", optional: true },
+    tinggi_badan: { type: "number", optional: true },
+    lingkar_kepala: { type: "number", optional: true },
+    golongan_darah: { type: "string", optional: true },
+    isAlumni: { type: "boolean", optional: true },
   };
 
   // validate schema

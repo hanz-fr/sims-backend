@@ -107,6 +107,14 @@ class Siswa extends Model {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    thn_ajaran: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    status_siswa: {
+      type: DataTypes.ENUM('aktif', 'non-aktif'),
+      allowNull: false,
+    },
     sekolah_asal: {
       type: DataTypes.STRING,
       allowNull: false,
