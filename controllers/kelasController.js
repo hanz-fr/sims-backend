@@ -176,6 +176,10 @@ exports.getSiswaByKelas = async (req, res) => {
                             s.jenis_kelamin = "L"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -191,6 +195,10 @@ exports.getSiswaByKelas = async (req, res) => {
                             s.jenis_kelamin = "P"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -275,6 +283,9 @@ exports.getSiswaByKelas = async (req, res) => {
             [Op.ne]: true
           },
           status_siswa: 'aktif',
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
         },
         attributes: [],
       },
@@ -312,6 +323,10 @@ exports.getSiswaByKelas10 = async (req, res) => {
                             s.jenis_kelamin = "L"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -327,6 +342,10 @@ exports.getSiswaByKelas10 = async (req, res) => {
                             s.jenis_kelamin = "P"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -411,6 +430,9 @@ exports.getSiswaByKelas10 = async (req, res) => {
             [Op.ne]: true
           },
           status_siswa: 'aktif',
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
         },
         attributes: [],
       },
@@ -448,6 +470,10 @@ exports.getSiswaByKelas11 = async (req, res) => {
                             s.jenis_kelamin = "L"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -463,6 +489,10 @@ exports.getSiswaByKelas11 = async (req, res) => {
                             s.jenis_kelamin = "P"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -547,6 +577,9 @@ exports.getSiswaByKelas11 = async (req, res) => {
             [Op.ne]: true
           },
           status_siswa: 'aktif',
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
         },
         attributes: [],
       },
@@ -585,6 +618,10 @@ exports.getSiswaByKelas12 = async (req, res) => {
                             s.jenis_kelamin = "L"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -600,6 +637,10 @@ exports.getSiswaByKelas12 = async (req, res) => {
                             s.jenis_kelamin = "P"
                             AND
                             s.status_siswa = "aktif"
+                            AND
+                            s.isAlumni = 'false'
+                            AND
+                            s.tgl_meninggalkan_sekolah IS NULL
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -684,6 +725,9 @@ exports.getSiswaByKelas12 = async (req, res) => {
             [Op.ne]: true
           },
           status_siswa: 'aktif',
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
         },
         attributes: [],
       },
