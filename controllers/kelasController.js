@@ -174,6 +174,8 @@ exports.getSiswaByKelas = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "L"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -187,6 +189,8 @@ exports.getSiswaByKelas = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "P"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -270,6 +274,7 @@ exports.getSiswaByKelas = async (req, res) => {
           isAlumni: {
             [Op.ne]: true
           },
+          status_siswa: 'aktif',
         },
         attributes: [],
       },
@@ -305,6 +310,8 @@ exports.getSiswaByKelas10 = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "L"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -318,6 +325,8 @@ exports.getSiswaByKelas10 = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "P"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -401,6 +410,7 @@ exports.getSiswaByKelas10 = async (req, res) => {
           isAlumni: {
             [Op.ne]: true
           },
+          status_siswa: 'aktif',
         },
         attributes: [],
       },
@@ -436,6 +446,8 @@ exports.getSiswaByKelas11 = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "L"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -449,6 +461,8 @@ exports.getSiswaByKelas11 = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "P"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -532,6 +546,7 @@ exports.getSiswaByKelas11 = async (req, res) => {
           isAlumni: {
             [Op.ne]: true
           },
+          status_siswa: 'aktif',
         },
         attributes: [],
       },
@@ -568,6 +583,8 @@ exports.getSiswaByKelas12 = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "L"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaLaki",
       ],
@@ -581,6 +598,8 @@ exports.getSiswaByKelas12 = async (req, res) => {
                             s.KelasId = Kelas.id
                             AND
                             s.jenis_kelamin = "P"
+                            AND
+                            s.status_siswa = "aktif"
                     )`),
         "jumlahSiswaPerempuan",
       ],
@@ -664,6 +683,7 @@ exports.getSiswaByKelas12 = async (req, res) => {
           isAlumni: {
             [Op.ne]: true
           },
+          status_siswa: 'aktif',
         },
         attributes: [],
       },
