@@ -837,6 +837,7 @@ exports.getAlumni = async (req, res) => {
   let toDate = req.query.dibuatTglKe || "";
   let sort_by = req.query.sort_by || "nama_siswa";
   let sort = req.query.sort || "ASC";
+  let thn_ajaran = req.query.thn_ajaran || '';
 
   let id = req.query.id || '';
   let nis_siswa = req.query.nis_siswa || '';
@@ -845,129 +846,86 @@ exports.getAlumni = async (req, res) => {
   let jenis_kelamin = req.query.jenis_kelamin || '';
   let KelasId = req.query.KelasId || '';
 
-  /* Pagination */
-  const pageAsNumber = Number.parseInt(req.query.page);
-  const perPageAsNumber = Number.parseInt(req.query.perPage);
 
-  let page = 1;
-  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
-    page = pageAsNumber
-  }
+  /* CONDITIONAL WHERE QUERY */
+  let where = {
+    isAlumni: {
+      [Op.is]: true
+    },
+  };
 
 
-  let perPage = 10;
+  // kalau gaada search
+  if (!search) { 
+
+
+    // kalau ada thn_ajaran
+    if (thn_ajaran) { 
   
-  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
-    perPage = perPageAsNumber;
-  }
 
-  try {
-
-    if (!search) {
-
+      // kalau ada thn_ajaran, fromDate & toDate
       if (fromDate != "" || toDate != "") {
-
-        let alumni = await Siswa.findAndCountAll({
-          limit: perPage,
-          offset: ( page-1 ) * perPage,
-          order: [
-            [sort_by, sort]
-          ],
-          where: {
-            isAlumni: {
-              [Op.is]: true
-            },
-            [Op.or]: [{
-              updatedAt: {
-                [Op.between]: [fromDate, toDate]
-              }
-            }]
-          }
-        });
-  
-        let from = ((page - 1) * perPage) + 1;
-  
-        let to = page * perPage;
-  
-        // pagination params
-        path = 'http://127.0.0.1:8000/data-alumni';
-        firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-  
-        if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-        } 
-  
-        if (page === 1) {
-          prevPageUrl = null
+      
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          thn_ajaran: thn_ajaran,
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
         }
-  
-  
-        res.status(200).json({
-          resultId: 1,
-          current_page: page,
-          data: alumni,
-          first_page_url: firstPageUrl,
-          from: from,
-          next_page_url: nextPageUrl,
-          path: path,
-          per_page: perPage,
-          prev_page_url: prevPageUrl,
-          to: to,
-        });
-
+      
+      // kalau ada thn_ajaran, tp gaada fromDate & toDate
       } else {
 
-        let alumni = await Siswa.findAndCountAll({
-          limit: perPage,
-          offset: ( page-1 ) * perPage,
-          order: [
-            [sort_by, sort]
-          ],
-          where: {
-            isAlumni: {
-              [Op.is]: true
-            }
-          }
-        });
-  
-        let from = ((page - 1) * perPage) + 1;
-  
-        let to = page * perPage;
-  
-        // pagination params
-        path = 'http://127.0.0.1:8000/data-alumni';
-        firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-  
-        if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-        } 
-  
-        if (page === 1) {
-          prevPageUrl = null
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          thn_ajaran: thn_ajaran,
         }
+
+      }
   
-  
-        res.status(200).json({
-          resultId: 2,
-          current_page: page,
-          data: alumni,
-          first_page_url: firstPageUrl,
-          from: from,
-          next_page_url: nextPageUrl,
-          path: path,
-          per_page: perPage,
-          prev_page_url: prevPageUrl,
-          to: to,
-        });
+    } else {
+
+
+      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.is]: true
+          },
+
+        }
 
       }
 
+    }
 
-    } else {
+    
 
-      /* 
+  // kalau ada search
+  } else {
+
+    /* 
       Initialize variable with +?+ so there wont
       be any results of the following parameters.
       */
@@ -982,7 +940,7 @@ exports.getAlumni = async (req, res) => {
       /*
       If there's any parameters with search query is enabled,
       the previous value of variable will be replaced with search.
-       */
+      */
   
       if (id === "true") {
         searchById = search;
@@ -1022,168 +980,251 @@ exports.getAlumni = async (req, res) => {
       searchByKelas = search;
      }
 
-     if (fromDate != "" || toDate != "") { 
+    // kalau ada thn_ajaran
+    if (thn_ajaran) { 
+  
 
-      let alumni = await Siswa.findAndCountAll({
-        limit: perPage,
-        offset: ( page-1 ) * perPage,
-        order: [
-          [sort_by, sort]
-        ],
-        where: {
+      // kalau ada thn_ajaran, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+      
+        where = {
           isAlumni: {
             [Op.is]: true
           },
-          updatedAt: {
+          thn_ajaran: thn_ajaran,
+          createdAt: {
             [Op.between]: [fromDate, toDate]
           },
           [Op.or]: [
             {
               id: {
-                [Op.like]: '%' + searchById + '%',
-              },
+                [Op.like]: '%' + searchById + '%'
+              }
             },
             {
               nis_siswa: {
-                [Op.like]: '%' + searchByNis + '%',
-              },
+                [Op.like]: '%' + searchByNis + '%'
+              }
             },
             {
               nisn_siswa: {
-                [Op.like]: '%' + searchByNisn + '%',
-              },
+                [Op.like]: '%' + searchByNisn + '%'
+              }
             },
             {
               nama_siswa: {
-                [Op.like]: '%' + searchByNama + '%',
-              },
+                [Op.like]: '%' + searchByNama + '%'
+              }
             },
             {
               jenis_kelamin: {
-                [Op.like]: '%' + searchByGender + '%',
-              },
+                [Op.like]: '%' + searchByGender + '%'
+              }
             },
             {
               KelasId: {
-                [Op.like]: '%' + searchByKelas + '%',
-              },
+                [Op.like]: '%' + searchByKelas + '%'
+              }
             },
           ]
         }
-      });
- 
-      let from = ((page - 1) * perPage) + 1;
- 
-      let to = page * perPage;
- 
-      // pagination params
-      path = 'http://127.0.0.1:8000/data-alumni';
-      firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
- 
-      if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-      } 
- 
-      if (page === 1) {
-        prevPageUrl = null
+      
+      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      } else {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          thn_ajaran: thn_ajaran,
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+
       }
- 
- 
-      res.status(200).json({
-        resultId: 3,
-        current_page: page,
-        data: alumni,
-        first_page_url: firstPageUrl,
-        from: from,
-        next_page_url: nextPageUrl,
-        path: path,
-        per_page: perPage,
-        prev_page_url: prevPageUrl,
-        to: to,
-      });
+  
+    } else {
 
-     } else {
 
-       let alumni = await Siswa.findAndCountAll({
-         limit: perPage,
-         offset: ( page-1 ) * perPage,
-         order: [
-            [sort_by, sort]
-         ],
-         where: {
-           isAlumni: {
-             [Op.is]: true
-           },
-           [Op.or]: [
-             {
-               id: {
-                 [Op.like]: '%' + searchById + '%',
-               },
-             },
-             {
-               nis_siswa: {
-                 [Op.like]: '%' + searchByNis + '%',
-               },
-             },
-             {
-               nisn_siswa: {
-                 [Op.like]: '%' + searchByNisn + '%',
-               },
-             },
-             {
-               nama_siswa: {
-                 [Op.like]: '%' + searchByNama + '%',
-               },
-             },
-             {
-               jenis_kelamin: {
-                 [Op.like]: '%' + searchByGender + '%',
-               },
-             },
-             {
-               KelasId: {
-                 [Op.like]: '%' + searchByKelas + '%',
-               },
-             },
-           ]
-         }
-       });
-  
-       let from = ((page - 1) * perPage) + 1;
-  
-       let to = page * perPage;
-  
-       // pagination params
-       path = 'http://127.0.0.1:8000/data-alumni';
-       firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-       nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-  
-       if (page > 1) {
-         prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
-       } 
-  
-       if (page === 1) {
-         prevPageUrl = null
-       }
-  
-  
-       res.status(200).json({
-        resultId: 4,
-         current_page: page,
-         data: alumni,
-         first_page_url: firstPageUrl,
-         from: from,
-         next_page_url: nextPageUrl,
-         path: path,
-         per_page: perPage,
-         prev_page_url: prevPageUrl,
-         to: to,
-       });
+      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
 
-     }
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
+          },
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.is]: true
+          },
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+
+        }
+
+      }
 
     }
+
+  }
+
+
+  /* Pagination */
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+  let page = 1;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    page = pageAsNumber
+  }
+
+
+  let perPage = 10;
+  
+  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber;
+  }
+
+  try {
+
+    let alumni = await Siswa.findAndCountAll({
+      limit: perPage,
+      offset: ( page-1 ) * perPage,
+      order: [
+        [sort_by, sort]
+      ],
+      where,
+    });
+
+    let from = ((page - 1) * perPage) + 1;
+
+    let to = page * perPage;
+
+    // pagination params
+    path = 'http://127.0.0.1:8000/data-alumni';
+    firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
+    nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+
+    if (page > 1) {
+      prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+    } 
+
+    if (page === 1) {
+      prevPageUrl = null
+    }
+
+
+    res.status(200).json({
+      resultId: 1,
+      current_page: page,
+      data: alumni,
+      first_page_url: firstPageUrl,
+      from: from,
+      next_page_url: nextPageUrl,
+      path: path,
+      per_page: perPage,
+      prev_page_url: prevPageUrl,
+      to: to,
+    });
 
 
   } catch (error) {
