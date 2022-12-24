@@ -79,6 +79,10 @@ module.exports = {
         allowNull: false,
       },
       thn_ajaran: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      angkatan: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },

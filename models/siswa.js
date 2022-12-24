@@ -108,6 +108,10 @@ class Siswa extends Model {
       allowNull: false,
     },
     thn_ajaran: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    angkatan: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
