@@ -16,7 +16,7 @@ exports.getAllSiswa = async (req, res) => {
   let toDate = req.query.dibuatTglKe || "";
   let sort_by = req.query.sort_by || "nama_siswa";
   let sort = req.query.sort || "ASC";
-  let thn_ajaran = req.query.thn_ajaran || '';
+  let angkatan = req.query.angkatan || '';
 
   let id = req.query.id || '';
   let nis_siswa = req.query.nis_siswa || '';
@@ -39,11 +39,11 @@ exports.getAllSiswa = async (req, res) => {
   if (!search) { 
 
 
-    // kalau ada thn_ajaran
-    if (thn_ajaran) { 
+    // kalau ada angkatan
+    if (angkatan) { 
   
 
-      // kalau ada thn_ajaran, fromDate & toDate
+      // kalau ada angkatan, fromDate & toDate
       if (fromDate != "" || toDate != "") {
       
         where = {
@@ -51,7 +51,7 @@ exports.getAllSiswa = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           [Op.or]: [{
             createdAt: {
               [Op.between]: [fromDate, toDate]
@@ -59,7 +59,7 @@ exports.getAllSiswa = async (req, res) => {
           }]
         }
       
-      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      // kalau ada angkatan, tp gaada fromDate & toDate
       } else {
 
         where = {
@@ -67,7 +67,7 @@ exports.getAllSiswa = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
         }
 
       }
@@ -75,7 +75,7 @@ exports.getAllSiswa = async (req, res) => {
     } else {
 
 
-      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      // kalau gaada angkatan, tapi ada fromDate & toDate
       if (fromDate != "" || toDate != "") {
 
         where = {
@@ -164,11 +164,11 @@ exports.getAllSiswa = async (req, res) => {
       searchByKelas = search;
      }
 
-    // kalau ada thn_ajaran
-    if (thn_ajaran) { 
+    // kalau ada angkatan
+    if (angkatan) { 
   
 
-      // kalau ada thn_ajaran, fromDate & toDate
+      // kalau ada angkatan, fromDate & toDate
       if (fromDate != "" || toDate != "") {
       
         where = {
@@ -176,7 +176,7 @@ exports.getAllSiswa = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           createdAt: {
             [Op.between]: [fromDate, toDate]
           },
@@ -214,7 +214,7 @@ exports.getAllSiswa = async (req, res) => {
           ]
         }
       
-      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      // kalau ada angkatan, tp gaada fromDate & toDate
       } else {
 
         where = {
@@ -222,7 +222,7 @@ exports.getAllSiswa = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           [Op.or]: [
             {
               id: {
@@ -262,7 +262,7 @@ exports.getAllSiswa = async (req, res) => {
     } else {
 
 
-      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      // kalau gaada angkatan, tapi ada fromDate & toDate
       if (fromDate != "" || toDate != "") {
 
         where = {
@@ -405,10 +405,10 @@ exports.getAllSiswa = async (req, res) => {
     // pagination params
     path = 'http://127.0.0.1:8000/data-induk-siswa';
     firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=1&perPage=${perPage}`;
-    nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+    nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
 
     if (page > 1) {
-      prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`
+      prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`
     } 
 
     if (page === 1) {
@@ -447,7 +447,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
   let toDate = req.query.dibuatTglKe || "";
   let sort_by = req.query.sort_by || "nama_siswa";
   let sort = req.query.sort || "ASC";
-  let thn_ajaran = req.query.thn_ajaran || '';
+  let angkatan = req.query.angkatan || '';
 
   let id = req.query.id || '';
   let nis_siswa = req.query.nis_siswa || '';
@@ -472,11 +472,11 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
   if (!search) { 
 
 
-    // kalau ada thn_ajaran
-    if (thn_ajaran) { 
+    // kalau ada angkatan
+    if (angkatan) { 
   
 
-      // kalau ada thn_ajaran, fromDate & toDate
+      // kalau ada angkatan, fromDate & toDate
       if (fromDate != "" || toDate != "") {
       
         where = {
@@ -484,7 +484,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           [Op.or]: [{
             createdAt: {
               [Op.between]: [fromDate, toDate]
@@ -492,7 +492,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           }]
         }
       
-      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      // kalau ada angkatan, tp gaada fromDate & toDate
       } else {
 
         where = {
@@ -500,7 +500,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
         }
 
       }
@@ -508,7 +508,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
     } else {
 
 
-      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      // kalau gaada angkatan, tapi ada fromDate & toDate
       if (fromDate != "" || toDate != "") {
 
         where = {
@@ -597,11 +597,11 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       searchByKelas = search;
      }
 
-    // kalau ada thn_ajaran
-    if (thn_ajaran) { 
+    // kalau ada angkatan
+    if (angkatan) { 
   
 
-      // kalau ada thn_ajaran, fromDate & toDate
+      // kalau ada angkatan, fromDate & toDate
       if (fromDate != "" || toDate != "") {
       
         where = {
@@ -609,7 +609,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           createdAt: {
             [Op.between]: [fromDate, toDate]
           },
@@ -647,7 +647,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           ]
         }
       
-      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      // kalau ada angkatan, tp gaada fromDate & toDate
       } else {
 
         where = {
@@ -655,7 +655,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             [Op.ne]: true,
           },
           status_siswa: 'aktif',
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           [Op.or]: [
             {
               id: {
@@ -695,7 +695,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
     } else {
 
 
-      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      // kalau gaada angkatan, tapi ada fromDate & toDate
       if (fromDate != "" || toDate != "") {
 
         where = {
@@ -842,10 +842,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         // pagination params
         path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
         firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
   
         if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
         } 
       
         if (page === 1) {
@@ -901,10 +901,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         // pagination params
         path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
         firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
   
         if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
         } 
       
         if (page === 1) {
@@ -1020,10 +1020,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       // pagination params
       path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
   
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
       } 
     
       if (page === 1) {
@@ -1080,10 +1080,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
        // pagination params
        path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
    
        if (page > 1) {
-         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&thn_ajaran=${thn_ajaran}`;
+         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
        } 
      
        if (page === 1) {
@@ -1198,7 +1198,7 @@ exports.createSiswa = async (req, res) => {
       semester_diterima: { type: "number", optional: true },
       diterima_di_kelas: { type: "string", optional: false },
       status_siswa: { type: "enum", values: ["aktif", "non-aktif"], optional: false },
-      thn_ajaran: { type: "string", optional: true },
+      angkatan: { type: "string", optional: true },
       angkatan: { type: "number", optional: true, },
       sekolah_asal: { type: "string" },
       alamat_sekolah_asal: { type: "string", optional: true },
@@ -1313,7 +1313,7 @@ exports.updateSiswa = async (req, res) => {
     semester_diterima: { type: "number", optional: true },
     diterima_di_kelas: { type: "string", optional: true },
     status_siswa: { type: "enum", values: ["aktif", "non-aktif"], optional: true },
-    thn_ajaran: { type: "string", optional: true },
+    angkatan: { type: "string", optional: true },
     angkatan: { type: "number", optional: true, },
     sekolah_asal: { type: "string", optional: true },
     alamat_sekolah_asal: { type: "string", optional: true },
