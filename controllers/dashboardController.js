@@ -837,7 +837,6 @@ exports.getAlumni = async (req, res) => {
   let toDate = req.query.dibuatTglKe || "";
   let sort_by = req.query.sort_by || "nama_siswa";
   let sort = req.query.sort || "ASC";
-  let thn_ajaran = req.query.thn_ajaran || '';
 
   let id = req.query.id || '';
   let nis_siswa = req.query.nis_siswa || '';
@@ -846,6 +845,8 @@ exports.getAlumni = async (req, res) => {
   let jenis_kelamin = req.query.jenis_kelamin || '';
   let KelasId = req.query.KelasId || '';
 
+  let angkatan = req.params.angkatan || '';
+  let jurusan = req.params.jurusan || '';
 
   /* CONDITIONAL WHERE QUERY */
   let where = {
@@ -860,32 +861,32 @@ exports.getAlumni = async (req, res) => {
 
 
     // kalau ada thn_ajaran
-    if (thn_ajaran) { 
+    if (angkatan) { 
   
 
-      // kalau ada thn_ajaran, fromDate & toDate
+      // kalau ada angkatan, fromDate & toDate
       if (fromDate != "" || toDate != "") {
       
         where = {
           isAlumni: {
             [Op.is]: true
           },
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           [Op.or]: [{
             createdAt: {
               [Op.between]: [fromDate, toDate]
             }
-          }]
+          }],
         }
       
-      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      // kalau ada angkatan, tp gaada fromDate & toDate
       } else {
 
         where = {
           isAlumni: {
             [Op.is]: true
           },
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
         }
 
       }
@@ -893,7 +894,7 @@ exports.getAlumni = async (req, res) => {
     } else {
 
 
-      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      // kalau gaada angkatan, tapi ada fromDate & toDate
       if (fromDate != "" || toDate != "") {
 
         where = {
@@ -980,18 +981,18 @@ exports.getAlumni = async (req, res) => {
       searchByKelas = search;
      }
 
-    // kalau ada thn_ajaran
-    if (thn_ajaran) { 
+    // kalau ada angkatan
+    if (angkatan) { 
   
 
-      // kalau ada thn_ajaran, fromDate & toDate
+      // kalau ada angkatan, fromDate & toDate
       if (fromDate != "" || toDate != "") {
       
         where = {
           isAlumni: {
             [Op.is]: true
           },
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           createdAt: {
             [Op.between]: [fromDate, toDate]
           },
@@ -1029,14 +1030,14 @@ exports.getAlumni = async (req, res) => {
           ]
         }
       
-      // kalau ada thn_ajaran, tp gaada fromDate & toDate
+      // kalau ada angkatan, tp gaada fromDate & toDate
       } else {
 
         where = {
           isAlumni: {
             [Op.is]: true
           },
-          thn_ajaran: thn_ajaran,
+          angkatan: angkatan,
           [Op.or]: [
             {
               id: {
@@ -1076,7 +1077,7 @@ exports.getAlumni = async (req, res) => {
     } else {
 
 
-      // kalau gaada thn_ajaran, tapi ada fromDate & toDate
+      // kalau gaada angkatan, tapi ada fromDate & toDate
       if (fromDate != "" || toDate != "") {
 
         where = {
@@ -1193,6 +1194,13 @@ exports.getAlumni = async (req, res) => {
         [sort_by, sort]
       ],
       where,
+      include: {
+        model: Kelas,
+        as: 'kelas',
+        where: {
+          jurusan: jurusan,
+        }
+      }
     });
 
     let from = ((page - 1) * perPage) + 1;
