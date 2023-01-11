@@ -26,6 +26,13 @@ exports.getMainDashboardData = async (req, res) => {
           [Op.is]: null
         },
       },
+      include: [
+        {
+          model: Kelas,
+          as: 'kelas',
+          attributes: ['JurusanId'],
+        }
+      ]
     });
     const mutasi = await Mutasi.findAndCountAll({
       attributes: ['nis_siswa'],

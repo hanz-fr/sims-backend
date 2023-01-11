@@ -1,16 +1,16 @@
 const Validator = require("fastest-validator");
-const { Jurusan, sequelize } = require("../models");
+const { Jurusan, Siswa, Kelas, sequelize } = require("../models");
+const { Op, where } = require("sequelize");
 
 const v = new Validator();
 
 // get all jurusan
 exports.getAllJurusan = async (req, res) => {
-  const jurusan = await sequelize.query("SELECT * FROM jurusan", {
-    model: Jurusan,
-    mapToModel: true,
+  const jurusan = await Jurusan.findAndCountAll();
+  
+  res.status(200).json({
+    jurusan: jurusan,
   });
-
-  res.status(200).json(jurusan);
 };
 
 // get all jurusan and count it
@@ -38,6 +38,7 @@ exports.getJurusan = async (req, res) => {
     result: jurusan,
   });
 };
+
 
 // create jurusan
 exports.createJurusan = async (req, res) => {
