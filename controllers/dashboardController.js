@@ -3,6 +3,63 @@ const { Op } = require("sequelize");
 const { Siswa, Raport, Jurusan, sequelize, Mutasi, MapelJurusan, Kelas,  } = require("../models");
 const v = new Validator();
 const kelasController = require('../controllers/kelasController');
+const cron = require('node-cron');
+
+
+/* Update isAlumni automatically */
+cron.schedule('*/30 * * * *', function() {
+  
+  let date_ob = new Date();
+  let year = date_ob.getFullYear();
+
+  console.log(`Updating siswa 'isAlumni' to true every 30 minutes if year of angkatan is lower than ${year}`);
+
+  try {
+
+    const result = Siswa.update(
+      { isAlumni: true },
+      { 
+        where: {
+          angkatan: {
+            [Op.lt]: year,
+          },
+          isAlumni: {
+            [Op.ne]: true
+          } 
+        }, 
+      }
+    );
+
+    res.status(200).json({
+      message: 'success',
+      result: result,
+    });
+
+  } catch (err) {
+
+    res.status(404).json({
+      message: err.message,
+    });
+
+  }
+
+});
+
+
+exports.getAllAlumni = async (req, res) => {
+
+  const alumni = await Siswa.findAndCountAll({
+    where: {
+      isAlumni: true
+    }
+  });
+
+  res.status(200).json({
+    status: 'success',
+    result: alumni
+  })
+
+}
 
 
 exports.getMainDashboardData = async (req, res) => {
@@ -372,22 +429,6 @@ exports.getMainDashboardData = async (req, res) => {
         siswaKeluar: siswaKeluar,
         siswaTdkNaik: siswaTdkNaik,
     });
-}
-
-exports.updateIsAlumni = async (req, res) => {
-
-  let date_ob = new Date();
-  let year = date_ob.getFullYear();
-
-  const siswa = await Siswa.findAndCountAll({
-    where: {
-      angkatan: year,
-    }
-  })
- 
-  res.status(200).json({
-    siswa
-  });
 }
 
 
