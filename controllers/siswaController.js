@@ -1373,6 +1373,7 @@ exports.updateSiswa = async (req, res) => {
   });
 };
 
+
 // delete siswa
 exports.deleteSiswa = async (req, res) => {
   const nis = req.params.nis_siswa; // get nis from req params

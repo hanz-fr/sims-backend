@@ -374,6 +374,22 @@ exports.getMainDashboardData = async (req, res) => {
     });
 }
 
+exports.updateIsAlumni = async (req, res) => {
+
+  let date_ob = new Date();
+  let year = date_ob.getFullYear();
+
+  const siswa = await Siswa.findAndCountAll({
+    where: {
+      angkatan: year,
+    }
+  })
+ 
+  res.status(200).json({
+    siswa
+  });
+}
+
 
 exports.getSiswaMasukByMonth = async (req, res) => {
 

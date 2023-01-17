@@ -11,5 +11,4 @@ router.post('/', controller.createSiswa); // create route
 router.put('/:nis_siswa', controller.updateSiswa); // update route
 router.delete('/:nis_siswa', controller.deleteSiswa); // delete route
 
-
 module.exports = router;
