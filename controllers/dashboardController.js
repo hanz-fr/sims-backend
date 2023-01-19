@@ -1257,11 +1257,11 @@ exports.getAlumni = async (req, res) => {
 
     // pagination params
     path = 'http://127.0.0.1:8000/data-alumni';
-    firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-    nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+    firstPageUrl = `http://127.0.0.1:8000/data-alumni?jurusan=${jurusan}&angkatan=${angkatan}&page=1&perPage=${perPage}`;
+    nextPageUrl = `http://127.0.0.1:8000/data-alumni?jurusan=${jurusan}&angkatan=${angkatan}&page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
 
     if (page > 1) {
-      prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+      prevPageUrl = `http://127.0.0.1:8000/data-alumni?jurusan=${jurusan}&angkatan=${angkatan}&page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
     }
 
     if (page === 1) {
@@ -1292,6 +1292,9 @@ exports.getAlumni = async (req, res) => {
 
 
 
+
+
+
 /* get all alumni */
 exports.getAllAlumni = async (req, res) => {
 
@@ -1307,6 +1310,7 @@ exports.getAllAlumni = async (req, res) => {
   let nama_siswa = req.query.nama_siswa || '';
   let jenis_kelamin = req.query.jenis_kelamin || '';
   let KelasId = req.query.KelasId || '';
+  let angkatan = req.query.angkatan || '';
 
   /* CONDITIONAL WHERE QUERY */
   let where = {
@@ -1316,33 +1320,71 @@ exports.getAllAlumni = async (req, res) => {
   };
 
 
-  // kalau gaada search
   if (!search) {
 
-    // kalau gaada search, tapi ada fromDate & toDate
-    if (fromDate != "" || toDate != "") {
 
-      where = {
-        isAlumni: {
-          [Op.is]: true
-        },
-        [Op.or]: [{
-          createdAt: {
-            [Op.between]: [fromDate, toDate]
-          }
-        }]
+    // kalau ada thn_ajaran
+    if (angkatan) {
+
+
+      // kalau ada angkatan, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          angkatan: angkatan,
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }],
+        }
+
+        // kalau ada angkatan, tp gaada fromDate & toDate
+      } else {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          angkatan: angkatan,
+        }
+
       }
-    } else if (!fromDate || !toDate) {
 
-      where = {
+    } else {
 
-        isAlumni: {
-          [Op.is]: true
-        },
+
+      // kalau gaada angkatan, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
+          },
+          [Op.or]: [{
+            createdAt: {
+              [Op.between]: [fromDate, toDate]
+            }
+          }]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.is]: true
+          },
+
+        }
 
       }
 
     }
+
+
 
     // kalau ada search
   } else {
@@ -1402,91 +1444,191 @@ exports.getAllAlumni = async (req, res) => {
       searchByKelas = search;
     }
 
+    // kalau ada angkatan
+    if (angkatan) {
 
-    // kalau gaada angkatan, tapi ada fromDate & toDate
-    if (fromDate != "" || toDate != "") {
 
-      where = {
-        isAlumni: {
-          [Op.is]: true
-        },
-        createdAt: {
-          [Op.between]: [fromDate, toDate]
-        },
-        [Op.or]: [
-          {
-            id: {
-              [Op.like]: '%' + searchById + '%'
-            }
+      // kalau ada angkatan, fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
           },
-          {
-            nis_siswa: {
-              [Op.like]: '%' + searchByNis + '%'
-            }
+          angkatan: angkatan,
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
           },
-          {
-            nisn_siswa: {
-              [Op.like]: '%' + searchByNisn + '%'
-            }
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+
+        // kalau ada angkatan, tp gaada fromDate & toDate
+      } else {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
           },
-          {
-            nama_siswa: {
-              [Op.like]: '%' + searchByNama + '%'
-            }
-          },
-          {
-            jenis_kelamin: {
-              [Op.like]: '%' + searchByGender + '%'
-            }
-          },
-          {
-            KelasId: {
-              [Op.like]: '%' + searchByKelas + '%'
-            }
-          },
-        ]
+          angkatan: angkatan,
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+
       }
-    } else if (!fromDate || !toDate) {
 
-      where = {
+    } else {
 
-        isAlumni: {
-          [Op.is]: true
-        },
-        [Op.or]: [
-          {
-            id: {
-              [Op.like]: '%' + searchById + '%'
-            }
+
+      // kalau gaada angkatan, tapi ada fromDate & toDate
+      if (fromDate != "" || toDate != "") {
+
+        where = {
+          isAlumni: {
+            [Op.is]: true
           },
-          {
-            nis_siswa: {
-              [Op.like]: '%' + searchByNis + '%'
-            }
+          createdAt: {
+            [Op.between]: [fromDate, toDate]
           },
-          {
-            nisn_siswa: {
-              [Op.like]: '%' + searchByNisn + '%'
-            }
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+        }
+      } else if (!fromDate || !toDate) {
+
+        where = {
+
+          isAlumni: {
+            [Op.is]: true
           },
-          {
-            nama_siswa: {
-              [Op.like]: '%' + searchByNama + '%'
-            }
-          },
-          {
-            jenis_kelamin: {
-              [Op.like]: '%' + searchByGender + '%'
-            }
-          },
-          {
-            KelasId: {
-              [Op.like]: '%' + searchByKelas + '%'
-            }
-          },
-        ]
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: '%' + searchById + '%'
+              }
+            },
+            {
+              nis_siswa: {
+                [Op.like]: '%' + searchByNis + '%'
+              }
+            },
+            {
+              nisn_siswa: {
+                [Op.like]: '%' + searchByNisn + '%'
+              }
+            },
+            {
+              nama_siswa: {
+                [Op.like]: '%' + searchByNama + '%'
+              }
+            },
+            {
+              jenis_kelamin: {
+                [Op.like]: '%' + searchByGender + '%'
+              }
+            },
+            {
+              KelasId: {
+                [Op.like]: '%' + searchByKelas + '%'
+              }
+            },
+          ]
+
+        }
+
       }
+
     }
+
   }
 
 
@@ -1522,12 +1664,12 @@ exports.getAllAlumni = async (req, res) => {
     let to = page * perPage;
 
     // pagination params
-    path = 'http://127.0.0.1:8000/data-alumni';
-    firstPageUrl = `http://127.0.0.1:8000/data-alumni?page=1&perPage=${perPage}`;
-    nextPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+    path = 'http://127.0.0.1:8000/data-alumni/all';
+    firstPageUrl = `http://127.0.0.1:8000/data-alumni/all?page=1&perPage=${perPage}&angkatan=${angkatan}`;
+    nextPageUrl = `http://127.0.0.1:8000/data-alumni/all?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
 
     if (page > 1) {
-      prevPageUrl = `http://127.0.0.1:8000/data-alumni?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}`;
+      prevPageUrl = `http://127.0.0.1:8000/data-alumni/all?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
     }
 
     if (page === 1) {
