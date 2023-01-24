@@ -6,11 +6,98 @@ const v = new Validator();
 
 // get all jurusan
 exports.getAllJurusan = async (req, res) => {
-  const jurusan = await Jurusan.findAndCountAll();
+
+  /* Search & Sorting */
+  const search = req.query.search || '';
+  let sort_by = req.query.sort_by || 'nama';
+  let sort = req.query.sort || 'ASC';
+
+  /* Pagination */
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+  let page = 1;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    page = pageAsNumber
+  }
+
+  let perPage = 10;
+  if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber;
+  }
+
+  let where = {
+    [Op.or]: [
+      {
+        id: {
+          [Op.like]: '%' + search + '%'
+        },
+      },
+      {
+        nama: {
+          [Op.like]: '%' + search + '%'
+        },
+      },
+      {
+        konsentrasi: {
+          [Op.like]: '%' + search + '%'
+        },
+      },
+      {
+        desc: {
+          [Op.like]: '%' + search + '%'
+        },
+      }
+    ]
+  }
+
+  try {
+
+    let jurusan = await Jurusan.findAndCountAll({
+      limit: perPage,
+      order: [
+        [sort_by, sort]
+      ],
+      offset: ( page-1 ) * perPage,
+      where: where,
+    });
+
+    let from = ((page - 1) * perPage) + 1;
+
+    let to = page * perPage;
+
+    // pagination params
+    path = 'http://127.0.0.1:8000/admin/jurusan';
+    firstPageUrl = `http://127.0.0.1:8000/admin/jurusan?page=1&perPage=${perPage}`;
+    nextPageUrl = `http://127.0.0.1:8000/admin/jurusan?page=${page + 1}&perPage=${perPage}&search=${search}&sort_by=${sort_by}&sort=${sort}`;
+
+    if (page > 1) {
+      prevPageUrl = `http://127.0.0.1:8000/admin/jurusan?page=${page - 1}&perPage=${perPage}&search=${search}&sort_by=${sort_by}&sort=${sort}`
+    } 
+
+    if (page === 1) {
+      prevPageUrl = null
+    }
   
-  res.status(200).json({
-    jurusan: jurusan,
-  });
+    res.status(200).json({
+      resultId: 1,
+      current_page: page,
+      data: jurusan,
+      first_page_url: firstPageUrl,
+      from: from,
+      next_page_url: nextPageUrl,
+      path: path,
+      per_page: perPage,
+      prev_page_url: prevPageUrl,
+      to: to,
+    });
+
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    })
+  }
+
 };
 
 // get all jurusan and count it
