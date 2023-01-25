@@ -1,14 +1,108 @@
 const Validator = require("fastest-validator");
 const { MapelJurusan, Mapel, Jurusan, sequelize } = require("../models");
+const { Op, where } = require("sequelize");
+
 
 const v = new Validator();
 
 // get all mapeljurusan
-exports.getAllMapelJurusan = async (req, res) => {
-    const mapelJurusan = await MapelJurusan.findAll();
+// exports.getAllMapelJurusan = async (req, res) => {
+//     const mapelJurusan = await MapelJurusan.findAll();
 
-    res.status(200).json(mapelJurusan);
-};
+//     res.status(200).json(mapelJurusan);
+// };
+
+
+exports.getAllMapelJurusan = async (req, res) => {
+
+    /* Search & Sorting */
+    const search = req.query.search || '';
+    let sort_by = req.query.sort_by || 'mapelJurusanId';
+    let sort = req.query.sort || 'ASC';
+
+    /* Pagination */
+    const pageAsNumber = Number.parseInt(req.query.page);
+    const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+    let page = 1;
+    if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+      page = pageAsNumber
+    }
+
+    let perPage = 10;
+    if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+      perPage = perPageAsNumber;
+    }
+
+    let where = {
+        [Op.or]: [
+          {
+            mapelJurusanId: {
+              [Op.like]: '%' + search + '%'
+            },
+          },
+          {
+            MapelId: {
+              [Op.like]: '%' + search + '%'
+            },
+          },
+          {
+            JurusanId: {
+              [Op.like]: '%' + search + '%'
+            },
+          },
+        ]
+    }
+
+    try {
+
+        let mapelJurusan = await MapelJurusan.findAndCountAll({
+            limit: perPage,
+            order: [
+              [sort_by, sort]
+            ],
+            offset: ( page-1 ) * perPage,
+            where: where,
+        });
+
+        let from = ((page - 1) * perPage) + 1;
+    
+        let to = page * perPage;
+
+        // pagination params
+        path = 'http://127.0.0.1:8000/admin/mapel-jurusan';
+        firstPageUrl = `http://127.0.0.1:8000/admin/mapel-jurusan?page=1&perPage=${perPage}`;
+        nextPageUrl = `http://127.0.0.1:8000/admin/mapel-jurusan?page=${page + 1}&perPage=${perPage}&search=${search}&sort_by=${sort_by}&sort=${sort}`;
+
+        if (page > 1) {
+          prevPageUrl = `http://127.0.0.1:8000/admin/mapel-jurusan?page=${page - 1}&perPage=${perPage}&search=${search}&sort_by=${sort_by}&sort=${sort}`
+        } 
+
+        if (page === 1) {
+          prevPageUrl = null
+        }
+    
+        res.status(200).json({
+          resultId: 1,
+          current_page: page,
+          data: mapelJurusan,
+          first_page_url: firstPageUrl,
+          from: from,
+          next_page_url: nextPageUrl,
+          path: path,
+          per_page: perPage,
+          prev_page_url: prevPageUrl,
+          to: to,
+        });
+
+
+    } catch (error) {
+        res.status(404).json({
+          message: error.message
+        })
+    }
+
+}
 
 
 exports.getAllMapelbyJurusan = async (req, res) => {

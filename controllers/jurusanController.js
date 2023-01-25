@@ -63,7 +63,7 @@ exports.getAllJurusan = async (req, res) => {
     });
 
     let from = ((page - 1) * perPage) + 1;
-
+    
     let to = page * perPage;
 
     // pagination params
