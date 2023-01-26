@@ -121,6 +121,7 @@ exports.getJurusan = async (req, res) => {
   }
 
   res.status(200).json({
+    status: 'success',
     message: `Displaying jurusan with id : ${id}`,
     result: jurusan,
   });
@@ -144,7 +145,7 @@ exports.createJurusan = async (req, res) => {
     }
 
     let jurusanIdExist = await Jurusan.findOne({
-      where: { id: req.body.nama+req.body.konsentrasi }
+      where: { id: req.body.nama+'-'+req.body.konsentrasi }
     });
 
     if (jurusanIdExist) {
@@ -162,7 +163,8 @@ exports.createJurusan = async (req, res) => {
     });
 
     res.status(200).json({
-      status: "Data added successfully.",
+      status: "success",
+      message: 'Data added successfully.',
       jurusan,
     });
   } catch (err) {
@@ -201,6 +203,7 @@ exports.updateJurusan = async (req, res) => {
   jurusanExist = await jurusanExist.update(req.body);
 
   res.status(200).json({
+    status: 'success',
     message: `Successfully updated jurusan with id : ${id}`,
     result: jurusanExist,
   });
