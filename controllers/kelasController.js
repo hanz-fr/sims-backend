@@ -6,12 +6,102 @@ const v = new Validator();
 
 // get all kelas
 exports.getAllKelas = async (req, res) => {
-  const kelas = await sequelize.query("SELECT * FROM kelas", {
-    model: Kelas,
-    mapToModel: true,
-  });
 
-  res.status(200).json(kelas);
+  // search & sorting
+  const search = req.query.search || '';
+  let sort_by = req.query.sort_by || 'kelas';
+  let sort = req.query.sort || 'ASC';
+
+  const pageAsNumber = Number.parseInt(req.query.page);
+  const perPageAsNumber = Number.parseInt(req.query.perPage);
+
+  let page = 1;
+  if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+    page = pageAsNumber
+  }
+
+  let perPage = 10;
+  if(!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
+    perPage = perPageAsNumber
+  }
+
+  let where = {
+    [Op.or]: [
+      {
+        id: {
+          [Op.like]: '%' + search + '%'
+        }
+      },
+      {
+        kelas: {
+          [Op.like]: '%' + search + '%'
+        }
+      },
+      {
+        rombel: {
+          [Op.like]: '%' + search + '%'
+        }
+      },
+      {
+        jurusan: {
+          [Op.like]: '%' + search + '%'
+        }
+      },
+      {
+        JurusanId: {
+          [Op.like]: '%' + search + '%'
+        }
+      }
+    ]
+  }
+
+  try {
+
+    let kelas = await Kelas.findAndCountAll({
+      limit: perPage,
+      order: [
+        [sort_by, sort]
+      ],
+      offset: ( page - 1 ) * perPage,
+      where: where
+    });
+  
+    let from = (( page - 1 ) * perPage) + 1;
+  
+    let to = page * perPage;
+  
+    path = 'http://127.0.0.1:8000/admin/kelas';
+    firstPageUrl = `http://127.0.0.1:8000/admin/kelas?page=1?perPage=${perPage}`;
+    nextPageUrl = `http://127.0.0.1:8000/admin/kelas?page=${page + 1}?perPage=${perPage}?search=${search}?sort_by=${sort_by}?sort=${sort}`;
+  
+    if (page > 1) {
+      prevPageUrl = `http://127.0.0.1:8000/admin/kelas?page=${page - 1}?perPage=${perPage}?search=${search}?sort_by=${sort_by}?sort=${sort}`
+    }
+  
+    if (page === 1) {
+      prevPageUrl = null
+    }
+  
+    res.status(200).json({
+      resultId: 1,
+      current_page: page,
+      data: kelas,
+      first_page_url: firstPageUrl,
+      from: from,
+      next_page_url: nextPageUrl,
+      path: path,
+      per_page: perPage,
+      prev_page_url: prevPageUrl,
+      to: to,
+    });
+
+  } catch (error) {
+
+    res.status(404).json({
+      message: error.message
+    })
+  }
+
 };
 
 // get kelas by id
