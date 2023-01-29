@@ -129,29 +129,48 @@ exports.getMapel = async (req, res) => {
 }
 
 exports.createMapel = async (req, res) => {
-    try {
-        const schema = {
-            nama: { type: "string" },
-            id: { type: "string" },
-        }
 
-        const validate = v.validate(req.body, schema);
+  try {
 
-        if (validate.length) {
-            return res.status(400).json(validate);
-        }
+    const schema = {
 
-        var mapel = await Mapel.create(req.body);
+      nama: { type: "string" },
+      id: { type: "string" },
 
-        res.status(200).json({
-            status: "Data added successfully.",
-            mapel
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500);
-        res.send({ status: "error", message: "Something went wrong. :(" });
     }
+
+    const validate = v.validate(req.body, schema);
+
+    if (validate.length) {
+      return res.status(400).json(validate);
+    }
+
+    let mapelExist = await Mapel.findByPk(req.body.id);
+
+    if (mapelExist) {
+
+      return res.status(400).json({
+        status: "error",
+        message: `Mata pelajaran with Id : '${req.body.id}' already exist`
+      });
+
+    }
+
+    var mapel = await Mapel.create(req.body);
+
+    res.status(200).json({
+      status: "success",
+      message: "Data added successfully.",
+      mapel
+    });
+
+  } catch (err) {
+
+      console.log(err);
+      res.status(500);
+      res.send({ status: "error", message: "Something went wrong. :(" });
+
+  }
 }
 
 
