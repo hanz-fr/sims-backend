@@ -198,6 +198,7 @@ exports.updateMapel = async (req, res) => {
 
     mapelExist = await mapelExist.update(req.body);
     res.status(200).json({
+        status: 'success',
         message: `Successfully updated Mapel with id ${id}`,
         result: mapelExist
     });
@@ -219,6 +220,7 @@ exports.deleteMapel = async (req, res) => {
     await mapelExist.destroy();
 
     res.status(200).json({
-        message: "Mapel deleted successfully."
+      status: 'success',
+      message: "Mapel deleted successfully."
     });
 }
