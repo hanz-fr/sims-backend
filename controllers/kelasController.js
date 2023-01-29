@@ -12,6 +12,7 @@ exports.getAllKelas = async (req, res) => {
   let sort_by = req.query.sort_by || 'kelas';
   let sort = req.query.sort || 'ASC';
 
+  // pagination
   const pageAsNumber = Number.parseInt(req.query.page);
   const perPageAsNumber = Number.parseInt(req.query.perPage);
 
@@ -169,7 +170,8 @@ exports.createKelas = async (req, res) => {
     });
 
     res.status(200).json({
-      status: "Data added successfully.",
+      status: 'success',
+      message: 'Data added successfully.',
       kelas,
     });
   } catch (err) {
@@ -221,6 +223,7 @@ exports.updateKelas = async (req, res) => {
   });
 
   res.status(200).json({
+    status:  "success",
     message: `Successfully updated kelas with id : ${kelas.id}`,
     result: kelas,
   });
