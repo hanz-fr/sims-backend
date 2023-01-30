@@ -203,7 +203,8 @@ exports.createMapelJurusan = async (req, res) => {
         });
 
         res.status(200).json({
-            status: "Data added successfully.",
+            status: "success",
+            message: "Data added successfully.",
             mapelJurusan
         });
     } catch (err) {
