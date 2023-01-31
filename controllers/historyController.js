@@ -12,6 +12,13 @@ const v = new Validator();
 /* get all history */
 exports.getAllHistory = async (req, res) => {
 
+    /* limit shown data */
+    let limitAsNumber = Number.parseInt(req.query.limit);
+    let limit = null;
+    if(!Number.isNaN(limitAsNumber) && limitAsNumber > 0) {
+        limit = limitAsNumber;
+    }
+    
     const year = req.query.year;
 
     try {
@@ -22,6 +29,7 @@ exports.getAllHistory = async (req, res) => {
                     [Op.between]: [`${year}-01-01`, `${year}-12-31`] 
                 }
             },
+            limit: limit,
             order: [
                 ['createdAt', 'DESC']
             ],
@@ -170,6 +178,127 @@ exports.updateHistory = async (req, res) => {
         history: history
     });
     
+}
+
+
+/* get all history per year */
+exports.countAllHistoryPerMonth = async (req, res) => {
+
+    const year = req.query.year;
+
+    let januaryActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-01-01`, `${year}-01-31`] 
+            }
+        }
+    });
+
+    let februaryActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-02-01`, `${year}-02-28`] 
+            }
+        }
+    });
+
+    let marchActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-03-01`, `${year}-03-31`] 
+            }
+        }
+    });
+
+    let aprilActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-04-01`, `${year}-04-30`] 
+            }
+        }
+    });
+
+    let mayActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-05-01`, `${year}-04-31`] 
+            }
+        }
+    });
+
+    let juneActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-06-01`, `${year}-06-30`] 
+            }
+        }
+    });
+
+    let julyActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-07-01`, `${year}-07-31`] 
+            }
+        }
+    });
+
+    let augustActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-08-01`, `${year}-08-31`] 
+            }
+        }
+    });
+
+    let septemberActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-09-01`, `${year}-09-30`] 
+            }
+        }
+    });
+
+    let octoberActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-10-01`, `${year}-10-31`] 
+            }
+        }
+    });
+
+    let novemberActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-11-01`, `${year}-11-30`] 
+            }
+        }
+    });
+
+    let decemberActivity = await History.count({
+        where: {
+            createdAt: {
+                [Op.between]: [`${year}-12-01`, `${year}-12-31`] 
+            }
+        }
+    });
+
+    res.status(200).json({
+        'status': 'success',
+        'message': 'Displaying total activity per month',
+        'january': januaryActivity,
+        'february': februaryActivity,
+        'march': marchActivity,
+        'april': aprilActivity,
+        'may': mayActivity,
+        'june': juneActivity,
+        'july': julyActivity,
+        'august': augustActivity,
+        'september': septemberActivity,
+        'october': octoberActivity,
+        'november': novemberActivity,
+        'december': decemberActivity,
+    })
+
 }
 
 
