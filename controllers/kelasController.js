@@ -73,10 +73,10 @@ exports.getAllKelas = async (req, res) => {
   
     path = 'http://127.0.0.1:8000/admin/kelas';
     firstPageUrl = `http://127.0.0.1:8000/admin/kelas?page=1?perPage=${perPage}`;
-    nextPageUrl = `http://127.0.0.1:8000/admin/kelas?page=${page + 1}?perPage=${perPage}?search=${search}?sort_by=${sort_by}?sort=${sort}`;
+    nextPageUrl = `http://127.0.0.1:8000/admin/kelas?page=${page + 1}&perPage=${perPage}&search=${search}&sort_by=${sort_by}&sort=${sort}`;
   
     if (page > 1) {
-      prevPageUrl = `http://127.0.0.1:8000/admin/kelas?page=${page - 1}?perPage=${perPage}?search=${search}?sort_by=${sort_by}?sort=${sort}`
+      prevPageUrl = `http://127.0.0.1:8000/admin/kelas?page=${page - 1}&perPage=${perPage}&search=${search}&sort_by=${sort_by}&sort=${sort}`
     }
   
     if (page === 1) {

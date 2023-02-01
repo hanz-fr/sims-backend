@@ -275,6 +275,7 @@ exports.updateMapelJurusan = async (req, res) => {
     });
 
     res.status(200).json({
+        status: 'success',
         message: `Successfully updated Mapel Jurusan with id ${mapelJurusanId}`,
         result: mapelJurusanExist
     });
@@ -282,6 +283,7 @@ exports.updateMapelJurusan = async (req, res) => {
 
 // delete mapeljurusan
 exports.deleteMapelJurusan = async (req, res) => {
+    
     const mapelJurusanId = req.params.mapelJurusanId;
 
     const mapelJurusanExist = await MapelJurusan.findByPk(mapelJurusanId);
