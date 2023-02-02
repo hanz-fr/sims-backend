@@ -203,10 +203,10 @@ exports.updateKelas = async (req, res) => {
   }
 
   const schema = {
-    kelas: { type: "string", max: 50, optional: false },
-    JurusanId: { type: "string", optional: false },
-    jurusan: { type: "string", max: 50, optional: false },
-    rombel: { type: "string", max: 5, optional: false },
+    kelas: { type: "string", max: 50, optional: true },
+    JurusanId: { type: "string", optional: true },
+    jurusan: { type: "string", max: 50, optional: true },
+    rombel: { type: "string", max: 5, optional: true },
   };
 
   const validate = v.validate(req.body, schema);
