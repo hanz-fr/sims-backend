@@ -464,6 +464,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
     isAlumni: {
       [Op.ne]: true,
     },
+    tgl_meninggalkan_sekolah: {
+      [Op.is]: null
+    },
     status_siswa: 'aktif',
   };
 
@@ -483,6 +486,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           isAlumni: {
             [Op.ne]: true,
           },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
           status_siswa: 'aktif',
           angkatan: angkatan,
           [Op.or]: [{
@@ -498,6 +504,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         where = {
           isAlumni: {
             [Op.ne]: true,
+          },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
           },
           status_siswa: 'aktif',
           angkatan: angkatan,
@@ -515,6 +524,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           isAlumni: {
             [Op.ne]: true,
           },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
           status_siswa: 'aktif',
           [Op.or]: [{
             createdAt: {
@@ -528,6 +540,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
 
           isAlumni: {
             [Op.ne]: true,
+          },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
           },
           status_siswa: 'aktif',
 
@@ -608,6 +623,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           isAlumni: {
             [Op.ne]: true,
           },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
           status_siswa: 'aktif',
           angkatan: angkatan,
           createdAt: {
@@ -653,6 +671,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         where = {
           isAlumni: {
             [Op.ne]: true,
+          },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
           },
           status_siswa: 'aktif',
           angkatan: angkatan,
@@ -702,6 +723,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           isAlumni: {
             [Op.ne]: true,
           },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
+          },
           status_siswa: 'aktif',
           createdAt: {
             [Op.between]: [fromDate, toDate]
@@ -745,6 +769,9 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
 
           isAlumni: {
             [Op.ne]: true,
+          },
+          tgl_meninggalkan_sekolah: {
+            [Op.is]: null
           },
           status_siswa: 'aktif',
           [Op.or]: [
@@ -927,61 +954,6 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       }
 
     } else {
-
-    //   /* 
-    //   Initialize variable with +?+ so there wont
-    //   be any results of the following parameters.
-    //   */
-  
-    //   let searchById = '+?+';
-    //   let searchByNis = '+?+';
-    //   let searchByNisn = '+?+';
-    //   let searchByNama = '+?+';
-    //   let searchByGender = '+?+';
-    //   let searchByKelas = '+?+';
-  
-    //   /*
-    //   If there's any parameters with search query is enabled,
-    //   the previous value of variable will be replaced with search.
-    //    */
-  
-    //   if (id === "true") {
-    //     searchById = search;
-    //   }
-
-    //   if (nis_siswa === "true") {
-    //     searchByNis = search;
-    //   }
-  
-    //   if (nisn_siswa === "true") {
-    //     searchByNisn = search;
-    //   }
-  
-    //   if (nama_siswa === "true") {
-    //     searchByNama = search;
-    //   }
-  
-    //   if (jenis_kelamin === "true") {
-    //     searchByGender = search;
-    //   }
-  
-    //   if (KelasId === "true") {
-    //     searchByKelas = search;
-    //   }
-  
-    //   /* 
-    //   If there are no parameters set to true,
-    //   All parameters will have the same value as search.
-    //   */
-  
-    // if (!req.query.nis_siswa && !req.query.nisn_siswa && !req.query.nama_siswa && !req.query.jenis_kelamin && !req.query.KelasId) {
-    //   searchById = search;
-    //   searchByNis = search;
-    //   searchByNisn = search;
-    //   searchByNama = search;
-    //   searchByGender = search;
-    //   searchByKelas = search;
-    // }
 
     if (fromDate != "" || toDate != "") {
 
@@ -1367,6 +1339,25 @@ exports.updateSiswa = async (req, res) => {
 
   // update siswa
   siswaExist = await siswaExist.update(req.body);
+
+  sql.connect(sqlConfig, function (err) {
+    if (err) console.log(err);
+    // create Request object
+    var request = new sql.Request();
+    // query to the database and execute procedure 
+    let query = "exec PostHistory in_id='" + faker.random.uuid() + "', in_activityName='" + password + "' in_activiyAuthor ;";
+    console.log(query)
+    request.query(query, function (err, recordset) {
+        if (err) {
+            console.log(err);
+            sql.close();
+        }
+        sql.close();
+        res.send(recordset);
+
+    });
+  });
+
   res.status(200).json({
     message: `Successfully updated Siswa with nis : ${siswaExist.nis}`,
     result: siswaExist,
