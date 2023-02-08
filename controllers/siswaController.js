@@ -1340,24 +1340,6 @@ exports.updateSiswa = async (req, res) => {
   // update siswa
   siswaExist = await siswaExist.update(req.body);
 
-  sql.connect(sqlConfig, function (err) {
-    if (err) console.log(err);
-    // create Request object
-    var request = new sql.Request();
-    // query to the database and execute procedure 
-    let query = "exec PostHistory in_id='" + faker.random.uuid() + "', in_activityName='" + password + "' in_activiyAuthor ;";
-    console.log(query)
-    request.query(query, function (err, recordset) {
-        if (err) {
-            console.log(err);
-            sql.close();
-        }
-        sql.close();
-        res.send(recordset);
-
-    });
-  });
-
   res.status(200).json({
     message: `Successfully updated Siswa with nis : ${siswaExist.nis}`,
     result: siswaExist,

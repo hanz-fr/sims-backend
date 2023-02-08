@@ -111,6 +111,12 @@ exports.getKelas = async (req, res) => {
 
   const kelas = await Kelas.findByPk(id);
 
+  const siswa = await Siswa.findAndCountAll({
+    where: {
+      KelasId: id,
+    }
+  })
+
   if (!kelas) {
     return res.json({
       message: `Kelas with id ${id}  does not exist`,
@@ -120,6 +126,7 @@ exports.getKelas = async (req, res) => {
   res.status(200).json({
     message: `Displaying kelas with id : ${id}`,
     result: kelas,
+    siswa: siswa.count,
   });
 };
 

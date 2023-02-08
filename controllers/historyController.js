@@ -4,6 +4,7 @@ const { History } = require("../models");
 const { Op } = require("sequelize");
 const models = require('../models');
 const searchBuilder = require('sequelize-search-builder');
+var mysql = require('mysql');
 
 // import fastest-validator
 const v = new Validator();
@@ -43,6 +44,58 @@ exports.getAllHistory = async (req, res) => {
           message: error.message,
         });
     }
+
+}
+
+
+exports.getTodaysHistory = async (req, res) => {
+
+    let connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : '',
+        database : 'sims_backend_1.0'
+    });
+
+    connection.query("call get_today_history", function (err, result) {
+        if (err) {
+            res.status(200).json({
+                status: 'error',
+                message: err
+            })
+        } else {
+            res.status(200).json({
+                status: 'success',
+                result: result[0]
+            })
+        }
+    });
+
+}
+
+
+exports.getAllHistoryYesterdayAndSo = async (req, res) => {
+
+    let connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : '',
+        database : 'sims_backend_1.0'
+    });
+
+    connection.query("call get_older_history", function (err, result) {
+        if (err) {
+            res.status(200).json({
+                status: 'error',
+                message: err
+            })
+        } else {
+            res.status(200).json({
+                status: 'success',
+                result: result[0]
+            })
+        }
+    });
 
 }
 
