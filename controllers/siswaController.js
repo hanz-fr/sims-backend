@@ -852,7 +852,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
               as: 'kelas',
               where: {
                 kelas: kelas,
-                jurusan: jurusan
+                JurusanId: jurusan
               }
             },
             {
@@ -911,7 +911,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
               as: 'kelas',
               where: {
                 kelas: kelas,
-                jurusan: jurusan
+                JurusanId: jurusan
               }
             },
             {
@@ -974,7 +974,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             as: 'kelas',
             where: {
               kelas: kelas,
-              jurusan: jurusan
+              JurusanId: jurusan
             }
           },
           {
@@ -1034,7 +1034,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
              as: 'kelas',
              where: {
                kelas: kelas,
-               jurusan: jurusan
+               JurusanId: jurusan
              }
            },
            {

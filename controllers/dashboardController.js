@@ -1250,7 +1250,7 @@ exports.getAlumni = async (req, res) => {
         model: Kelas,
         as: 'kelas',
         where: {
-          jurusan: jurusan,
+          JurusanId: jurusan,
         }
       }
     });

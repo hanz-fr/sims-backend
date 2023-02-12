@@ -227,3 +227,44 @@ exports.deleteJurusan = async (req, res) => {
     message: "Jurusan deleted successfully.",
   });
 };
+
+
+// count siswa per jurusan
+exports.countSiswaPerJurusan = async (req, res) => {
+
+  const jurusan_id = req.params.jurusanid;
+
+  let jurusanExist = Jurusan.findByPk(jurusan_id);
+
+  if (!jurusanExist) {
+    return res.status(409).json({
+      status: 'error',
+      message: 'Jurusan does not exist'
+    });
+  }
+
+  let siswa = await Siswa.findAndCountAll({
+    isAlumni: {
+      [Op.ne]: true,
+    },
+    status_siswa: 'aktif',
+    tgl_meninggalkan_sekolah: {
+      [Op.is]: null
+    },
+    include: [
+      {
+        model: Kelas,
+        as: 'kelas',
+        where: {
+          JurusanId: jurusan_id,
+        }
+      }
+    ]
+  });
+
+  res.status(200).json({
+    status: 'success',
+    siswa: siswa.count
+  })
+
+}
