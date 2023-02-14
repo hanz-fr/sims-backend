@@ -30,9 +30,21 @@ exports.getLamaSiswaSekolahFunction = async (req, res) => {
 
     let query = `select lama_siswa_sekolah(tgl_diterima) as 'lama_siswa_sekolah' from siswa where nis_siswa='${nis_siswa}'`;
 
-    const [results, metadata] = await sequelize.query(
-        query
-    );
+    try {
 
-    res.status(200).json(results);
+      const [results, metadata] = await sequelize.query(
+        query
+      );
+      res.status(200).json(results);
+
+    } catch (error) {
+
+      res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+      
+    }
+
+    
 }
