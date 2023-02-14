@@ -35,7 +35,10 @@ exports.getLamaSiswaSekolahFunction = async (req, res) => {
       const [results, metadata] = await sequelize.query(
         query
       );
-      res.status(200).json(results);
+      res.status(200).json({
+        status: 'success',
+        results
+      });
 
     } catch (error) {
 
@@ -43,7 +46,7 @@ exports.getLamaSiswaSekolahFunction = async (req, res) => {
         status: 'error',
         message: error.message,
       });
-      
+
     }
 
     
