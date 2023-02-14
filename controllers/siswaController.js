@@ -1368,4 +1368,3 @@ exports.deleteSiswa = async (req, res) => {
   });
 };
 
-

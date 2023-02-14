@@ -18,6 +18,7 @@ var nilaiMapelRouter = require('./routes/nilaiMapel');
 var mutasiRouter = require('./routes/mutasi');
 var dashboardRouter = require('./routes/dashboard');
 var historyRouter = require('./routes/history');
+var functionProcedureRouter = require('./routes/functionProcedure');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use('/nilai-mapel', nilaiMapelRouter);
 app.use('/mutasi', mutasiRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/history', historyRouter);
+app.use('/dbquery', functionProcedureRouter);
 
 module.exports = app;
 

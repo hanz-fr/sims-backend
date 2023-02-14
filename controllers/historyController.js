@@ -74,6 +74,34 @@ exports.getTodaysHistory = async (req, res) => {
 }
 
 
+exports.getHistoryDiff = async (req, res) => {
+
+    let created_at = req.query.created_at;
+
+    let connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : '',
+        database : 'sims_backend_1.0'
+    });
+
+    connection.query(`history_diff(${created_at})`, function (err, result) {
+        if (err) {
+            res.status(200).json({
+                status: 'error',
+                message: err
+            })
+        } else {
+            res.status(200).json({
+                status: 'success',
+                result: result[0]
+            })
+        }
+    });
+
+}
+
+
 exports.getAllHistoryYesterdayAndSo = async (req, res) => {
 
     let connection = mysql.createConnection({

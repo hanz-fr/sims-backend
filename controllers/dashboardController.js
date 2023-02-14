@@ -4,6 +4,7 @@ const { Siswa, Raport, Jurusan, sequelize, Mutasi, MapelJurusan, Kelas, } = requ
 const v = new Validator();
 const kelasController = require('../controllers/kelasController');
 const cron = require('node-cron');
+var mysql = require('mysql');
 
 
 /* Update isAlumni automatically */

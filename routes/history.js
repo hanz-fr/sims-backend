@@ -12,5 +12,6 @@ router.get('/count/permonth', controller.countAllHistoryPerMonth);
 router.post('/', controller.createHistory);
 router.put('/:historyId', controller.updateHistory);
 router.delete('/:historyId', controller.deleteHistory);
+router.get('/get/diff', controller.getHistoryDiff);
 
 module.exports = router;
