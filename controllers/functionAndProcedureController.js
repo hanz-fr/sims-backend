@@ -21,7 +21,6 @@ const sequelize = new Sequelize('sims_backend_1.0', 'root', '', {
     idle: 10000
   },
 
-  // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
   operatorsAliases: false
 });
 
