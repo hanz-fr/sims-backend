@@ -1,6 +1,6 @@
 const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, NilaiAkhir, MapelJurusan, Jurusan, sequelize } = require("../models");
+const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Jurusan, sequelize } = require("../models");
 const { Op } = require("sequelize");
 const models = require('../models');
 const searchBuilder = require('sequelize-search-builder');
@@ -1109,9 +1109,6 @@ exports.getSiswa = async (req, res) => {
               },
             ],
           },
-          {
-            model: NilaiAkhir
-          }
         ],
       },
       {

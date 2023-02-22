@@ -12,13 +12,13 @@ var jurusanRouter = require('./routes/jurusan');
 var kelasRouter = require('./routes/kelas');
 var mapelRouter = require('./routes/mapel');
 var mapelJurusanRouter = require('./routes/mapelJurusan');
-var nilaiAkhirRouter = require('./routes/nilaiAkhir');
 var raportRouter = require('./routes/raport');
 var nilaiMapelRouter = require('./routes/nilaiMapel');
 var mutasiRouter = require('./routes/mutasi');
 var dashboardRouter = require('./routes/dashboard');
 var historyRouter = require('./routes/history');
 var functionProcedureRouter = require('./routes/functionProcedure');
+// var nilaiAkhirRouter = require('./routes/nilaiAkhir');
 
 var app = express();
 
@@ -37,13 +37,13 @@ app.use('/jurusan', jurusanRouter);
 app.use('/kelas', kelasRouter);
 app.use('/mapel', mapelRouter);
 app.use('/mapel-jurusan', mapelJurusanRouter);
-app.use('/nilai-akhir', nilaiAkhirRouter);
 app.use('/raport', raportRouter);
 app.use('/nilai-mapel', nilaiMapelRouter);
 app.use('/mutasi', mutasiRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/history', historyRouter);
 app.use('/dbquery', functionProcedureRouter);
+// app.use('/nilai-akhir', nilaiAkhirRouter);
 
 module.exports = app;
 
