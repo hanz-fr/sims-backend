@@ -9,7 +9,7 @@ exports.getAllKelas = async (req, res) => {
 
   // search & sorting
   const search = req.query.search || '';
-  let sort_by = req.query.sort_by || 'kelas';
+  let sort_by = req.query.sort_by || 'id';
   let sort = req.query.sort || 'ASC';
 
   // pagination
