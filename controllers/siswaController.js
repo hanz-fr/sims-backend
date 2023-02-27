@@ -448,6 +448,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
   let sort_by = req.query.sort_by || "nama_siswa";
   let sort = req.query.sort || "ASC";
   let angkatan = req.query.angkatan || '';
+  let rombel = req.query.rombel || '';
 
   let id = req.query.id || '';
   let nis_siswa = req.query.nis_siswa || '';
@@ -469,6 +470,23 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
     },
     status_siswa: 'aktif',
   };
+
+  let where_kelas = {
+    kelas: kelas,
+    JurusanId: jurusan,
+  }
+
+  if(rombel){
+
+    where_kelas = {
+      kelas: kelas,
+      JurusanId: jurusan,
+      rombel: rombel,
+    }
+
+  } 
+  /* END OF CONDITIONAL WHERE QUERY */
+
 
 
   // kalau gaada search
@@ -850,10 +868,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             {
               model: Kelas,
               as: 'kelas',
-              where: {
-                kelas: kelas,
-                JurusanId: jurusan
-              }
+              where: where_kelas
             },
             {
               model: Mutasi,
@@ -869,10 +884,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         // pagination params
         path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
         firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
   
         if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
         } 
       
         if (page === 1) {
@@ -909,10 +924,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
             {
               model: Kelas,
               as: 'kelas',
-              where: {
-                kelas: kelas,
-                JurusanId: jurusan
-              }
+              where: where_kelas
             },
             {
               model: Mutasi,
@@ -928,10 +940,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         // pagination params
         path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
         firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+        nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
   
         if (page > 1) {
-          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+          prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
         } 
       
         if (page === 1) {
@@ -972,10 +984,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           {
             model: Kelas,
             as: 'kelas',
-            where: {
-              kelas: kelas,
-              JurusanId: jurusan
-            }
+            where: where_kelas
           },
           {
             model: Mutasi,
@@ -992,10 +1001,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
       // pagination params
       path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
       firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+      nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
   
       if (page > 1) {
-        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+        prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
       } 
     
       if (page === 1) {
@@ -1032,10 +1041,7 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
            {
              model: Kelas,
              as: 'kelas',
-             where: {
-               kelas: kelas,
-               JurusanId: jurusan
-             }
+             where: where_kelas
            },
            {
              model: Mutasi,
@@ -1052,10 +1058,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
        // pagination params
        path = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}`;
        firstPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=1&perPage=${perPage}`;
-       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+       nextPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page + 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
    
        if (page > 1) {
-         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}`;
+         prevPageUrl = `http://127.0.0.1:8000/data-induk-siswa/${jurusan}/${kelas}?page=${page - 1}&perPage=${perPage}&search=${search}&id=${id}&nis_siswa=${nis_siswa}&nisn_siswa=${nisn_siswa}&nama_siswa=${nama_siswa}&jenis_kelamin=${jenis_kelamin}&KelasId=${KelasId}&sort_by=${sort_by}&sort=${sort}&dibuatTglDari=${fromDate}&dibuatTglKe=${toDate}&angkatan=${angkatan}&rombel=${rombel}`;
        } 
      
        if (page === 1) {

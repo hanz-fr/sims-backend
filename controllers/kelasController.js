@@ -130,6 +130,33 @@ exports.getKelas = async (req, res) => {
   });
 };
 
+
+// get kelas by user name (walikelas name)
+exports.getKelasByWalkelNIP = async (req, res) => {
+
+  const nip = req.params.nip;
+
+  const kelas = await Kelas.findOne({
+    where: {
+      walikelas: nip,
+    }
+  });
+
+  if (!kelas) {
+    return res.status(403).json({
+      status: 'error',
+      message: `Kelas with wali kelas nip : '${nip}' does not exist.`
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    kelas: kelas, 
+  });
+
+};
+
+
 // create kelas
 exports.createKelas = async (req, res) => {
   try {

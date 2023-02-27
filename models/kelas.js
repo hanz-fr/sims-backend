@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
+    walikelas: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   }, {
     sequelize,
     modelName: 'Kelas',

@@ -32,6 +32,10 @@ module.exports = {
           key: 'id',
         },
       },
+      walikelas: {
+        type: Sequelize.STRING,
+        allownull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
