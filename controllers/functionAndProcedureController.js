@@ -1,14 +1,21 @@
-const { json } = require("body-parser");
-const Validator = require("fastest-validator");
-const { History } = require("../models");
-const { Op } = require("sequelize");
-const models = require('../models');
-var mysql = require('mysql');
-const { QueryTypes } = require('sequelize');
 const Sequelize = require('sequelize');
+const { execute } = require('@getvim/execute');
+const cron = require('node-cron');
 
-// import fastest-validator
-const v = new Validator();
+
+/* function test () {
+
+  execute('echo Bambang').then(console.log).catch(
+    err=>{
+      console.log("error", err)
+    }
+  );
+
+}
+
+cron.schedule('* * * * * *', () => {
+  test();
+}); */
 
 const sequelize = new Sequelize('sims_backend_1.0', 'root', '', {
   host: 'localhost',
