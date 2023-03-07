@@ -1,6 +1,6 @@
 const Validator = require("fastest-validator");
 const { Jurusan, Siswa, Kelas, sequelize } = require("../models");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
 const v = new Validator();
 

@@ -1,10 +1,6 @@
-const Validator = require("fastest-validator");
 const { Op } = require("sequelize");
-const { Siswa, Raport, Jurusan, sequelize, Mutasi, MapelJurusan, Kelas, } = require("../models");
-const v = new Validator();
-const kelasController = require('../controllers/kelasController');
+const { Siswa, Raport, Jurusan, Mutasi, MapelJurusan, Kelas, } = require("../models");
 const cron = require('node-cron');
-var mysql = require('mysql');
 
 
 /* Update isAlumni automatically */
@@ -61,6 +57,8 @@ exports.getMainDashboardData = async (req, res) => {
   const jurusan = await Jurusan.findAndCountAll({
     attributes: ['id']
   });
+
+
   const siswa = await Siswa.findAndCountAll({
     attributes: ['id'],
     where: {
@@ -80,6 +78,8 @@ exports.getMainDashboardData = async (req, res) => {
       }
     ]
   });
+
+
   const mutasi = await Mutasi.findAndCountAll({
     attributes: ['nis_siswa'],
     where: {
@@ -99,6 +99,8 @@ exports.getMainDashboardData = async (req, res) => {
       }
     ]
   });
+
+
   const siswaMasuk = await Mutasi.findAndCountAll({
     attributes: ['nis_siswa'],
     where: {
@@ -118,6 +120,9 @@ exports.getMainDashboardData = async (req, res) => {
       }
     ]
   });
+
+
+
   const siswaKeluar = await Mutasi.findAndCountAll({
     attributes: ['nis_siswa'],
     include: [
@@ -142,9 +147,11 @@ exports.getMainDashboardData = async (req, res) => {
   const kelas = await Kelas.findAndCountAll({
     attributes: ['id']
   });
+
   const mapel = await MapelJurusan.findAndCountAll({
     attributes: ['mapelJurusanId']
   });
+
   const alumni = await Siswa.findAndCountAll({
     attributes: ['nis_siswa'],
     where: {
@@ -156,6 +163,7 @@ exports.getMainDashboardData = async (req, res) => {
       },
     }
   });
+
   const siswaTdkNaik = await Siswa.findAndCountAll({
     attributes: ['nis_siswa'],
     where: {
@@ -177,6 +185,8 @@ exports.getMainDashboardData = async (req, res) => {
       }
     ]
   });
+
+
   const jumlahSiswaX = await Siswa.findAndCountAll({
     attributes: [],
     where: {
@@ -246,6 +256,7 @@ exports.getMainDashboardData = async (req, res) => {
     }]
   });
 
+
   const jumlahSiswaAKL = await Siswa.findAndCountAll({
     attributes: [],
     where: {
@@ -266,6 +277,7 @@ exports.getMainDashboardData = async (req, res) => {
       }
     }]
   });
+
 
   const jumlahSiswaDKV = await Siswa.findAndCountAll({
     attributes: [],
@@ -407,7 +419,6 @@ exports.getMainDashboardData = async (req, res) => {
     jumlahSiswaXI: jumlahSiswaXI,
     jumlahSiswaXII: jumlahSiswaXII,
     jumlahSiswaAKL: jumlahSiswaAKL,
-    jumlahSiswaAKL: jumlahSiswaAKL,
     jumlahSiswaDKV: jumlahSiswaDKV,
     jumlahSiswaMPLB: jumlahSiswaMPLB,
     jumlahSiswaPM: jumlahSiswaPM,
@@ -419,6 +430,7 @@ exports.getMainDashboardData = async (req, res) => {
     siswaTdkNaik: siswaTdkNaik,
   });
 }
+
 
 
 exports.getSiswaMasukByMonth = async (req, res) => {
@@ -440,6 +452,7 @@ exports.getSiswaMasukByMonth = async (req, res) => {
   res.status(200).json(siswaMasuk);
 
 }
+
 
 
 exports.getSiswaKeluarByMonth = async (req, res) => {
@@ -471,16 +484,17 @@ exports.getSiswaTidakNaik = async (req, res) => {
   let sort_by = req.query.sort_by || "id";
   let sort = req.query.sort || "ASC";
 
-
+  // sort by apah
   let nama_siswa = req.query.nama_siswa || '';
   let tinggal_di_Kelas = req.query.tinggal_di_Kelas || '';
   let alasan_tidak_naik = req.query.alasan_tidak_naik || '';
   let tmp_lahir = req.query.tmp_lahir || '';
   let tgl_lahir = req.query.tgl_lahir || '';
 
+
   /* Pagination */
-  const pageAsNumber = Number.parseInt(req.query.page);
-  const perPageAsNumber = Number.parseInt(req.query.perPage);
+  const pageAsNumber = Number.parseInt(req.query.page);  // halaman
+  const perPageAsNumber = Number.parseInt(req.query.perPage); // limit
 
   let page = 1;
   if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
@@ -489,7 +503,6 @@ exports.getSiswaTidakNaik = async (req, res) => {
 
 
   let perPage = 10;
-
   if (!Number.isNaN(perPageAsNumber) && perPageAsNumber > 0) {
     perPage = perPageAsNumber;
   }
@@ -499,6 +512,7 @@ exports.getSiswaTidakNaik = async (req, res) => {
 
     if (!search) {
 
+      // kalau misal periodik itu terisi
       if (fromDate != "" || toDate != "") {
 
         let siswaTdkNaik = await Raport.findAndCountAll({

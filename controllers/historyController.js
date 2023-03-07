@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 const models = require('../models');
 const searchBuilder = require('sequelize-search-builder');
 var mysql = require('mysql');
-``
+
 // import fastest-validator
 const v = new Validator();
 

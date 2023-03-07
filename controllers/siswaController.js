@@ -1272,7 +1272,6 @@ exports.updateSiswa = async (req, res) => {
   const schema = {
     nis_siswa: { type: "string", max: 10, optional: true },
     KelasId: { type: "string", optional: true },
-    /* OrtuId: { type: "number", optional: true }, */
     nisn_siswa: { type: "string", max: 10, optional: true },
     nama_siswa: { type: "string", optional: true },
     tmp_lahir: { type: "string", optional: true },

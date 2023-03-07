@@ -7,6 +7,7 @@ const controller = require('../controllers/kelasController');
 router.get('/', controller.getAllKelas); // get all kelas
 
 router.get('/get-by-walkel/:nip', controller.getKelasByWalkelNIP); // get kelas by walkel nip
+
 router.get('/:id', controller.getKelas); // get kelas by id
 
 router.get('/siswa-per-kelas/all', controller.getSiswaByKelas);
