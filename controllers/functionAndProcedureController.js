@@ -4,48 +4,56 @@ const cron = require('node-cron');
 
 var cp = require('child_process');
 
-
-// cron.schedule('* * * * * *', () => {
-//   exec("ls -la", (error, stdout, stderr) => {
-//     if (error) {
-//         console.log(`error: ${error.message}`);
-//         return;
-//     }
-//     if (stderr) {
-//         console.log(`stderr: ${stderr}`);
-//         return;
-//     }
-//     console.log(`stdout: ${stdout}`);
-//   });
-// });
-
-// const command = spawn ('mysql', [`-h localhost -u root -p sims_backend_1.0 > C:/"SQL Backup"/BackendBackup.sql`]);
-
-// command.stdin.write("\n");
-
-// command.stdout.on('data', output => {
-//   console.log("Output : ", output.toString());
-// });
-
-// try {
-
-// } catch(err) {
-
-//   return res.status(400).json({
-//     message: 'Failed',
-//     error: err
-//   });
-
-// }
-
-exports.download = async (req, res) => {
+exports.backupDB = async (req, res) => {
   
-  var child = cp.spawn('mysql', [`-h localhost -u root -p sims_backend_1.0 > C:/"SQL Backup"/BackendBackup.sql`],{ cwd: "C:/xampp/mysql/bin" }).on('error', function( err ) { throw err });
+  console.log(req);
+
+  let db = req.query.db;
+  let table = req.query.table || 'all';
+
+  switch (db) {
+    case 'frontend':
+      db = 'sims_backend_1.0';
+      break;
+    case 'backend':
+      db = 'sims_auth';
+      break; 
+    default:
+  }
+
+  if (table == "all") {
+
+    // dump the result straight to a file
+    mysqldump({
+      connection: {
+          host: 'localhost',
+          user: 'root',
+          password: '',
+          database: db,
+      },
+      dumpToFile: `C:/SQL Backup/HistoryTableBackupTest.sql`,
+    });
+
+  } else {
+
+    // dump the result straight to a file
+    mysqldump({
+      connection: {
+          host: 'localhost',
+          user: 'root',
+          password: '',
+          database: db,
+      },
+      dump: {
+        tables: [
+            table
+        ],
+      },
+      dumpToFile: `C:/SQL Backup/HistoryTableBackupTest.sql`,
+    });
+  }
+
   
-  child.stdout.on('data', function() {
-    console.log(data);
-    console.log("STDOUT: ", data.toString());
-  });
 
 
 }
