@@ -2,20 +2,54 @@ const Sequelize = require('sequelize');
 const { execute } = require('@getvim/execute');
 const cron = require('node-cron');
 
+var cp = require('child_process');
 
-/* function test () {
 
-  execute('echo Bambang').then(console.log).catch(
-    err=>{
-      console.log("error", err)
-    }
-  );
+// cron.schedule('* * * * * *', () => {
+//   exec("ls -la", (error, stdout, stderr) => {
+//     if (error) {
+//         console.log(`error: ${error.message}`);
+//         return;
+//     }
+//     if (stderr) {
+//         console.log(`stderr: ${stderr}`);
+//         return;
+//     }
+//     console.log(`stdout: ${stdout}`);
+//   });
+// });
+
+// const command = spawn ('mysql', [`-h localhost -u root -p sims_backend_1.0 > C:/"SQL Backup"/BackendBackup.sql`]);
+
+// command.stdin.write("\n");
+
+// command.stdout.on('data', output => {
+//   console.log("Output : ", output.toString());
+// });
+
+// try {
+
+// } catch(err) {
+
+//   return res.status(400).json({
+//     message: 'Failed',
+//     error: err
+//   });
+
+// }
+
+exports.download = async (req, res) => {
+  
+  var child = cp.spawn('mysql', [`-h localhost -u root -p sims_backend_1.0 > C:/"SQL Backup"/BackendBackup.sql`],{ cwd: "C:/xampp/mysql/bin" }).on('error', function( err ) { throw err });
+  
+  child.stdout.on('data', function() {
+    console.log(data);
+    console.log("STDOUT: ", data.toString());
+  });
+
 
 }
 
-cron.schedule('* * * * * *', () => {
-  test();
-}); */
 
 const sequelize = new Sequelize('sims_backend_1.0', 'root', '', {
   host: 'localhost',
