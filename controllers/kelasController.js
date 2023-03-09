@@ -241,6 +241,7 @@ exports.updateKelas = async (req, res) => {
     JurusanId: { type: "string", optional: true },
     jurusan: { type: "string", max: 50, optional: true },
     rombel: { type: "string", max: 5, optional: true },
+    walikelas: { type: "string", optional: true },
   };
 
   const validate = v.validate(req.body, schema);
@@ -254,6 +255,7 @@ exports.updateKelas = async (req, res) => {
     kelas: req.body.kelas,
     JurusanId: req.body.JurusanId,
     rombel: req.body.rombel,
+    walikelas: req.body.walikelas
   });
 
   res.status(200).json({
