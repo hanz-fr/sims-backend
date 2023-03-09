@@ -27,7 +27,7 @@ exports.backupDB = async (req, res) => {
       db = 'sims_backend_1.0';
       break;
     case 'frontend':
-      db = 'sims_auth';
+      db = 'sims';
       break; 
     default:
   }
