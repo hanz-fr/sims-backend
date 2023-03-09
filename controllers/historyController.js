@@ -54,7 +54,7 @@ exports.getTodaysHistory = async (req, res) => {
         host     : 'localhost',
         user     : 'root',
         password : '',
-        database : 'sims_backend_1.0'
+        database : 'sims_backend_1.0.1'
     });
 
     connection.query("call get_today_history", function (err, result) {
@@ -82,7 +82,7 @@ exports.getHistoryDiff = async (req, res) => {
         host     : 'localhost',
         user     : 'root',
         password : '',
-        database : 'sims_backend_1.0'
+        database : 'sims_backend_1.0.1'
     });
 
     connection.query(`history_diff(${created_at})`, function (err, result) {
@@ -108,7 +108,7 @@ exports.getAllHistoryYesterdayAndSo = async (req, res) => {
         host     : 'localhost',
         user     : 'root',
         password : '',
-        database : 'sims_backend_1.0'
+        database : 'sims_backend_1.0.1'
     });
 
     connection.query("call get_older_history", function (err, result) {
