@@ -114,42 +114,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      nama_ayah: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      nama_ibu: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      alamat_ortu: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      no_telp_ortu: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-      },
-      email_ortu: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      nama_wali: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      alamat_wali: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      no_telp_wali: {
-        type: Sequelize.STRING(20),
-        allowNull: true,
-      },
-      pekerjaan_wali: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       tgl_meninggalkan_sekolah: {
         type: Sequelize.DATEONLY,
         allowNull: true,

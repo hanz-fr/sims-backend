@@ -8,35 +8,65 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Ortu.belongsTo(models.Siswa, {
+        foreignKey: 'nis_siswa',
+        targetKey: 'nis_siswa',
+        as: 'siswa',
+      }); 
     }
   }
   Ortu.init({
-    nik_ortu: {
-      type: DataTypes.STRING(16),
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4 
+    },
+    nis_siswa: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Siswa',
+        key: 'nis_siswa',
+      }
+    },
+    nama_ayah: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
-    nama: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    hubungan: {
-      type: DataTypes.ENUM('Ibu', 'Ayah', 'Wali'),
-      allowNull: false,
-    },
-    alamat: {
+    nama_ibu: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    no_telp: {
+    alamat_ortu: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    no_telp_ortu: {
       type: DataTypes.STRING(20),
       allowNull: true,
     },
-    pekerjaan: {
-      type: DataTypes.STRING(50),
+    email_ortu: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
-    email: {
-      type: DataTypes.STRING(100),
+    nama_wali: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    alamat_wali: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    no_telp_wali: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    pekerjaan_wali: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   }, {

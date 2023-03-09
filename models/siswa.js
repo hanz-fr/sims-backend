@@ -28,6 +28,12 @@ class Siswa extends Model {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }); 
+      Siswa.hasOne(models.Ortu, {
+        as: "ortu",
+        foreignKey: 'nis_siswa',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   Siswa.init({
@@ -140,42 +146,6 @@ class Siswa extends Model {
       allowNull: true,
     },
     no_skhun_smp: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    nama_ayah: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    nama_ibu: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    alamat_ortu: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    no_telp_ortu: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
-    email_ortu: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    nama_wali: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    alamat_wali: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    no_telp_wali: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
-    pekerjaan_wali: {
       type: DataTypes.STRING,
       allowNull: true,
     },
