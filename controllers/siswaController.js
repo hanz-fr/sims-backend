@@ -1418,17 +1418,20 @@ exports.updateSiswa = async (req, res) => {
 
   // update siswa
   siswaExist = await siswaExist.update(req.body);
-  ortuExist = await ortuExist.update({
-    nama_ayah: req.body.nama_ayah,
-    nama_ibu: req.body.nama_ibu,
-    alamat_ortu: req.body.alamat_ortu,
-    no_telp_ortu: req.body.no_telp_ortu,
-    email_ortu: req.body.email_ortu,
-    nama_wali: req.body.nama_wali,
-    alamat_wali: req.body.alamat_wali,
-    no_telp_wali: req.body.no_telp_wali,
-    pekerjaan_wali: req.body.pekerjaan_wali,
-  })
+
+  if (ortuExist) {
+    ortuExist = await ortuExist.update({
+      nama_ayah: req.body.nama_ayah,
+      nama_ibu: req.body.nama_ibu,
+      alamat_ortu: req.body.alamat_ortu,
+      no_telp_ortu: req.body.no_telp_ortu,
+      email_ortu: req.body.email_ortu,
+      nama_wali: req.body.nama_wali,
+      alamat_wali: req.body.alamat_wali,
+      no_telp_wali: req.body.no_telp_wali,
+      pekerjaan_wali: req.body.pekerjaan_wali,
+    });
+  }
 
   res.status(200).json({
     message: `Successfully updated Siswa with nis : ${siswaExist.nis}`,
