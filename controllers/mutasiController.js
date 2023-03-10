@@ -737,7 +737,7 @@ exports.createMutasi = async (req, res) => {
     try {
         const schema = {
             nis_siswa: { type: "string" },
-            nama_siswa: { type: "string" },
+            nama_siswa: { type: "string", optional: true },
             jenis_kelamin: { type: "enum", values: ["L", "P"], optional: true },
             alasan_mutasi: { type: "string", optional: true },
             keluar_di_kelas: { type: "string", optional: true },
@@ -766,7 +766,19 @@ exports.createMutasi = async (req, res) => {
             });
         }
         
-        var mutasi = await Mutasi.create(req.body);
+        var mutasi = await Mutasi.create({
+            nis_siswa: req.body.nis_siswa,
+            nama_siswa: siswaExist.nama_siswa,
+            jenis_kelamin: siswaExist.jenis_kelamin,
+            alasan_mutasi: req.body.alasan_mutasi,
+            keluar_di_kelas: req.body.keluar_di_kelas,
+            diterima_di_kelas: req.body.keluar_di_kelas,
+            diterima_di_kelas: req.body.diterima_di_kelas,
+            pindah_dari: req.body.pindah_dari,
+            pindah_ke: req.body.pindah_ke,
+            tgl_mutasi: req.body.tgl_mutasi,
+            sk_mutasi: req.body.sk_mutasi,
+        });
 
         res.status(200).json({
             status: "Data added successfully.",
