@@ -1,6 +1,6 @@
 const { json } = require("body-parser");
 const Validator = require("fastest-validator");
-const { Siswa, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Jurusan, sequelize } = require("../models");
+const { Siswa, Ortu, Kelas, Raport, Mutasi, NilaiMapel, MapelJurusan, Jurusan, sequelize } = require("../models");
 const { Op } = require("sequelize");
 const models = require('../models');
 const searchBuilder = require('sequelize-search-builder');
@@ -383,6 +383,10 @@ exports.getAllSiswa = async (req, res) => {
       ],
       where,
       include: [
+        {
+          model: Ortu,
+          as: 'ortu'
+        },
         {
           model: Raport,
           as: 'raport'
@@ -862,6 +866,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           where,
           include: [
             {
+              model: Ortu,
+              as: 'ortu'
+            },
+            {
               model: Raport,
               as: 'raport'
             },
@@ -917,6 +925,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
           ],
           where,
           include: [
+            {
+              model: Ortu,
+              as: 'ortu'
+            },
             {
               model: Raport,
               as: 'raport'
@@ -978,6 +990,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
         where,
         include: [
           {
+            model: Ortu,
+            as: 'ortu'
+          },
+          {
             model: Raport,
             as: 'raport'
           },
@@ -1034,6 +1050,10 @@ exports.getAllSiswaByJurusanKelas = async (req, res) => {
          ],
          where,
          include: [
+          {
+            model: Ortu,
+            as: 'ortu'
+          },
            {
              model: Raport,
              as: 'raport'
@@ -1102,6 +1122,10 @@ exports.getSiswa = async (req, res) => {
   // check if siswa exist
   const siswa = await Siswa.findOne({
     include: [
+      {
+        model: Ortu,
+        as: 'ortu'
+      },
       {
         model: Raport,
         as: 'raport',
@@ -1181,15 +1205,6 @@ exports.createSiswa = async (req, res) => {
       no_ijazah_smp: { type: "string", max: 100, optional: true },
       thn_skhun_smp: { type: "string", optional: true },
       no_skhun_smp: { type: "string", optional: true },
-      nama_ayah: { type: "string", optional: true },
-      nama_ibu: { type: "string", optional: true },
-      alamat_ortu: { type: "string", optional: true },
-      no_telp_ortu: { type: "string", optional: true, max: 20 },
-      email_ortu: { type: "string", optional: true },
-      nama_wali: { type: "string", optional: true },
-      alamat_wali: { type: "string", optional: true },
-      no_telp_wali: { type: "string", optional: true },
-      pekerjaan_wali: { type: "string", optional: true },
       tgl_meninggalkan_sekolah: { type: "date", convert: true, optional: true },
       alasan_meninggalkan_sekolah: { type: "string", optional: true },
       no_ijazah_smk: { type: "string", optional: true },
@@ -1203,12 +1218,38 @@ exports.createSiswa = async (req, res) => {
       isAlumni: { type: "boolean" },
     };
 
+    const schema2 = {
+      nis_siswa: { type: "string" },
+      nama_ayah: { type: "string", optional: true },
+      nama_ibu: { type: "string", optional: true },
+      alamat_ortu: { type: "string", optional: true },
+      no_telp_ortu: { type: "string", optional: true, max: 20 },
+      email_ortu: { type: "string", optional: true },
+      nama_wali: { type: "string", optional: true },
+      alamat_wali: { type: "string", optional: true },
+      no_telp_wali: { type: "string", optional: true },
+      pekerjaan_wali: { type: "string", optional: true },
+    }
+
     const validate = v.validate(req.body, schema);
 
+    const validate_ortu = v.validate([
+      req.body.nis_siswa,
+      req.body.nama_ayah,
+      req.body.nama_ibu,
+      req.body.alamat_ortu,
+      req.body.no_telp_ortu,
+      req.body.email_ortu,
+      req.body.nama_wali,
+      req.body.alamat_wali,
+      req.body.no_telp_wali,
+      req.body.pekerjaan_wali,
+    ], schema2);
+
     // check if validation is success or not
-    if (validate.length) {
+    if (validate.length && validate_ortu.length) {
       return res.status(400).json(validate);
-    }
+    };
 
     // find Siswa where nis already exist.
     const siswaIsExist = await Siswa.findOne({
@@ -1238,10 +1279,23 @@ exports.createSiswa = async (req, res) => {
     }
 
     var siswa = await Siswa.create(req.body);
+    var ortu = await Ortu.create({
+      nis_siswa: req.body.nis_siswa,
+      nama_ayah: req.body.nama_ayah,
+      nama_ibu: req.body.nama_ibu,
+      alamat_ortu: req.body.alamat_ortu,
+      no_telp_ortu: req.body.no_telp_ortu,
+      email_ortu: req.body.email_ortu,
+      nama_wali: req.body.nama_wali,
+      alamat_wali: req.body.alamat_wali,
+      no_telp_wali: req.body.no_telp_wali,
+      pekerjaan_wali: req.body.pekerjaan_wali,
+    });
 
     res.status(200).json({
       status: "Data added successfully.",
       siswa,
+      ortu,
     });
   } catch (error) {
     if (error.errno === 1452) {
@@ -1264,6 +1318,12 @@ exports.updateSiswa = async (req, res) => {
   // check if siswa exist in db or not.
   let siswaExist = await Siswa.findByPk(nis);
 
+  let ortuExist = await Ortu.findOne({
+    where: {
+      nis_siswa: req.params.nis_siswa
+    }
+  });
+  
   if (!siswaExist) {
     return res.status(404).json({ message: "Siswa does not exist" });
   }
@@ -1295,15 +1355,6 @@ exports.updateSiswa = async (req, res) => {
     no_ijazah_smp: { type: "string", optional: true },
     thn_skhun_smp: { type: "string", optional: true },
     no_skhun_smp: { type: "string", optional: true },
-    nama_ayah: { type: "string", optional: true },
-    nama_ibu: { type: "string", optional: true },
-    alamat_ortu: { type: "string", optional: true },
-    no_telp_ortu: { type: "string", optional: true, max: 20 },
-    email_ortu: { type: "string", optional: true },
-    nama_wali: { type: "string", optional: true },
-    alamat_wali: { type: "string", optional: true },
-    no_telp_wali: { type: "string", optional: true },
-    pekerjaan_wali: { type: "string", optional: true },
     tgl_meninggalkan_sekolah: { type: "date", convert: true, optional: true },
     alasan_meninggalkan_sekolah: { type: "string", optional: true },
     no_ijazah_smk: { type: "string", optional: true },
@@ -1317,13 +1368,39 @@ exports.updateSiswa = async (req, res) => {
     isAlumni: { type: "boolean", optional: true },
   };
 
-  // validate schema
-  const validate = v.validate(req.body, schema);
-
-  if (validate.length) {
-    return res.status(400).json(validate);
+  const schema2 = {
+    nis_siswa: { type: "string", optional: true },
+    nama_ayah: { type: "string", optional: true },
+    nama_ibu: { type: "string", optional: true },
+    alamat_ortu: { type: "string", optional: true },
+    no_telp_ortu: { type: "string", optional: true, max: 20 },
+    email_ortu: { type: "string", optional: true },
+    nama_wali: { type: "string", optional: true },
+    alamat_wali: { type: "string", optional: true },
+    no_telp_wali: { type: "string", optional: true },
+    pekerjaan_wali: { type: "string", optional: true },
   }
 
+  // validate schema
+  const validate = v.validate(req.body, schema);
+  
+  const validate_ortu = v.validate([
+    req.body.nis_siswa,
+    req.body.nama_ayah,
+    req.body.nama_ibu,
+    req.body.alamat_ortu,
+    req.body.no_telp_ortu,
+    req.body.email_ortu,
+    req.body.nama_wali,
+    req.body.alamat_wali,
+    req.body.no_telp_wali,
+    req.body.pekerjaan_wali,
+  ], schema2);
+
+  // check if validation is success or not
+  if (validate.length && validate_ortu.length) {
+    return res.status(400).json(validate);
+  };
 
   // if KelasId is not empty, check if the id exist
   if (req.body.KelasId) {
@@ -1342,9 +1419,36 @@ exports.updateSiswa = async (req, res) => {
   // update siswa
   siswaExist = await siswaExist.update(req.body);
 
+  if (ortuExist) {
+    ortuExist = await ortuExist.update({
+      nama_ayah: req.body.nama_ayah,
+      nama_ibu: req.body.nama_ibu,
+      alamat_ortu: req.body.alamat_ortu,
+      no_telp_ortu: req.body.no_telp_ortu,
+      email_ortu: req.body.email_ortu,
+      nama_wali: req.body.nama_wali,
+      alamat_wali: req.body.alamat_wali,
+      no_telp_wali: req.body.no_telp_wali,
+      pekerjaan_wali: req.body.pekerjaan_wali,
+    });
+  } else {
+    ortuExist = await Ortu.create({
+      nis_siswa: req.body.nis_siswa,
+      nama_ayah: req.body.nama_ayah,
+      nama_ibu: req.body.nama_ibu,
+      alamat_ortu: req.body.alamat_ortu,
+      no_telp_ortu: req.body.no_telp_ortu,
+      email_ortu: req.body.email_ortu,
+      nama_wali: req.body.nama_wali,
+      alamat_wali: req.body.alamat_wali,
+      no_telp_wali: req.body.no_telp_wali,
+      pekerjaan_wali: req.body.pekerjaan_wali,
+    });
+  }
+
   res.status(200).json({
     message: `Successfully updated Siswa with nis : ${siswaExist.nis}`,
-    result: siswaExist,
+    result: [siswaExist, ortuExist],
   });
 };
 

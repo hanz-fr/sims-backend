@@ -24,7 +24,7 @@ exports.backupDB = async (req, res) => {
 
   switch (db) {
     case 'backend':
-      db = 'sims_backend_1.0';
+      db = 'sims_backend_1.0.1';
       break;
     case 'frontend':
       db = 'sims';
@@ -103,7 +103,7 @@ exports.backupDB = async (req, res) => {
 }
 
 
-const sequelize = new Sequelize('sims_backend_1.0', 'root', '', {
+const sequelize = new Sequelize('sims_backend_1.0.1', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
 
